@@ -1,0 +1,138 @@
+{
+  "nav": {
+    "work": "Work",
+    "music": "Music",
+    "poetry": "Poetry",
+    "reach": "Reach",
+    "close": "Close",
+    "menu": "Menu"
+  },
+  "hero": {
+    "label": "Product builder · Engineer · Poet",
+    "tagline": "Builder. Poet. Dreamer.",
+    "subline": "I build cloud software for a living — Prime Innovators, Vortexme, and open-source tools — and write Urdu poetry for the rest of it. Currently exploring semantic-aware reconciliation of Kubernetes in Digital Twin environments.",
+    "cta": {
+      "work": "See the work",
+      "poetry": "Read the poetry"
+    },
+    "scroll": "Scroll"
+  },
+  "about": {
+    "title": "About",
+    "intro": "Full-stack engineer focused on building real products. Poet under the pen name Saeedi.",
+    "bio": "Mohammad Saeed is a product builder and engineer based in Islamabad. He is founding Prime Innovators (an open-source talent ecosystem), shipping Vortexme (FYP flagship), and exploring semantic-aware reconciliation of Kubernetes in Digital Twin environments. Outside the codebase, he writes and records Urdu poetry as Saeed Saeedi.",
+    "label": "Product builder and engineer. Writes Urdu poetry as Saeed Saeedi.",
+    "stats": {
+      "repos": "Open-source repos",
+      "stars": "GitHub stars",
+      "tracks": "Released tracks"
+    },
+    "preview": "Based in Islamabad. Leading Prime Innovators (open-source talent ecosystem), shipping Vortexme (FYP flagship), and maintaining again, clean-repo, and vocab. Poetry published as <em>Gulab-e-Suman</em> (9 tracks) with <em>Wehm-e-Kham-e-Khayal</em> coming soon (3 new tracks).",
+    "contact": "Get in touch"
+  },
+  "domains": {
+    "title": "What I Bring",
+    "software": "Cloud-native SaaS platforms, real-time systems, and the architecture that keeps them running. Next.js, NestJS, PostgreSQL, AWS.",
+    "marketing": "Positioning, messaging, and campaigns that help a product's first impression count.",
+    "people": "Hiring, onboarding, and the operational groundwork that keeps a team functioning well."
+  },
+  "work": {
+    "title": "Selected Work",
+    "intro": "Flagship products, open-source tools, and research-linked builds.",
+    "in_development": "In development",
+    "open_source": "Open source",
+    "rd": "R&D",
+    "fyp": "FYP",
+    "active": "Active",
+    "in_progress": "In progress",
+    "case_study_soon": "Case study soon",
+    "placeholder_uniflow": "Add a one-line description of what Uniflow does.",
+    "projects": {
+      "prime": {
+        "title": "Prime Innovators",
+        "subtitle": "Platform",
+        "desc": "Open-source talent ecosystem for verified developer reputation — TypeScript monorepo (Next.js, NestJS, Prisma, PostgreSQL, Redis, Docker, Traefik). Features include GitHub OAuth onboarding, contributor/maintainer roles, protected routes, and contract-driven APIs.",
+        "tags": ["Next.js", "NestJS", "Prisma", "Docker"],
+        "link": "View on GitHub"
+      },
+      "vortexme": {
+        "title": "Vortexme",
+        "subtitle": "FYP Flagship · R&D",
+        "desc": "Flagship final-year product. Details coming as development progresses; linked with cloud-native architecture research.",
+        "tags": ["FYP", "Cloud", "R&D"],
+        "link": "View on GitHub"
+      },
+      "vocab": {
+        "title": "vocab",
+        "desc": "Vocabulary and language-focused tool. Part of the open-source toolkit maintained alongside professional builds.",
+        "tags": ["TypeScript", "Tool"],
+        "status": "Active"
+      },
+      "clean_repo": {
+        "title": "clean-repo",
+        "desc": "Repository hygiene and structure tool for maintaining clean TypeScript monorepos.",
+        "tags": ["CLI", "TypeScript"],
+        "link": "View on GitHub",
+        "status": "Open source"
+      },
+      "again": {
+        "title": "again",
+        "subtitle": "CLI",
+        "desc": "High-performance command repeater CLI built with Go and Bubble Tea — useful for stress-testing and debugging.",
+        "tags": ["Go", "Bubble Tea"],
+        "link": "View on GitHub"
+      }
+    },
+    "also_on_github": "Also on GitHub:",
+    "full_profile": "full profile"
+  },
+  "music": {
+    "title": "Music",
+    "intro": "Written and performed as <strong>Saeed Saeedi</strong>. Urdu poetry set to sound.",
+    "albums": {
+      "gulab": {
+        "title": "Gulab-e-Suman",
+        "urdu": "گلابِ سمن",
+        "meta": "Debut album · 9 tracks",
+        "desc": "Nine tracks about longing, restraint, and the things that read better in Urdu than in English.",
+        "cta": "Listen on Spotify"
+      },
+      "wehm": {
+        "title": "Wehm-e-Kham-e-Khayal",
+        "urdu": "وہمِ خامِ خیال",
+        "meta": "Coming soon · 3 new tracks",
+        "desc": "The next chapter — three new tracks, still taking shape in the studio.",
+        "cta": "Coming soon"
+      }
+    }
+  },
+  "kalaam": {
+    "title": "Verses",
+    "intro": "A few verses, paired with the songs that carry them.",
+    "index": {
+      "intro": "A few verses, paired with the songs that carry them.",
+      "ghazal_tag": "Ghazal",
+      "sample_layout": "Sample layout"
+    },
+    "back": "Back to index",
+    "all_verses": "All verses",
+    "listen": "Listen",
+    "listen_to_album": "Listen to album",
+    "track_prefix": "Track",
+    "album_prefix": "·"
+  },
+  "connect": {
+    "title": "Let's talk",
+    "line": "Open to interesting SaaS builds, collaborations, or just talking poetry.",
+    "email": "imsaeedsaeedi@gmail.com"
+  },
+  "footer": {
+    "label": "Product Builder · Poet · Dreamer",
+    "tagline": "Product Builder · Poet · Dreamer",
+    "reach": "Reach",
+    "email": "Email",
+    "github": "GitHub",
+    "social": "Social",
+    "connect": "Let's talk"
+  }
+}

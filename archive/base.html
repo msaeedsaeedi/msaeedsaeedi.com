@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<script>
+(function(){
+  try{
+    var t = localStorage.getItem('ms-theme');
+    if(!t){ t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; }
+    document.documentElement.setAttribute('data-theme', t);
+    var l = localStorage.getItem('ms-lang') || 'en';
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === 'ur' ? 'rtl' : 'ltr';
+    if(l === 'ur'){ document.documentElement.classList.add('lang-ur'); }
+  }catch(e){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mohammad Saeed — Engineer, Poet, Dreamer</title>
+<meta name="description" content="Mohammad Saeed — full-stack cloud engineer and Urdu poet (Saeed Saeedi). SaaS platforms, real-time systems, and verses set to music.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+
+<!--
+  ============================================================
+  CONTENT CHECKLIST — search these markers before going live:
+  [[PLACEHOLDER: PORTRAIT]]   hero + about photo
+  [[PLACEHOLDER: DOMAIN]]     marketing / HR specifics
+  [[PLACEHOLDER: UNIFLOW]]    Uniflowco description
+  [[PLACEHOLDER: ALBUM ART]]  cover art for both albums
+  [[PLACEHOLDER: POEM]]       real verses + track pairings
+  Also: re-read the Urdu (.i18n-ur / .i18n-ur-i) copy in your
+  own voice — it was translated by Claude and should sound like you.
+  ============================================================
+-->
+
+<style>
+  /* ---------- reset & tokens ---------- */
+  :root{
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+
+    --ink-950:#0b0e12;
+    --ink-900:#12161d;
+    --ink-800:#1a2029;
+    --paper-50:#f6f1e7;
+    --paper-100:#efe6d3;
+    --gold-400:#dba847;
+    --gold-500:#c9932e;
+    --gold-600:#a8791f;
+    --jade-500:#3c6e58;
+    --maroon-600:#7c3a3a;
+
+    --radius-s:3px;
+    --radius-m:6px;
+    --ease:cubic-bezier(.16,1,.3,1);
+    --container:1180px;
+
+    --font-display:'Fraunces','Iowan Old Style','Georgia',serif;
+    --font-body:'Work Sans',-apple-system,'Segoe UI',sans-serif;
+    --font-ur:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif;
+
+    /* light defaults */
+    --bg:var(--paper-50);
+    --bg-elevated:#fffdf7;
+    --text:var(--ink-950);
+    --text-muted:rgba(11,14,18,.68);
+    --border:rgba(11,14,18,.14);
+    --accent:var(--gold-600);
+    --accent-soft:rgba(168,121,31,.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:var(--ink-950);
+      --bg-elevated:var(--ink-900);
+      --text:var(--paper-50);
+      --text-muted:rgba(246,241,231,.66);
+      --border:rgba(246,241,231,.14);
+      --accent:var(--gold-400);
+      --accent-soft:rgba(219,168,71,.14);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:var(--ink-950);
+    --bg-elevated:var(--ink-900);
+    --text:var(--paper-50);
+    --text-muted:rgba(246,241,231,.66);
+    --border:rgba(246,241,231,.14);
+    --accent:var(--gold-400);
+    --accent-soft:rgba(219,168,71,.14);
+  }
+  :root[data-theme="light"]{
+    --bg:var(--paper-50);
+    --bg-elevated:#fffdf7;
+    --text:var(--ink-950);
+    --text-muted:rgba(11,14,18,.68);
+    --border:rgba(11,14,18,.14);
+    --accent:var(--gold-600);
+    --accent-soft:rgba(168,121,31,.12);
+  }
+
+  *,*::before,*::after{ box-sizing:inherit; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; scroll-padding-top:calc(78px + env(safe-area-inset-top,0px)); }
+  html,body{ height:100%; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    transition:background .6s var(--ease), color .6s var(--ease), opacity .25s ease;
+    overflow-x:hidden;
+  }
+  img,svg,canvas{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+  ul{ list-style:none; }
+  h1,h2,h3,h4{ font-family:var(--font-display); font-weight:500; line-height:1.08; letter-spacing:-.01em; }
+  p{ max-width:64ch; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  .wrap{ max-width:var(--container); margin-inline:auto; padding-inline:clamp(1.25rem,5vw,3rem); }
+
+  /* ---------- bilingual toggling ---------- */
+  .i18n-ur, .i18n-ur-i{ display:none; font-family:var(--font-ur); }
+  html.lang-ur .i18n-en, html.lang-ur .i18n-en-i{ display:none; }
+  html.lang-ur .i18n-ur{ display:block; }
+  html.lang-ur .i18n-ur-i{ display:inline; }
+  html.lang-ur .i18n-ur.flex{ display:flex; }
+  .i18n-ur, .i18n-ur-i{ line-height:2.05; }
+  html.lang-ur h1.i18n-ur, html.lang-ur h2.i18n-ur, html.lang-ur h3.i18n-ur{ line-height:1.55; }
+
+  /* ---------- custom cursor ---------- */
+  .cursor-dot,.cursor-ring{ position:fixed; top:0; left:0; z-index:9999; border-radius:50%; pointer-events:none; mix-blend-mode:difference; will-change:transform; }
+  .cursor-dot{ width:7px; height:7px; background:var(--paper-50); }
+  .cursor-ring{ width:34px; height:34px; border:1px solid var(--paper-50); opacity:.55; transition:width .28s var(--ease), height .28s var(--ease), opacity .28s ease; }
+  body:not(.has-custom-cursor) .cursor-dot, body:not(.has-custom-cursor) .cursor-ring{ display:none; }
+  body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button{ cursor:none; }
+  body.cursor-hover .cursor-ring{ width:60px; height:60px; opacity:.9; }
+  body.cursor-down .cursor-ring{ width:24px; height:24px; }
+
+  /* ---------- scroll progress ---------- */
+  .progress-bar{ position:fixed; top:env(safe-area-inset-top,0px); left:0; height:2px; width:0%; background:var(--accent); z-index:1001; transition:width .1s linear; }
+
+  /* ---------- nav ---------- */
+  .nav{ position:fixed; top:env(safe-area-inset-top,0px); left:0; right:0; z-index:1000; background:transparent; transition:background .4s var(--ease), border-color .4s var(--ease), backdrop-filter .4s var(--ease); border-bottom:1px solid transparent; }
+  .nav.scrolled{ background:color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter:blur(10px); border-bottom-color:var(--border); }
+  .nav__inner{ display:flex; align-items:center; justify-content:space-between; padding-block:1rem; }
+  .logo{ display:flex; flex-direction:column; line-height:1; gap:.15rem; }
+  .logo__en{ font-family:var(--font-display); font-style:italic; font-size:1.15rem; letter-spacing:.01em; }
+  .logo__ur{ font-family:var(--font-ur); font-size:.85rem; color:var(--text-muted); line-height:1.4; }
+  .nav__links{ display:flex; gap:clamp(1rem,2.4vw,2.2rem); }
+  .nav__links a{ font-size:.92rem; color:var(--text-muted); transition:color .3s ease; position:relative; padding-block:.2rem; }
+  .nav__links a::after{ content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px; background:var(--accent); transition:width .35s var(--ease); }
+  .nav__links a:hover{ color:var(--text); }
+  .nav__links a:hover::after{ width:100%; }
+  .nav__actions{ display:flex; align-items:center; gap:.6rem; }
+  .icon-btn{ width:38px; height:38px; display:grid; place-items:center; border:1px solid var(--border); border-radius:50%; transition:border-color .3s ease, transform .3s var(--ease); }
+  .icon-btn:hover{ border-color:var(--accent); }
+  .icon-btn svg{ width:17px; height:17px; stroke:var(--text); fill:none; stroke-width:1.6; }
+  .theme-toggle .sun,.theme-toggle .moon{ grid-area:1/1; }
+  [data-theme="dark"] .theme-toggle .sun{ display:none; }
+  [data-theme="light"] .theme-toggle .moon{ display:none; }
+  .lang-toggle{ display:flex; align-items:center; gap:.35rem; height:38px; padding-inline:.75rem; border:1px solid var(--border); border-radius:999px; font-size:.78rem; transition:border-color .3s ease; }
+  .lang-toggle:hover{ border-color:var(--accent); }
+  .lang-toggle .opt{ opacity:.42; transition:opacity .3s ease; }
+  .lang-toggle .opt.ur-opt{ font-family:var(--font-ur); font-size:.95rem; }
+  html:not(.lang-ur) .lang-toggle .en-opt{ opacity:1; color:var(--accent); }
+  html.lang-ur .lang-toggle .ur-opt{ opacity:1; color:var(--accent); }
+  .menu-toggle{ display:none; width:38px; height:38px; position:relative; }
+  .menu-toggle span,.menu-toggle span::before,.menu-toggle span::after{ content:''; position:absolute; left:9px; right:9px; height:1.5px; background:var(--text); transition:transform .3s var(--ease), opacity .3s ease; }
+  .menu-toggle span{ top:18px; }
+  .menu-toggle span::before{ top:-7px; }
+  .menu-toggle span::after{ top:7px; }
+  body.nav-open .menu-toggle span{ background:transparent; }
+  body.nav-open .menu-toggle span::before{ transform:translateY(7px) rotate(45deg); background:var(--text); }
+  body.nav-open .menu-toggle span::after{ transform:translateY(-7px) rotate(-45deg); background:var(--text); }
+
+  .mobile-nav{ position:fixed; inset:0; height:100%; background:var(--bg); z-index:999; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:1.4rem; padding-inline:clamp(1.25rem,5vw,3rem); transform:translateY(-100%); transition:transform .5s var(--ease); }
+  body.nav-open .mobile-nav{ transform:translateY(0); }
+  .mobile-nav a{ font-family:var(--font-display); font-size:2rem; }
+
+  /* ---------- section shell ---------- */
+  .section{ padding-block:clamp(4.5rem,9vw,7.5rem); border-top:1px solid var(--border); }
+  .section__head{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:clamp(2rem,5vw,3.5rem); }
+  .section__title{ font-size:clamp(1.9rem,4.2vw,2.9rem); }
+  .section__intro{ color:var(--text-muted); max-width:36ch; }
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- hero ---------- */
+  .hero{ position:relative; min-height:100vh; min-height:100svh; display:flex; align-items:center; padding-top:5rem; overflow:hidden; }
+  .hero__canvas{ position:absolute; inset:0; width:100%; height:100%; opacity:.55; pointer-events:none; }
+  .hero__content{ position:relative; z-index:2; }
+  .hero__label{ font-size:.85rem; color:var(--text-muted); margin-bottom:1.1rem; display:flex; gap:.5rem; align-items:center; }
+  .hero__label::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  .hero__name{ font-size:clamp(3rem,9vw,7.2rem); }
+  .hero__name .i18n-ur{ font-weight:700; }
+  .hero__flourish{ width:min(420px,60vw); margin-block:.6rem 1.3rem; }
+  .hero__flourish path{ fill:none; stroke:var(--accent); stroke-width:2; stroke-linecap:round; stroke-dasharray:900; stroke-dashoffset:900; animation:draw 1.8s var(--ease) .3s forwards; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  .hero__tagline{ font-family:var(--font-display); font-style:italic; font-size:clamp(1.3rem,2.6vw,1.9rem); margin-bottom:.9rem; }
+  .hero__subline{ color:var(--text-muted); font-size:clamp(1rem,1.4vw,1.15rem); max-width:46ch; margin-bottom:2.2rem; }
+  .hero__cta{ display:flex; gap:1rem; flex-wrap:wrap; }
+  .hero-fade > *{ opacity:0; transform:translateY(16px); animation:fadeUp .8s var(--ease) forwards; }
+  .hero-fade > *:nth-child(1){ animation-delay:.05s; }
+  .hero-fade > *:nth-child(2){ animation-delay:.18s; }
+  .hero-fade > *:nth-child(3){ animation-delay:.42s; }
+  .hero-fade > *:nth-child(4){ animation-delay:.56s; }
+  .hero-fade > *:nth-child(5){ animation-delay:.7s; }
+  @keyframes fadeUp{ to{ opacity:1; transform:translateY(0); } }
+
+  .scroll-cue{ position:absolute; bottom:2.4rem; left:clamp(1.25rem,5vw,3rem); display:flex; flex-direction:column; align-items:center; gap:.6rem; z-index:2; }
+  .scroll-cue__label{ font-size:.72rem; letter-spacing:.04em; color:var(--text-muted); writing-mode:vertical-rl; }
+  .scroll-cue__line{ width:1px; height:46px; background:var(--border); position:relative; overflow:hidden; }
+  .scroll-cue__line::after{ content:''; position:absolute; top:-46px; left:0; width:100%; height:46px; background:var(--accent); animation:trail 2.2s ease-in-out infinite; }
+  @keyframes trail{ 0%{ top:-46px; } 60%{ top:46px; } 100%{ top:46px; } }
+
+  /* ---------- buttons ---------- */
+  .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1.5rem; border-radius:999px; font-size:.92rem; transition:transform .35s var(--ease), background .3s ease, color .3s ease, border-color .3s ease; }
+  .btn-primary{ background:var(--text); color:var(--bg); }
+  .btn-primary:hover{ background:var(--accent); color:var(--ink-950); }
+  .btn-outline{ border:1px solid var(--border); }
+  .btn-outline:hover{ border-color:var(--accent); color:var(--accent); }
+  .btn-disabled{ border:1px solid var(--border); color:var(--text-muted); opacity:.6; pointer-events:none; }
+  .magnetic{ transition:transform .35s var(--ease); }
+
+  /* ---------- about ---------- */
+  .about__grid{ display:grid; grid-template-columns:.85fr 1.4fr; gap:clamp(2rem,5vw,4rem); align-items:start; }
+  .about__portrait{ aspect-ratio:4/5; border-radius:var(--radius-m); border:1px solid var(--border); background:
+      radial-gradient(120% 140% at 20% 0%, var(--accent-soft), transparent 60%),
+      repeating-linear-gradient(135deg, transparent 0 18px, var(--border) 18px 19px);
+    display:flex; align-items:flex-end; padding:1.1rem; position:relative; overflow:hidden; }
+  .about__portrait .mono{ font-family:var(--font-display); font-style:italic; font-size:2.4rem; }
+  .about__portrait .tag-note{ position:absolute; top:1rem; right:1rem; font-size:.68rem; color:var(--text-muted); border:1px dashed var(--border); padding:.3rem .55rem; border-radius:999px; }
+  .about__body p{ color:var(--text-muted); font-size:1.05rem; }
+  .about__body .i18n-en, .about__body .i18n-ur{ margin-bottom:1.6rem; }
+  .stats{ display:flex; gap:clamp(1.6rem,4vw,3rem); flex-wrap:wrap; margin-top:1.8rem; padding-top:1.8rem; border-top:1px solid var(--border); }
+  .stat__num{ font-family:var(--font-display); font-size:2.2rem; color:var(--accent); }
+  .stat__label{ font-size:.8rem; color:var(--text-muted); max-width:14ch; }
+
+  /* ---------- domains ---------- */
+  .domains__grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius-m); overflow:hidden; }
+  .domain-card{ background:var(--bg); padding:clamp(1.6rem,3vw,2.2rem); transition:background .3s ease; }
+  .domain-card:hover{ background:var(--bg-elevated); }
+  .domain-card h3{ font-size:1.25rem; margin-bottom:.7rem; }
+  .domain-card p{ color:var(--text-muted); font-size:.95rem; }
+
+  /* ---------- work / projects ---------- */
+  .work__grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.4rem; }
+  .project-card{ border:1px solid var(--border); border-radius:var(--radius-m); overflow:hidden; position:relative; transform-style:preserve-3d; }
+  .project-card::before{ content:''; position:absolute; inset:0; background:radial-gradient(circle at var(--mx,50%) var(--my,50%), var(--accent-soft), transparent 55%); opacity:0; transition:opacity .35s ease; pointer-events:none; z-index:2; }
+  .project-card:hover::before{ opacity:1; }
+  .project-card__thumb{ height:150px; position:relative; }
+  .p1{ background:repeating-radial-gradient(circle at 30% 30%, var(--accent-soft) 0 2px, transparent 2px 22px); }
+  .p2{ background:repeating-linear-gradient(45deg, var(--accent-soft) 0 2px, transparent 2px 20px); }
+  .p3{ background:radial-gradient(var(--accent-soft) 1.5px, transparent 1.5px); background-size:16px 16px; }
+  .p4{ background:repeating-linear-gradient(115deg, var(--accent-soft) 0 1px, transparent 1px 14px), repeating-linear-gradient(25deg, var(--border) 0 1px, transparent 1px 14px); }
+  .p5{ background:linear-gradient(120deg, var(--accent-soft), transparent 60%), repeating-linear-gradient(0deg, var(--border) 0 1px, transparent 1px 24px); }
+  .p6{ background:conic-gradient(from 90deg at 30% 40%, var(--accent-soft), transparent 40%); }
+  .project-card__body{ padding:1.4rem 1.5rem 1.6rem; }
+  .project-card__top{ display:flex; align-items:flex-start; justify-content:space-between; gap:.6rem; margin-bottom:.5rem; }
+  .project-card__title{ font-size:1.2rem; }
+  .status-pill{ font-size:.68rem; white-space:nowrap; border:1px solid var(--border); padding:.25rem .6rem; border-radius:999px; color:var(--text-muted); }
+  .project-card__desc{ color:var(--text-muted); font-size:.92rem; margin-bottom:.9rem; }
+  .project-card__desc.placeholder{ font-style:italic; opacity:.8; }
+  .tags{ display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:.9rem; }
+  .tag{ font-size:.72rem; color:var(--text-muted); border:1px solid var(--border); padding:.2rem .55rem; border-radius:999px; }
+  .project-card__link{ font-size:.85rem; border-bottom:1px solid var(--border); padding-bottom:2px; transition:border-color .3s ease, color .3s ease; }
+  .project-card__link:hover{ border-color:var(--accent); color:var(--accent); }
+  .also-row{ margin-top:1.6rem; font-size:.88rem; color:var(--text-muted); display:flex; flex-wrap:wrap; gap:.4rem 1rem; }
+  .also-row a{ border-bottom:1px solid var(--border); }
+  .also-row a:hover{ color:var(--accent); border-color:var(--accent); }
+
+  /* ---------- music ---------- */
+  .music__grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+  .album-card{ border:1px solid var(--border); border-radius:var(--radius-m); overflow:hidden; position:relative; transform-style:preserve-3d; }
+  .album-card::before{ content:''; position:absolute; inset:0; background:radial-gradient(circle at var(--mx,50%) var(--my,50%), var(--accent-soft), transparent 55%); opacity:0; transition:opacity .35s ease; pointer-events:none; z-index:2; }
+  .album-card:hover::before{ opacity:1; }
+  .album-card__art{ aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; position:relative; }
+  .album-card__art .ring{ width:56%; aspect-ratio:1/1; border-radius:50%; border:1.5px solid var(--accent); position:relative; }
+  .album-card__art .ring::after{ content:''; position:absolute; inset:38%; border-radius:50%; background:var(--accent); opacity:.25; }
+  .album-1 .album-card__art{ background:radial-gradient(circle at 50% 40%, var(--accent-soft), transparent 65%), repeating-radial-gradient(circle, var(--border) 0 1px, transparent 1px 18px); }
+  .album-2 .album-card__art{ background:repeating-linear-gradient(70deg, var(--accent-soft) 0 2px, transparent 2px 16px); }
+  .album-card__body{ padding:1.5rem; }
+  .album-card__title-row{ display:flex; align-items:baseline; justify-content:space-between; gap:.6rem; margin-bottom:.2rem; }
+  .album-card__title{ font-size:1.35rem; }
+  .album-card__title-ur{ font-family:var(--font-ur); color:var(--text-muted); font-size:1.1rem; }
+  .album-card__meta{ font-size:.8rem; color:var(--accent); margin-bottom:.8rem; }
+  .album-card__desc{ color:var(--text-muted); font-size:.92rem; margin-bottom:1.2rem; }
+
+  /* ---------- kalaam ---------- */
+  .kalaam__grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+  .poem-card{ border:1px solid var(--border); border-radius:var(--radius-m); padding:1.5rem; display:flex; flex-direction:column; gap:1rem; min-height:220px; }
+  .poem-card__tag{ align-self:flex-start; font-size:.68rem; color:var(--text-muted); border:1px dashed var(--border); padding:.25rem .6rem; border-radius:999px; }
+  .poem-card__verse{ font-family:var(--font-display); font-style:italic; font-size:1.05rem; color:var(--text-muted); flex:1; }
+  .poem-card__verse.i18n-ur{ font-family:var(--font-ur); font-style:normal; font-size:1.2rem; }
+  .poem-card__foot{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding-top:.8rem; border-top:1px solid var(--border); font-size:.82rem; }
+  .poem-card__track{ color:var(--text-muted); }
+  .poem-card__link{ color:var(--accent); }
+
+  /* ---------- connect ---------- */
+  .connect{ padding-block:clamp(5rem,10vw,8.5rem); }
+  .connect__inner{ text-align:left; }
+  .connect__title{ font-size:clamp(2.4rem,7vw,4.8rem); margin-bottom:1.1rem; }
+  .connect__line{ color:var(--text-muted); max-width:44ch; margin-bottom:2.2rem; font-size:1.05rem; }
+  .connect__email{ font-family:var(--font-display); font-style:italic; font-size:clamp(1.4rem,3vw,2rem); display:inline-block; margin-bottom:2.6rem; border-bottom:1px solid var(--border); padding-bottom:.3rem; transition:border-color .3s ease, color .3s ease; }
+  .connect__email:hover{ color:var(--accent); border-color:var(--accent); }
+  .social-row{ display:flex; gap:.7rem; flex-wrap:wrap; }
+  .social-btn{ width:52px; height:52px; display:grid; place-items:center; border:1px solid var(--border); border-radius:50%; font-size:.78rem; letter-spacing:.01em; transition:border-color .3s ease, color .3s ease, transform .3s var(--ease); }
+  .social-btn:hover{ border-color:var(--accent); color:var(--accent); }
+
+  /* ---------- footer ---------- */
+  .footer{ border-top:1px solid var(--border); padding-block:2rem; }
+  .footer__inner{ display:flex; flex-wrap:wrap; gap:.6rem 1.2rem; align-items:center; justify-content:space-between; font-size:.82rem; color:var(--text-muted); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    .about__grid{ grid-template-columns:1fr; }
+    .domains__grid{ grid-template-columns:1fr; }
+    .work__grid{ grid-template-columns:1fr; }
+    .music__grid{ grid-template-columns:1fr; }
+    .kalaam__grid{ grid-template-columns:1fr; }
+    .nav__links{ display:none; }
+    .menu-toggle{ display:block; }
+  }
+  @media (max-width:520px){
+    .stats{ gap:1.4rem; }
+    .connect__inner{ text-align:left; }
+  }
+
+  /* ---------- view-transition theme wipe ---------- */
+  ::view-transition-old(root),::view-transition-new(root){ animation:none; mix-blend-mode:normal; }
+  ::view-transition-new(root){ clip-path:circle(0% at var(--vt-x,50%) var(--vt-y,50%)); animation:vt-reveal .65s var(--ease) forwards; }
+  ::view-transition-old(root){ z-index:-1; }
+  @keyframes vt-reveal{ to{ clip-path:circle(150% at var(--vt-x,50%) var(--vt-y,50%)); } }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.15s !important; }
+    .hero-fade > *{ opacity:1; transform:none; animation:none; }
+    .hero__flourish path{ stroke-dashoffset:0; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+<div class="progress-bar"></div>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a href="#top" class="logo magnetic">
+      <span class="logo__en">M. Saeed</span>
+      <span class="logo__ur" lang="ur" dir="rtl">سعید سعیدی</span>
+    </a>
+    <nav class="nav__links">
+      <a href="#about" class="magnetic"><span class="i18n-en-i">About</span><span class="i18n-ur-i" lang="ur" dir="rtl">تعارف</span></a>
+      <a href="#work" class="magnetic"><span class="i18n-en-i">Work</span><span class="i18n-ur-i" lang="ur" dir="rtl">کام</span></a>
+      <a href="#music" class="magnetic"><span class="i18n-en-i">Music</span><span class="i18n-ur-i" lang="ur" dir="rtl">موسیقی</span></a>
+      <a href="#kalaam" class="magnetic"><span class="i18n-en-i">Kalaam</span><span class="i18n-ur-i" lang="ur" dir="rtl">کلام</span></a>
+      <a href="#connect" class="magnetic"><span class="i18n-en-i">Connect</span><span class="i18n-ur-i" lang="ur" dir="rtl">رابطہ</span></a>
+    </nav>
+    <div class="nav__actions">
+      <button class="icon-btn theme-toggle magnetic" aria-label="Toggle theme">
+        <svg class="sun" viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"></path></svg>
+        <svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+      </button>
+      <button class="lang-toggle magnetic" aria-label="Toggle language">
+        <span class="opt en-opt">EN</span><span class="opt">/</span><span class="opt ur-opt" lang="ur" dir="rtl">اردو</span>
+      </button>
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav">
+  <a href="#about"><span class="i18n-en-i">About</span><span class="i18n-ur-i" lang="ur" dir="rtl">تعارف</span></a>
+  <a href="#work"><span class="i18n-en-i">Work</span><span class="i18n-ur-i" lang="ur" dir="rtl">کام</span></a>
+  <a href="#music"><span class="i18n-en-i">Music</span><span class="i18n-ur-i" lang="ur" dir="rtl">موسیقی</span></a>
+  <a href="#kalaam"><span class="i18n-en-i">Kalaam</span><span class="i18n-ur-i" lang="ur" dir="rtl">کلام</span></a>
+  <a href="#connect"><span class="i18n-en-i">Connect</span><span class="i18n-ur-i" lang="ur" dir="rtl">رابطہ</span></a>
+</nav>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="hero">
+    <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="wrap hero__content">
+      <div class="hero-fade">
+        <p class="hero__label">
+          <span class="i18n-en-i">Based in Pakistan</span><span class="i18n-ur-i" lang="ur" dir="rtl">پاکستان میں مقیم</span>
+        </p>
+        <h1 class="hero__name">
+          <span class="i18n-en">Mohammad Saeed</span>
+          <span class="i18n-ur" lang="ur" dir="rtl">محمد سعید</span>
+        </h1>
+        <svg class="hero__flourish" viewBox="0 0 420 60" aria-hidden="true">
+          <path d="M4,42 C70,10 130,54 200,26 S330,4 416,34" />
+        </svg>
+        <p class="hero__tagline">
+          <span class="i18n-en-i">Coder. Poet. Dreamer.</span>
+          <span class="i18n-ur-i" lang="ur" dir="rtl">انجینئر۔ شاعر۔ خواب دیکھنے والا۔</span>
+        </p>
+        <p class="hero__subline">
+          <span class="i18n-en-i">I build cloud software for a living, and write Urdu verses for the rest of it.</span>
+          <span class="i18n-ur-i" lang="ur" dir="rtl">میں روزی کمانے کے لیے کلاؤڈ سافٹ ویئر بناتا ہوں، اور باقی وقت میں اردو شعر کہتا ہوں۔</span>
+        </p>
+        <div class="hero__cta">
+          <a href="#work" class="btn btn-primary magnetic">
+            <span class="i18n-en-i">See the work</span><span class="i18n-ur-i" lang="ur" dir="rtl">کام دیکھیں</span>
+          </a>
+          <a href="#kalaam" class="btn btn-outline magnetic">
+            <span class="i18n-en-i">Read the Kalaam</span><span class="i18n-ur-i" lang="ur" dir="rtl">کلام پڑھیں</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__line"></span>
+      <span class="scroll-cue__label i18n-en-i">Scroll</span><span class="scroll-cue__label i18n-ur-i" lang="ur" dir="rtl">سکرول</span>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2 class="section__title"><span class="i18n-en-i">About</span><span class="i18n-ur-i" lang="ur" dir="rtl">تعارف</span></h2>
+      </div>
+      <div class="about__grid">
+        <div class="about__portrait reveal">
+          <span class="tag-note">[[PLACEHOLDER: PORTRAIT]]</span>
+          <span class="mono">M.S.</span>
+        </div>
+        <div class="about__body reveal">
+          <p class="i18n-en">Mohammad Saeed is a full-stack cloud engineer based in Pakistan, building SaaS platforms, real-time systems, and the infrastructure behind them. Outside the codebase, he writes and records Urdu poetry as Saeed Saeedi, and picks up marketing and people-operations work wherever a growing team needs an extra hand. Two disciplines, one habit — turning a vague idea into something that holds together.</p>
+          <p class="i18n-ur" lang="ur" dir="rtl">محمد سعید پاکستان میں مقیم ایک فل اسٹیک کلاؤڈ انجینئر ہیں، جو SaaS پلیٹ فارمز، ریئل ٹائم سسٹمز اور ان کے پسِ پردہ انفراسٹرکچر تخلیق کرتے ہیں۔ کوڈ سے ہٹ کر وہ سعید سعیدی کے نام سے اردو شاعری لکھتے اور ریکارڈ کرواتے ہیں، اور جہاں کسی بڑھتی ٹیم کو اضافی ہاتھ درکار ہو، وہاں مارکیٹنگ اور ایچ آر کا کام بھی سنبھال لیتے ہیں۔ دو الگ میدان، مگر عادت ایک ہی ہے — ایک مبہم خیال کو ایسی شکل دینا جو ٹھوس اور برقرار رہے۔</p>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat__num">43</div>
+              <div class="stat__label"><span class="i18n-en-i">Open-source repos</span><span class="i18n-ur-i" lang="ur" dir="rtl">اوپن سورس ری پوزیٹریز</span></div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">65</div>
+              <div class="stat__label"><span class="i18n-en-i">GitHub stars</span><span class="i18n-ur-i" lang="ur" dir="rtl">گٹ ہب اسٹارز</span></div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">9</div>
+              <div class="stat__label"><span class="i18n-en-i">Released tracks</span><span class="i18n-ur-i" lang="ur" dir="rtl">جاری شدہ گانے</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DOMAINS ================= -->
+  <section class="section" id="domains">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2 class="section__title"><span class="i18n-en-i">What I Bring</span><span class="i18n-ur-i" lang="ur" dir="rtl">مہارتیں</span></h2>
+      </div>
+      <div class="domains__grid reveal">
+        <div class="domain-card">
+          <h3><span class="i18n-en-i">Software Engineering</span><span class="i18n-ur-i" lang="ur" dir="rtl">سافٹ ویئر انجینئرنگ</span></h3>
+          <p class="i18n-en">Cloud-native SaaS platforms, real-time systems, and the architecture that keeps them running. Next.js, NestJS, PostgreSQL, AWS.</p>
+          <p class="i18n-ur" lang="ur" dir="rtl">کلاؤڈ نیٹو SaaS پلیٹ فارمز، ریئل ٹائم سسٹمز، اور وہ فن تعمیر جو انہیں رواں رکھتا ہے۔</p>
+        </div>
+        <div class="domain-card">
+          <h3><span class="i18n-en-i">Marketing</span><span class="i18n-ur-i" lang="ur" dir="rtl">مارکیٹنگ</span></h3>
+          <p class="i18n-en">Positioning, messaging, and campaigns that help a product's first impression count. <span style="opacity:.6">[[PLACEHOLDER: DOMAIN — add specifics]]</span></p>
+          <p class="i18n-ur" lang="ur" dir="rtl">پوزیشننگ، پیغام رسانی، اور ایسی مہمات جو کسی پروڈکٹ کے پہلے تاثر کو یادگار بناتی ہیں۔</p>
+        </div>
+        <div class="domain-card">
+          <h3><span class="i18n-en-i">People &amp; HR</span><span class="i18n-ur-i" lang="ur" dir="rtl">ایچ آر اور افرادی امور</span></h3>
+          <p class="i18n-en">Hiring, onboarding, and the operational groundwork that keeps a team functioning well. <span style="opacity:.6">[[PLACEHOLDER: DOMAIN — add specifics]]</span></p>
+          <p class="i18n-ur" lang="ur" dir="rtl">بھرتی، تربیت، اور وہ انتظامی بنیاد جو ٹیم کو مؤثر انداز میں چلاتی رہتی ہے۔</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2 class="section__title"><span class="i18n-en-i">Selected Work</span><span class="i18n-ur-i" lang="ur" dir="rtl">منتخب کام</span></h2>
+        <p class="section__intro i18n-en-i">Shipped products, open-source tools, and a few things still in the oven.</p>
+        <p class="section__intro i18n-ur-i" lang="ur" dir="rtl">مکمل شدہ منصوبے، اوپن سورس ٹولز، اور کچھ چیزیں جو ابھی زیرِ تکمیل ہیں۔</p>
+      </div>
+
+      <div class="work__grid">
+        <div class="project-card tilt-card">
+          <div class="project-card__thumb p1"></div>
+          <div class="project-card__body">
+            <div class="project-card__top">
+              <h3 class="project-card__title">ArchBoard</h3>
+              <span class="status-pill i18n-en-i">Open source</span><span class="status-pill i18n-ur-i" lang="ur" dir="rtl">اوپن سورس</span>
+            </div>
+            <p class="project-card__desc i18n-en">A collaborative canvas for building and sharing software architecture diagrams in real time.</p>
+            <p class="project-card__desc i18n-ur" lang="ur" dir="rtl">سافٹ ویئر آرکیٹیکچر ڈایاگرام حقیقی وقت میں مل کر بنانے اور شیئر کرنے کا ایک باہمی کینوس۔</p>
+            <div class="tags"><span class="tag">TypeScript</span><span class="tag">Full-stack</span></div>
+            <a href="https://github.com/msaeedsaeedi/ArchBoard" target="_blank" rel="noopener" class="project-card__link"><span class="i18n-en-i">View on GitHub</span><span class="i18n-ur-i" lang="ur" dir="rtl">گٹ ہب پر دیکھیں</span></a>
+          </div>
+        </div>
+
+        <div class="project-card tilt-card">
+          <div class="project-card__thumb p2"></div>
+          <div class="project-card__body">
+            <div class="project-card__top">
+              <h3 class="project-card__title">Taskana</h3>
+              <span class="status-pill i18n-en-i">Case study soon</span><span class="status-pill i18n-ur-i" lang="ur" dir="rtl">تفصیلات جلد</span>
+            </div>
+            <p class="project-card__desc i18n-en">A real-time timetable system for universities, keeping students and faculty in sync automatically.</p>
+            <p class="project-card__desc i18n-ur" lang="ur" dir="rtl">جامعات کے لیے ایک ریئل ٹائم ٹائم ٹیبل سسٹم، جو طلبہ اور اساتذہ کو خودکار طور پر باخبر رکھتا ہے۔</p>
+            <div class="tags"><span class="tag">Angular</span><span class="tag">NestJS</span></div>
+          </div>
+        </div>
+
+        <div class="project-card tilt-card">
+          <div class="project-card__thumb p3"></div>
+          <div class="project-card__body">
+            <div class="project-card__top">
+              <h3 class="project-card__title">Uniflowco</h3>
+              <span class="status-pill i18n-en-i">In development</span><span class="status-pill i18n-ur-i" lang="ur" dir="rtl">زیرِ تکمیل</span>
+            </div>
+            <p class="project-card__desc placeholder i18n-en">[[PLACEHOLDER: UNIFLOW — add a one-line description of what Uniflow does.]]</p>
+            <p class="project-card__desc placeholder i18n-ur" lang="ur" dir="rtl">[یہاں یونی فلو کے بارے میں ایک سطر کا تعارف شامل کریں۔]</p>
+          </div>
+        </div>
+
+        <div class="project-card tilt-card">
+          <div class="project-card__thumb p4"></div>
+          <div class="project-card__body">
+            <div class="project-card__top">
+              <h3 class="project-card__title"><span class="i18n-en-i">SaaS Billing Starter</span><span class="i18n-ur-i" lang="ur" dir="rtl">SaaS بلنگ اسٹارٹر</span></h3>
+              <span class="status-pill i18n-en-i">In progress</span><span class="status-pill i18n-ur-i" lang="ur" dir="rtl">زیرِ تکمیل</span>
+            </div>
+            <p class="project-card__desc i18n-en">An opinionated Next.js and Stripe starter for shipping subscription billing without rebuilding it from scratch.</p>
+            <p class="project-card__desc i18n-ur" lang="ur" dir="rtl">سبسکرپشن بلنگ کو صفر سے بنائے بغیر لانچ کرنے کے لیے Next.js اور Stripe پر مبنی ایک تیار اسٹارٹر۔</p>
+            <div class="tags"><span class="tag">Next.js</span><span class="tag">Stripe</span></div>
+          </div>
+        </div>
+
+        <div class="project-card tilt-card">
+          <div class="project-card__thumb p5"></div>
+          <div class="project-card__body">
+            <div class="project-card__top">
+              <h3 class="project-card__title"><span class="i18n-en-i">Realtime Analytics Platform</span><span class="i18n-ur-i" lang="ur" dir="rtl">ریئل ٹائم اینالیٹکس پلیٹ فارم</span></h3>
+              <span class="status-pill i18n-en-i">In progress</span><span class="status-pill i18n-ur-i" lang="ur" dir="rtl">زیرِ تکمیل</span>
+            </div>
+            <p class="project-card__desc i18n-en">An event-driven analytics platform built on NestJS and WebSockets for live, streaming dashboards.</p>
+            <p class="project-card__desc i18n-ur" lang="ur" dir="rtl">لائیو اور اسٹریمنگ ڈیش بورڈز کے لیے NestJS اور WebSockets پر بنایا گیا ایک ایونٹ بیسڈ اینالیٹکس پلیٹ فارم۔</p>
+            <div class="tags"><span class="tag">NestJS</span><span class="tag">WebSockets</span></div>
+          </div>
+        </div>
+
+        <div class="project-card tilt-card">
+          <div class="project-card__thumb p6"></div>
+          <div class="project-card__body">
+            <div class="project-card__top">
+              <h3 class="project-card__title">MEAN Template</h3>
+              <span class="status-pill i18n-en-i">Open source</span><span class="status-pill i18n-ur-i" lang="ur" dir="rtl">اوپن سورس</span>
+            </div>
+            <p class="project-card__desc i18n-en">An open-source Turborepo starter pairing a NestJS backend with a server-rendered Angular frontend.</p>
+            <p class="project-card__desc i18n-ur" lang="ur" dir="rtl">ایک اوپن سورس Turborepo اسٹارٹر، جو NestJS بیک اینڈ کو سرور رینڈرڈ Angular فرنٹ اینڈ سے جوڑتا ہے۔</p>
+            <div class="tags"><span class="tag">Turborepo</span><span class="tag">Angular</span></div>
+            <a href="https://github.com/msaeedsaeedi/MEAN-FullStack-Template" target="_blank" rel="noopener" class="project-card__link"><span class="i18n-en-i">View on GitHub</span><span class="i18n-ur-i" lang="ur" dir="rtl">گٹ ہب پر دیکھیں</span></a>
+          </div>
+        </div>
+      </div>
+
+      <p class="also-row">
+        <span class="i18n-en-i">Also on GitHub:</span><span class="i18n-ur-i" lang="ur" dir="rtl">مزید گٹ ہب پر:</span>
+        <a href="https://github.com/msaeedsaeedi/again" target="_blank" rel="noopener">again</a>
+        <a href="https://github.com/msaeedsaeedi/clean-repo" target="_blank" rel="noopener">clean-repo</a>
+        <a href="https://github.com/msaeedsaeedi" target="_blank" rel="noopener">
+          <span class="i18n-en-i">full profile →</span><span class="i18n-ur-i" lang="ur" dir="rtl">مکمل پروفائل</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= MUSIC ================= -->
+  <section class="section" id="music">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2 class="section__title"><span class="i18n-en-i">Music</span><span class="i18n-ur-i" lang="ur" dir="rtl">موسیقی</span></h2>
+        <p class="section__intro i18n-en-i">Written and performed as Saeed Saeedi.</p>
+        <p class="section__intro i18n-ur-i" lang="ur" dir="rtl">"سعید سعیدی" کے نام سے لکھی اور گائی گئی۔</p>
+      </div>
+      <div class="music__grid">
+        <div class="album-card album-1 tilt-card">
+          <div class="album-card__art"><span class="tag-note" style="position:absolute;top:.9rem;right:.9rem;font-size:.65rem;color:var(--text-muted);border:1px dashed var(--border);padding:.25rem .5rem;border-radius:999px;">[[PLACEHOLDER: ALBUM ART]]</span><div class="ring"></div></div>
+          <div class="album-card__body">
+            <div class="album-card__title-row">
+              <h3 class="album-card__title">Gulab-e-Suman</h3>
+              <span class="album-card__title-ur" lang="ur" dir="rtl">گلابِ سمن</span>
+            </div>
+            <p class="album-card__meta"><span class="i18n-en-i">Debut album · 9 tracks</span><span class="i18n-ur-i" lang="ur" dir="rtl">پہلا البم · نو گانے</span></p>
+            <p class="album-card__desc i18n-en">Nine tracks about longing, restraint, and the things that read better in Urdu than in English.</p>
+            <p class="album-card__desc i18n-ur" lang="ur" dir="rtl">نو گانے، جدائی، ضبط اور ان باتوں کے بارے میں جو اردو میں انگریزی سے بہتر کہی جاتی ہیں۔</p>
+            <a href="https://open.spotify.com/album/3UMgWtCOb5RIAhPvCiXQfk" target="_blank" rel="noopener" class="btn btn-outline magnetic">
+              <span class="i18n-en-i">Listen on Spotify</span><span class="i18n-ur-i" lang="ur" dir="rtl">اسپاٹیفائی پر سنیں</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="album-card album-2 tilt-card">
+          <div class="album-card__art"><span class="tag-note" style="position:absolute;top:.9rem;right:.9rem;font-size:.65rem;color:var(--text-muted);border:1px dashed var(--border);padding:.25rem .5rem;border-radius:999px;">[[PLACEHOLDER: ALBUM ART]]</span><div class="ring"></div></div>
+          <div class="album-card__body">
+            <div class="album-card__title-row">
+              <h3 class="album-card__title">Wehm-e-Kham-e-Khayal</h3>
+              <span class="album-card__title-ur" lang="ur" dir="rtl">وہمِ خامِ خیال</span>
+            </div>
+            <p class="album-card__meta"><span class="i18n-en-i">Coming soon · 3 tracks</span><span class="i18n-ur-i" lang="ur" dir="rtl">جلد آ رہا ہے · تین گانے</span></p>
+            <p class="album-card__desc i18n-en">The next chapter — three new tracks, still taking shape in the studio.</p>
+            <p class="album-card__desc i18n-ur" lang="ur" dir="rtl">اگلا باب — تین نئے گانے، ابھی اسٹوڈیو میں تشکیل پا رہے ہیں۔</p>
+            <span class="btn btn-disabled"><span class="i18n-en-i">Coming soon</span><span class="i18n-ur-i" lang="ur" dir="rtl">جلد آ رہا ہے</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KALAAM / POETRY ================= -->
+  <section class="section" id="kalaam">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2 class="section__title">
+          <span class="i18n-en-i">Kalaam</span><span class="i18n-ur-i" lang="ur" dir="rtl">کلام</span>
+        </h2>
+        <p class="section__intro i18n-en-i">A few verses, paired with the songs that carry them.</p>
+        <p class="section__intro i18n-ur-i" lang="ur" dir="rtl">چند اشعار، ان نغموں کے ساتھ جو انہیں آواز دیتے ہیں۔</p>
+      </div>
+
+      <!-- Duplicate this .poem-card block for each real poem/track. -->
+      <div class="kalaam__grid">
+        <div class="poem-card">
+          <span class="poem-card__tag i18n-en-i">Sample layout</span><span class="poem-card__tag i18n-ur-i" lang="ur" dir="rtl">نمونہ خانہ</span>
+          <p class="poem-card__verse i18n-en">[[PLACEHOLDER: POEM — add two to four lines of your verse here]]</p>
+          <p class="poem-card__verse i18n-ur" lang="ur" dir="rtl">[یہاں اپنی نظم کے دو سے چار مصرعے درج کریں]</p>
+          <div class="poem-card__foot">
+            <span class="poem-card__track i18n-en-i">Track 01 · Gulab-e-Suman</span><span class="poem-card__track i18n-ur-i" lang="ur" dir="rtl">گانا ۰۱ · گلابِ سمن</span>
+            <a href="https://open.spotify.com/album/3UMgWtCOb5RIAhPvCiXQfk" target="_blank" rel="noopener" class="poem-card__link">♫</a>
+          </div>
+        </div>
+        <div class="poem-card">
+          <span class="poem-card__tag i18n-en-i">Sample layout</span><span class="poem-card__tag i18n-ur-i" lang="ur" dir="rtl">نمونہ خانہ</span>
+          <p class="poem-card__verse i18n-en">[[PLACEHOLDER: POEM — add two to four lines of your verse here]]</p>
+          <p class="poem-card__verse i18n-ur" lang="ur" dir="rtl">[یہاں اپنی نظم کے دو سے چار مصرعے درج کریں]</p>
+          <div class="poem-card__foot">
+            <span class="poem-card__track i18n-en-i">Track 02 · Gulab-e-Suman</span><span class="poem-card__track i18n-ur-i" lang="ur" dir="rtl">گانا ۰۲ · گلابِ سمن</span>
+            <a href="https://open.spotify.com/album/3UMgWtCOb5RIAhPvCiXQfk" target="_blank" rel="noopener" class="poem-card__link">♫</a>
+          </div>
+        </div>
+        <div class="poem-card">
+          <span class="poem-card__tag i18n-en-i">Sample layout</span><span class="poem-card__tag i18n-ur-i" lang="ur" dir="rtl">نمونہ خانہ</span>
+          <p class="poem-card__verse i18n-en">[[PLACEHOLDER: POEM — add two to four lines of your verse here]]</p>
+          <p class="poem-card__verse i18n-ur" lang="ur" dir="rtl">[یہاں اپنی نظم کے دو سے چار مصرعے درج کریں]</p>
+          <div class="poem-card__foot">
+            <span class="poem-card__track i18n-en-i">Track 03 · Gulab-e-Suman</span><span class="poem-card__track i18n-ur-i" lang="ur" dir="rtl">گانا ۰۳ · گلابِ سمن</span>
+            <a href="https://open.spotify.com/album/3UMgWtCOb5RIAhPvCiXQfk" target="_blank" rel="noopener" class="poem-card__link">♫</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONNECT ================= -->
+  <section class="section connect" id="connect">
+    <div class="wrap connect__inner">
+      <h2 class="connect__title reveal">
+        <span class="i18n-en-i">Let's talk</span><span class="i18n-ur-i" lang="ur" dir="rtl">رابطہ کریں</span>
+      </h2>
+      <p class="connect__line i18n-en-i">Open to interesting SaaS builds, collaborations, or just talking poetry.</p>
+      <p class="connect__line i18n-ur-i" lang="ur" dir="rtl">دلچسپ SaaS منصوبوں، تعاون، یا محض شاعری پر گفتگو کے لیے ہمیشہ تیار۔</p>
+      <a href="mailto:msaeedsaeedi@outlook.com" class="connect__email magnetic">msaeedsaeedi@outlook.com</a>
+      <div class="social-row">
+        <a href="https://www.linkedin.com/in/msaeedsaeedi/" target="_blank" rel="noopener" class="social-btn magnetic" aria-label="LinkedIn">in</a>
+        <a href="https://github.com/msaeedsaeedi" target="_blank" rel="noopener" class="social-btn magnetic" aria-label="GitHub">Gh</a>
+        <a href="https://www.instagram.com/imsaeedsaeedi/" target="_blank" rel="noopener" class="social-btn magnetic" aria-label="Instagram">Ig</a>
+        <a href="https://open.spotify.com/album/3UMgWtCOb5RIAhPvCiXQfk" target="_blank" rel="noopener" class="social-btn magnetic" aria-label="Spotify">Sp</a>
+        <a href="https://dev.to/msaeedsaeedi" target="_blank" rel="noopener" class="social-btn magnetic" aria-label="Dev.to">Dv</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span>© <span id="year">2026</span> Mohammad Saeed</span>
+    <span><span class="i18n-en-i">Coder · Poet · Dreamer</span><span class="i18n-ur-i" lang="ur" dir="rtl">انجینئر · شاعر · خواب دیکھنے والا</span></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- nav scroll state ---------- */
+  var navEl = document.querySelector('.nav');
+  var progressEl = document.querySelector('.progress-bar');
+  window.addEventListener('scroll', function(){
+    navEl.classList.toggle('scrolled', window.scrollY > 30);
+    var doc = document.documentElement;
+    var pct = (doc.scrollTop) / (doc.scrollHeight - doc.clientHeight) * 100;
+    progressEl.style.width = (isFinite(pct) ? pct : 0) + '%';
+  }, { passive: true });
+
+  /* ---------- mobile nav ---------- */
+  var menuBtn = document.querySelector('.menu-toggle');
+  menuBtn.addEventListener('click', function(){
+    var open = document.body.classList.toggle('nav-open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.mobile-nav a').forEach(function(a){
+    a.addEventListener('click', function(){ document.body.classList.remove('nav-open'); });
+  });
+
+  /* ---------- theme toggle (with view-transition wipe) ---------- */
+  var themeBtn = document.querySelector('.theme-toggle');
+  themeBtn.addEventListener('click', function(e){
+    var root = document.documentElement;
+    var current = root.getAttribute('data-theme') || 'dark';
+    var next = current === 'dark' ? 'light' : 'dark';
+    var rect = themeBtn.getBoundingClientRect();
+    var x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    root.style.setProperty('--vt-x', x + 'px');
+    root.style.setProperty('--vt-y', y + 'px');
+    function apply(){
+      root.setAttribute('data-theme', next);
+      try{ localStorage.setItem('ms-theme', next); }catch(err){}
+    }
+    if(document.startViewTransition && !reduceMotion){
+      document.startViewTransition(apply);
+    } else {
+      apply();
+    }
+  });
+
+  /* ---------- language toggle ---------- */
+  var langBtn = document.querySelector('.lang-toggle');
+  langBtn.addEventListener('click', function(){
+    var root = document.documentElement;
+    var isUr = root.classList.contains('lang-ur');
+    var next = isUr ? 'en' : 'ur';
+    document.body.style.opacity = '0.35';
+    setTimeout(function(){
+      root.lang = next;
+      root.dir = next === 'ur' ? 'rtl' : 'ltr';
+      root.classList.toggle('lang-ur', next === 'ur');
+      try{ localStorage.setItem('ms-lang', next); }catch(err){}
+      document.body.style.opacity = '1';
+    }, 180);
+  });
+
+  /* ---------- custom cursor ---------- */
+  if(!coarsePointer){
+    document.body.classList.add('has-custom-cursor');
+    var dot = document.querySelector('.cursor-dot');
+    var ring = document.querySelector('.cursor-ring');
+    var mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+    window.addEventListener('mousemove', function(e){
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0) translate(-50%,-50%)';
+    });
+    (function loop(){
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    })();
+    document.addEventListener('mousedown', function(){ document.body.classList.add('cursor-down'); });
+    document.addEventListener('mouseup', function(){ document.body.classList.remove('cursor-down'); });
+    document.querySelectorAll('a, button, .tilt-card').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ document.body.classList.add('cursor-hover'); });
+      el.addEventListener('mouseleave', function(){ document.body.classList.remove('cursor-hover'); });
+    });
+  }
+
+  /* ---------- magnetic elements ---------- */
+  if(!coarsePointer && !reduceMotion){
+    document.querySelectorAll('.magnetic').forEach(function(el){
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        var relX = e.clientX - r.left - r.width/2;
+        var relY = e.clientY - r.top - r.height/2;
+        el.style.transform = 'translate(' + (relX*0.22) + 'px,' + (relY*0.32) + 'px)';
+      });
+      el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+    });
+  }
+
+  /* ---------- tilt + spotlight cards ---------- */
+  if(!coarsePointer && !reduceMotion){
+    document.querySelectorAll('.tilt-card').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        var rxDeg = (py - 0.5) * -5;
+        var ryDeg = (px - 0.5) * 7;
+        card.style.transform = 'perspective(900px) rotateX(' + rxDeg + 'deg) rotateY(' + ryDeg + 'deg)';
+        card.style.setProperty('--mx', (px*100) + '%');
+        card.style.setProperty('--my', (py*100) + '%');
+      });
+      card.addEventListener('mouseleave', function(){ card.style.transform = ''; });
+    });
+  }
+
+  /* ---------- reveal on scroll (section heads only) ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !reduceMotion){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); ro.unobserve(en.target); }
+      });
+    }, { threshold: 0.18 });
+    revealEls.forEach(function(el){ ro.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- hero particle field ---------- */
+  var canvas = document.getElementById('hero-canvas');
+  var heroEl = document.getElementById('hero');
+  if(canvas && !reduceMotion){
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w, h, particles = [], raf, mouse = { x: -9999, y: -9999 };
+
+    function resize(){
+      var rect = heroEl.getBoundingClientRect();
+      w = canvas.width = Math.max(1, rect.width * dpr);
+      h = canvas.height = Math.max(1, rect.height * dpr);
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+    }
+    function seed(){
+      resize();
+      var count = Math.min(55, Math.floor((w*h) / (dpr*dpr) / 9000));
+      particles = [];
+      for(var i=0;i<count;i++){
+        particles.push({
+          x: Math.random()*w, y: Math.random()*h,
+          vx:(Math.random()-.5)*0.18*dpr, vy:(Math.random()-.5)*0.18*dpr,
+          r:(Math.random()*1.3+0.6)*dpr
+        });
+      }
+    }
+    function accentColor(){
+      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#c9932e';
+    }
+    function step(){
+      ctx.clearRect(0,0,w,h);
+      var col = accentColor();
+      var rad = 130*dpr;
+      for(var i=0;i<particles.length;i++){
+        var p = particles[i];
+        var dx = p.x-mouse.x, dy = p.y-mouse.y;
+        var d2 = dx*dx+dy*dy;
+        if(d2 < rad*rad){
+          var d = Math.sqrt(d2) || 1;
+          var f = (rad-d)/rad;
+          p.x += (dx/d)*f*1.5;
+          p.y += (dy/d)*f*1.5;
+        }
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < 0) p.x = w; if(p.x > w) p.x = 0;
+        if(p.y < 0) p.y = h; if(p.y > h) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = col;
+        ctx.globalAlpha = 0.4;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(step);
+    }
+    function start(){ seed(); cancelAnimationFrame(raf); raf = requestAnimationFrame(step); }
+    function stop(){ cancelAnimationFrame(raf); }
+
+    window.addEventListener('resize', function(){ seed(); });
+    window.addEventListener('mousemove', function(e){
+      var rect = heroEl.getBoundingClientRect();
+      mouse.x = (e.clientX - rect.left) * dpr;
+      mouse.y = (e.clientY - rect.top) * dpr;
+    });
+    window.addEventListener('mouseleave', function(){ mouse.x = -9999; mouse.y = -9999; });
+
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ en.isIntersecting ? start() : stop(); });
+      }, { threshold: 0.05 }).observe(heroEl);
+    } else {
+      start();
+    }
+  }
+})();
+</script>
+</body>
+</html>
