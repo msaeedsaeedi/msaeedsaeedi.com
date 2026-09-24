@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowUpRight, BookOpen, Play } from 'lucide-react'
 import { albums, trackDurations } from '@content/music'
+import { site } from '@content/site'
 import { isLocale } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import en from '@/i18n/en'
@@ -32,6 +33,7 @@ export default async function AlbumsPage({ params }: Props) {
   const [debut, upcoming] = albums
   const tracks = getAlbumTracks(debut.slug)
   const upcomingPoem = upcoming.poems?.[0] ? getPoem(upcoming.poems[0]) : undefined
+  const upcomingTracks = getAlbumTracks(upcoming.slug)
 
   return (
     <>
@@ -119,12 +121,30 @@ export default async function AlbumsPage({ params }: Props) {
               {lang === 'en' && <span className="block text-2xl font-bold tracking-tight">{upcoming.title.en}</span>}
             </h2>
             <p className="mt-4 opacity-80">{t.upcomingBody}</p>
+            {upcomingTracks.length > 0 && (
+              <ol className="mt-8 border-t border-white/15">
+                {upcomingTracks.map((p) => (
+                  <li key={p.slug} className="border-b border-white/15">
+                    <Link href={href(lang, `kalaam/${p.slug}`)} className="group grid grid-cols-[2rem_1fr_auto] items-center gap-4 py-3" data-cursor={t.readPoem}>
+                      <span className="text-sm tabular-nums opacity-60">{localDigits(p.trackNo!, lang)}</span>
+                      <span className="min-w-0">
+                        <span lang="ur" className="font-gulzar block truncate text-[1.35rem] leading-[1.9] transition-colors group-hover:text-[#d8b266]">
+                          {p.titleUr}
+                        </span>
+                        {lang === 'en' && <span className="block text-sm opacity-60">{p.title}</span>}
+                      </span>
+                      <BookOpen size={15} className="opacity-60 transition-opacity group-hover:opacity-100" aria-hidden />
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            )}
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/25 px-3 py-1 text-sm">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-rose" aria-hidden />
                 {t.upcomingStatus}
               </span>
-              <a href={`https://open.spotify.com/album/${debut.spotifyId}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm underline-offset-4 hover:underline">
+              <a href={site.spotifyArtist} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm underline-offset-4 hover:underline">
                 {t.notify}
                 <ArrowUpRight size={14} />
               </a>

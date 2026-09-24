@@ -97,5 +97,5 @@ The build fails loudly if a sher doesn't have exactly two lines.
 - VortexMe is in design (FYP, team of three); case study marked `draft` until it's built and validated. Don't claim it's launched.
 - The digital-twin research is a separate entry (`digital-twin-reconciliation`), also `draft`.
 - Real titles for poems with `titleStatus: working` (the 9 album tracks use their Spotify titles).
-- Wehm-e-Kham-e-Khayal: names of the other two tracks.
+- Wehm-e-Kham-e-Khayal (tracks: Behr-e-Kitab, Bazm-e-Yaad, Khoon-e-Jigar): add `spotifyId`, `durationMs` and per-poem `spotifyTrack` on release.
 - Urdu copy review before flipping `publishedLocales`.

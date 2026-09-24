@@ -16,6 +16,6 @@ export const selectedAshaar: { lines: [string, string]; from: string }[] = [
   { lines: ['ہو کیونکر گلاب عارضِ گُل عِذار سا', 'رخِ زیبا کہ ہے آج اپنے شباب سا'], from: 'rakht-e-siyah' },
   { lines: ['ہے سَعیدی تیری آغوشِ محبت', 'تنہا اس میں تُو بڑا دو چار ہوگا'], from: 'aaghosh-e-mohabbat' },
   { lines: ['بس سَعیدی نگاہِ تکلف تمہیں', 'دیکھے ہے روز کہ ہم نوا جب نہ ہو'], from: 'nigah-e-takalluf' },
-  { lines: ['سہارا گلابوں کا لیکر لحد میں', 'اسے قبر میں بھی سنوارا گیا ہے'], from: 'lahad' },
+  { lines: ['سہارا گلابوں کا لیکر لحد میں', 'اسے قبر میں بھی سنوارا گیا ہے'], from: 'khoon-e-jigar' },
   { lines: ['یہ ہی تعریف ہے تیری کہ غزل لکھ دوں میں', 'ورنہ شاعر کو زمانے کی پڑی رہتی ہے'], from: 'muskurate-huye-chehron-mein' },
 ]

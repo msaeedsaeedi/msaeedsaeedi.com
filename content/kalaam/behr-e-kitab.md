@@ -1,9 +1,11 @@
 ---
-title: "Wehm-e-Kham-e-Khayal"
-titleUr: "وہمِ خامِ خیال"
+title: "Behr-e-Kitab"
+titleUr: "بحرِ کتاب"
 form: ghazal
-titleStatus: working
+titleStatus: released
 order: 20
+album: wehm-e-kham-e-khayal
+trackNo: 1
 ---
 
 غمِ زندگی کا تو ڈر نہیں غمِ عاشقی نے رلا دیا

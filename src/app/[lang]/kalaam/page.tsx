@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { poetIntro, selectedAshaar } from '@content/poet'
+import { albums } from '@content/music'
 import { isLocale } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import en from '@/i18n/en'
@@ -38,6 +39,7 @@ export default async function KalaamPage({ params }: Props) {
     sherCount: p.shers.length,
     shersText: t.shers(p.shers.length),
     trackNo: p.trackNo,
+    album: albums.find((a) => a.slug === p.album)?.title[lang] ?? null,
     text: p.shers.flat().join(' '),
   }))
 

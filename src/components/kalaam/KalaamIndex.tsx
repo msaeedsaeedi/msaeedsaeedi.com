@@ -14,6 +14,8 @@ export type PoemCard = {
   matla: string[]
   sherCount: number
   trackNo: number | null
+  /** Album name, shown as a tooltip on the track badge. */
+  album: string | null
   shersText: string
   /** Plain text of every line, used for search. */
   text: string
@@ -104,7 +106,7 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
                       {p.titleUr}
                     </h2>
                     {p.trackNo && (
-                      <span className="chip shrink-0" title={t.sung}>
+                      <span className="chip shrink-0" title={p.album ?? t.sung}>
                         <Music2 size={12} aria-hidden />
                         {localDigits(p.trackNo, locale)}
                       </span>

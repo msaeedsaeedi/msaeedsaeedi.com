@@ -20,6 +20,7 @@ export const site = {
   },
   /** Set to e.g. '/cv/mohammad-saeed.pdf' (file in /public) to show a download button on Journey. */
   cvUrl: null as string | null,
+  spotifyArtist: 'https://open.spotify.com/artist/31gyALvJYi0yBBMZM03DKF',
 }
 
 export type SocialId = 'github' | 'linkedin' | 'instagram' | 'spotify' | 'youtube' | 'devto'
@@ -27,7 +28,7 @@ export type SocialId = 'github' | 'linkedin' | 'instagram' | 'spotify' | 'youtub
 export const socials: { id: SocialId; label: string; handle: string; href: string }[] = [
   { id: 'github', label: 'GitHub', handle: 'msaeedsaeedi', href: 'https://github.com/msaeedsaeedi' },
   { id: 'linkedin', label: 'LinkedIn', handle: 'msaeedsaeedi', href: 'https://www.linkedin.com/in/msaeedsaeedi/' },
-  { id: 'spotify', label: 'Spotify', handle: 'Mohammad Saeed Saeedi', href: 'https://open.spotify.com/album/3UMgWtCOb5RlAhPvCiXQfk' },
+  { id: 'spotify', label: 'Spotify', handle: 'Mohammad Saeed Saeedi', href: 'https://open.spotify.com/artist/31gyALvJYi0yBBMZM03DKF' },
   { id: 'instagram', label: 'Instagram', handle: '@imsaeedsaeedi', href: 'https://www.instagram.com/imsaeedsaeedi/' },
   { id: 'youtube', label: 'YouTube', handle: '@imsaeedsaeedi', href: 'https://www.youtube.com/@imsaeedsaeedi' },
   { id: 'devto', label: 'DEV', handle: 'msaeedsaeedi', href: 'https://dev.to/msaeedsaeedi' },

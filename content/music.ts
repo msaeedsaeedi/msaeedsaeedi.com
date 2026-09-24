@@ -32,7 +32,8 @@ export const albums: Album[] = [
     cover: '/images/music/wehm-e-kham-e-khayal.jpg',
     spotifyId: null,
     trackCount: 3,
-    poems: ['wehm-e-kham-e-khayal'],
+    // Tracklist comes from poems with album: wehm-e-kham-e-khayal. This one gives the album its name.
+    poems: ['behr-e-kitab'],
   },
 ]
 

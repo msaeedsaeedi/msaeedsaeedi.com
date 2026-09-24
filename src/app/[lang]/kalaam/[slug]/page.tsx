@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { site } from '@content/site'
+import { albums } from '@content/music'
 import { isLocale, publishedLocales } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import { getNeighbours, getPoem, getPoems } from '@/lib/kalaam'
@@ -35,6 +36,7 @@ export default async function PoemPage({ params }: Props) {
   const d = getDictionary(lang)
   const t = d.kalaam
   const { prev, next } = getNeighbours(slug)
+  const album = albums.find((a) => a.slug === poem.album)
   const url = `${site.url}${href(lang, `kalaam/${slug}`)}`
   const Back = lang === 'ur' ? ArrowRight : ArrowLeft
 
@@ -60,7 +62,7 @@ export default async function PoemPage({ params }: Props) {
         </Link>
         <p className="meta mt-12">
           {t.ghazal}
-          {poem.trackNo ? <> &nbsp;/&nbsp; {t.track(poem.trackNo)}</> : null}
+          {album && poem.trackNo ? <> &nbsp;/&nbsp; {t.track(poem.trackNo, album.title[lang])}</> : null}
         </p>
         <h1 lang="ur" className="font-gulzar mt-2 text-[clamp(3rem,9vw,7rem)] leading-[1.6] text-ink">
           <Rise>{poem.titleUr}</Rise>

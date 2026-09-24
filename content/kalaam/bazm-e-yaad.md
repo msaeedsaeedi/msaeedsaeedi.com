@@ -2,8 +2,10 @@
 title: "Bazm-e-Yaad"
 titleUr: "بزمِ یاد"
 form: ghazal
-titleStatus: working
+titleStatus: released
 order: 12
+album: wehm-e-kham-e-khayal
+trackNo: 2
 ---
 
 جب بھی تیرے سامنے آنا پڑا مجھ کو

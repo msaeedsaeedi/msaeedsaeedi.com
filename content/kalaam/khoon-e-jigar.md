@@ -1,9 +1,11 @@
 ---
-title: "Lahad"
-titleUr: "لحد"
+title: "Khoon-e-Jigar"
+titleUr: "خونِ جگر"
 form: ghazal
-titleStatus: working
+titleStatus: released
 order: 16
+album: wehm-e-kham-e-khayal
+trackNo: 3
 ---
 
 یہ کس کو لحد میں اتارا گیا ہے
