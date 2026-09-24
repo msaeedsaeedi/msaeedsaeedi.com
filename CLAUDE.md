@@ -53,6 +53,13 @@ assets/profile.png       full-size portrait source (not shipped)
 - **Facts to respect:** Saeed does not sing; the albums were produced by a production house that must not be named. Prime Innovators is paused (July 2026). Vocab no longer mentions Lexicon, and is an experimental R&D project, not shipped. Slotty is in design, not shipped, and open to contributors.
 - **Links must look clickable:** use `.link` for inline links (quiet underline, rose on hover); nav items get a hover underline.
 
+## SEO and AI engines
+
+- Titles and descriptions for search live in `seo` in `en.ts`/`ur.ts` (the layout appends ` | Mohammad Saeed`). Poem titles come from `seo.poemTitle`.
+- Structured data: `src/lib/seo.ts`. The layout declares one `Person` (`#person`) and `WebSite`; each page adds its own graph (ProfilePage, CollectionPage + ItemList, MusicAlbum with tracks and lyricist, CreativeWork for poems, BreadcrumbList) that points back to `#person`. Render with `<JsonLd>`.
+- `/llms.txt` and `/llms-full.txt` (`src/lib/llms.ts`) are generated from `/content` at build time. New content shows up there automatically.
+- `robots.ts` explicitly allows AI crawlers. Cloudflare's "Block AI bots" and managed robots.txt settings can override it, so keep them off.
+
 ## Adding content
 
 **A new ghazal:** create `content/kalaam/<slug>.md`:

@@ -9,6 +9,8 @@ import en from '@/i18n/en'
 import ur from '@/i18n/ur'
 import { getAlbumTracks, getPoem } from '@/lib/kalaam'
 import { pageMetadata } from '@/lib/metadata'
+import { albumsGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { href } from '@/lib/routes'
 import { formatDuration, localDigits } from '@/lib/format'
 import { PageHeader } from '@/components/layout/PageHeader'
@@ -21,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const d = getDictionary(lang)
-  return pageMetadata(lang, 'albums', { title: d.albums.title, description: d.albums.intro })
+  return pageMetadata(lang, 'albums', { title: d.seo.albums.title, description: d.seo.albums.description })
 }
 
 export default async function AlbumsPage({ params }: Props) {
@@ -37,6 +39,7 @@ export default async function AlbumsPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={albumsGraph(lang)} />
       <PageHeader title={t.title} alt={other.albums.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={t.intro} />
 
       {/* Debut album */}

@@ -7,6 +7,8 @@ import { statusDot } from '@/components/builds/status'
 import { isLocale, publishedLocales } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
+import { buildGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { href } from '@/lib/routes'
 import { BuildCover } from '@/components/ui/BuildCover'
 import { Rise, Appear } from '@/components/ui/Reveal'
@@ -39,6 +41,7 @@ export default async function BuildPage({ params }: Props) {
 
   return (
     <article>
+      <JsonLd data={buildGraph(lang, b)} />
       <header className="wrap pt-32 md:pt-40">
         <Link href={href(lang, 'builds')} className="meta link group inline-flex items-center gap-2">
           <Back size={15} className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />

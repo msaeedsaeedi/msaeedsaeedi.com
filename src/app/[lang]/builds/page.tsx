@@ -6,6 +6,8 @@ import { getDictionary } from '@/i18n'
 import en from '@/i18n/en'
 import ur from '@/i18n/ur'
 import { pageMetadata } from '@/lib/metadata'
+import { buildsGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { BuildsGrid } from '@/components/builds/BuildsGrid'
 import { Appear } from '@/components/ui/Reveal'
@@ -17,7 +19,7 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const d = getDictionary(lang)
-  return pageMetadata(lang, 'builds', { title: d.builds.title, description: d.builds.intro })
+  return pageMetadata(lang, 'builds', { title: d.seo.builds.title, description: d.seo.builds.description })
 }
 
 export default async function BuildsPage({ params }: Props) {
@@ -29,6 +31,7 @@ export default async function BuildsPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={buildsGraph(lang)} />
       <PageHeader title={d.builds.title} alt={other.builds.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={d.builds.intro} />
       <section className="wrap">
         <BuildsGrid builds={builds} locale={lang} t={d.builds} />

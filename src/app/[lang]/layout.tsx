@@ -2,10 +2,12 @@ import type { Metadata, Viewport } from 'next'
 import { Bricolage_Grotesque, Gulzar, Newsreader, Noto_Nastaliq_Urdu } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
-import { site, socials } from '@content/site'
+import { site } from '@content/site'
 import { isLocale, localeMeta, publishedLocales } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
+import { graph, personNode, websiteNode } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { Providers } from '@/components/layout/Providers'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -42,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     ...pageMetadata(lang, ''),
     metadataBase: new URL(site.url),
-    title: { default: `${dict.meta.siteTitle}, ${dict.meta.tagline}`, template: `%s | ${dict.meta.siteTitle}` },
+    title: { default: dict.seo.homeTitle, template: `%s | ${dict.meta.siteTitle}` },
     applicationName: dict.meta.siteTitle,
     authors: [{ name: site.fullName.en, url: site.url }],
     creator: site.fullName.en,
@@ -64,22 +66,6 @@ export default async function RootLayout({ children, params }: { children: React
   const dict = getDictionary(lang)
   const { dir, htmlLang } = localeMeta[lang]
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: site.fullName.en,
-    alternateName: [site.name.en, site.penName.en, site.fullName.ur],
-    url: site.url,
-    image: `${site.url}${site.portrait.square}`,
-    email: `mailto:${site.email}`,
-    jobTitle: 'Product builder and software engineer',
-    worksFor: { '@type': 'Organization', name: 'CMOonTheGO' },
-    alumniOf: { '@type': 'CollegeOrUniversity', name: 'FAST National University of Computer and Emerging Sciences' },
-    address: { '@type': 'PostalAddress', addressLocality: 'Islamabad', addressCountry: 'PK' },
-    knowsLanguage: ['en', 'ur'],
-    sameAs: socials.map((s) => s.href),
-  }
-
   return (
     <html
       lang={htmlLang}
@@ -96,7 +82,7 @@ export default async function RootLayout({ children, params }: { children: React
           </main>
           <Footer locale={lang} dict={dict} />
         </Providers>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <JsonLd data={graph(personNode(lang), websiteNode(lang))} />
       </body>
     </html>
   )

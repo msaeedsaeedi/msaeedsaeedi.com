@@ -6,6 +6,8 @@ import { getDictionary } from '@/i18n'
 import en from '@/i18n/en'
 import ur from '@/i18n/ur'
 import { pageMetadata } from '@/lib/metadata'
+import { sectionGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { CopyButton } from '@/components/ui/CopyButton'
 import { LocalTime } from '@/components/ui/LocalTime'
@@ -19,7 +21,7 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const d = getDictionary(lang)
-  return pageMetadata(lang, 'contact', { title: d.contact.title, description: d.contact.intro })
+  return pageMetadata(lang, 'contact', { title: d.seo.contact.title, description: d.seo.contact.description })
 }
 
 export default async function ContactPage({ params }: Props) {
@@ -30,6 +32,7 @@ export default async function ContactPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={sectionGraph(lang, 'contact')} />
       <PageHeader title={t.title} alt={other.contact.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={t.intro} />
 
       <section className="wrap">

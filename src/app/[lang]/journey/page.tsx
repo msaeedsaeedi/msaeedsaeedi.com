@@ -7,6 +7,8 @@ import { getDictionary } from '@/i18n'
 import en from '@/i18n/en'
 import ur from '@/i18n/ur'
 import { pageMetadata } from '@/lib/metadata'
+import { sectionGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { localDigits } from '@/lib/format'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Appear } from '@/components/ui/Reveal'
@@ -18,7 +20,7 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const d = getDictionary(lang)
-  return pageMetadata(lang, 'journey', { title: d.journey.title, description: d.journey.intro })
+  return pageMetadata(lang, 'journey', { title: d.seo.journey.title, description: d.seo.journey.description })
 }
 
 function period(start: string, end: string | null, locale: Locale, present: string) {
@@ -36,6 +38,7 @@ export default async function JourneyPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={sectionGraph(lang, 'journey')} />
       <PageHeader title={t.title} alt={other.journey.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={t.intro}>
         <div className="mt-10">
           {site.cvUrl ? (

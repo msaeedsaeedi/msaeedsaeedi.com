@@ -9,3 +9,9 @@
   Content-Type: image/png
 /ur/opengraph-image
   Content-Type: image/png
+
+# Plain-text views for AI engines; they contain Urdu, so declare UTF-8 explicitly.
+/llms.txt
+  Content-Type: text/markdown; charset=utf-8
+/llms-full.txt
+  Content-Type: text/markdown; charset=utf-8

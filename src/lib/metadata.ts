@@ -16,7 +16,7 @@ export function pageMetadata(
   const description = opts.description ?? dict.meta.description
   const image = opts.image ?? `${site.url}/${locale}/opengraph-image`
   return {
-    title: opts.title ? title : { absolute: `${dict.meta.siteTitle}, ${dict.meta.tagline}` },
+    title: opts.title ? title : { absolute: dict.seo.homeTitle },
     description,
     alternates: {
       canonical: url,

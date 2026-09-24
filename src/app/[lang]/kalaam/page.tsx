@@ -8,6 +8,8 @@ import en from '@/i18n/en'
 import ur from '@/i18n/ur'
 import { getPoem, getPoems } from '@/lib/kalaam'
 import { pageMetadata } from '@/lib/metadata'
+import { kalaamGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { href } from '@/lib/routes'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { KalaamIndex, type PoemCard } from '@/components/kalaam/KalaamIndex'
@@ -20,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const d = getDictionary(lang)
-  return pageMetadata(lang, 'kalaam', { title: d.kalaam.title, description: d.kalaam.intro })
+  return pageMetadata(lang, 'kalaam', { title: d.seo.kalaam.title, description: d.seo.kalaam.description })
 }
 
 export default async function KalaamPage({ params }: Props) {
@@ -45,6 +47,7 @@ export default async function KalaamPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={kalaamGraph(lang)} />
       <PageHeader title={t.title} alt={other.kalaam.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={t.intro} />
 
       {/* Poetry is Urdu, so this whole area reads right to left, in the poet's own introduction. */}

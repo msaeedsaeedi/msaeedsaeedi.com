@@ -6,7 +6,44 @@ const en = {
     siteTitle: 'Mohammad Saeed',
     tagline: 'Product builder and Urdu poet',
     description:
-      'Mohammad Saeed builds products and infrastructure software, and writes Urdu ghazals as Saeedi. Projects, career, poetry and music in one place.',
+      'Mohammad Saeed Saeedi is a software engineer in Islamabad who builds products and AI systems, and an Urdu poet who writes ghazals as Saeedi (سعیدی). Projects, career, poetry and music in one place.',
+  },
+  // Search-facing titles and descriptions. Written for someone who hasn't met the site yet:
+  // say what the page is and whose it is. The layout appends " | Mohammad Saeed" to titles.
+  seo: {
+    homeTitle: 'Mohammad Saeed Saeedi: Software Engineer and Urdu Poet',
+    builds: {
+      title: 'Projects, Tools and Research',
+      description:
+        'Projects by Mohammad Saeed: VortexMe, a WhatsApp-first team of AI marketing agents; research on digital-twin infrastructure reconciliation; Prime Innovators; and open-source developer tools in Go and Rust.',
+    },
+    journey: {
+      title: 'Experience, Skills and Education',
+      description:
+        'The career of Mohammad Saeed, full-stack software engineer in Islamabad: CMOonTheGO, founder of Prime Innovators, Fastrack, and BS Computer Science at FAST-NU. TypeScript, React, Next.js, NestJS, Go, Rust and AWS.',
+    },
+    kalaam: {
+      title: 'Kalaam: Urdu Ghazals by Saeedi',
+      description:
+        'Urdu ghazals by Saeedi (سعیدی), the pen name of Mohammad Saeed Saeedi. Every ghazal in full, each on its own page, including the lyrics of the albums Gulab-e-Suman and Wehm-e-Kham-e-Khayal.',
+    },
+    albums: {
+      title: 'Albums: Gulab-e-Suman and Wehm-e-Kham-e-Khayal',
+      description:
+        'Gulab-e-Suman, an album of nine Urdu ghazals written by Saeedi and set to music, and Wehm-e-Kham-e-Khayal, the album that comes next. Listen on Spotify and read the lyrics.',
+    },
+    self: {
+      title: 'About',
+      description:
+        'Mohammad Saeed, born in Gujrat in 2005 and based in Islamabad: a computer science student at FAST-NU, a software engineer, and an Urdu poet who writes as Saeedi.',
+    },
+    contact: {
+      title: 'Contact',
+      description: 'How to reach Mohammad Saeed (Saeedi): email, GitHub, LinkedIn, Spotify, Instagram and YouTube.',
+    },
+    poemTitle: (roman: string, urdu: string) => `${roman} (${urdu}), Urdu Ghazal by Saeedi`,
+    poemDescription: (matla: string, roman: string) => `${matla}. “${roman}”, an Urdu ghazal by Saeedi (Mohammad Saeed Saeedi), in full.`,
+    ghazal: 'Urdu ghazal',
   },
   nav: {
     home: 'Home',

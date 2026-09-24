@@ -11,6 +11,8 @@ import { getDictionary } from '@/i18n'
 import { getPoem, getPoems } from '@/lib/kalaam'
 import { href } from '@/lib/routes'
 import { pageMetadata } from '@/lib/metadata'
+import { homeGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { localDigits } from '@/lib/format'
 import en from '@/i18n/en'
 import ur from '@/i18n/ur'
@@ -110,6 +112,7 @@ export default async function Home({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={homeGraph(locale)} />
       <Hero
         locale={locale}
         name={nameLines}

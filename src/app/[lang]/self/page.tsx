@@ -5,6 +5,8 @@ import { getDictionary } from '@/i18n'
 import en from '@/i18n/en'
 import ur from '@/i18n/ur'
 import { pageMetadata } from '@/lib/metadata'
+import { sectionGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Appear, Rise } from '@/components/ui/Reveal'
 import { Spotlight } from '@/components/ui/Spotlight'
@@ -15,7 +17,7 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const d = getDictionary(lang)
-  return pageMetadata(lang, 'self', { title: d.self.title, description: d.self.bio[0] })
+  return pageMetadata(lang, 'self', { title: d.seo.self.title, description: d.seo.self.description })
 }
 
 export default async function SelfPage({ params }: Props) {
@@ -26,6 +28,7 @@ export default async function SelfPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={sectionGraph(lang, 'self')} />
       <PageHeader title={t.title} alt={other.self.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={t.intro} />
 
       <section className="wrap grid gap-12 md:grid-cols-12">

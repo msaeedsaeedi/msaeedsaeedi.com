@@ -7,6 +7,8 @@ import { isLocale, publishedLocales } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import { getNeighbours, getPoem, getPoems } from '@/lib/kalaam'
 import { pageMetadata } from '@/lib/metadata'
+import { poemGraph } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
 import { href } from '@/lib/routes'
 import { localDigits } from '@/lib/format'
 import { PoemReader } from '@/components/kalaam/PoemReader'
@@ -25,8 +27,12 @@ export async function generateMetadata({ params }: Props) {
   const { lang, slug } = await params
   const poem = getPoem(slug)
   if (!isLocale(lang) || !poem) return {}
-  const title = lang === 'ur' ? poem.titleUr : `${poem.title} (${poem.titleUr})`
-  return pageMetadata(lang, `kalaam/${slug}`, { title, description: poem.shers[0].join(' / '), type: 'article' })
+  const d = getDictionary(lang).seo
+  return pageMetadata(lang, `kalaam/${slug}`, {
+    title: d.poemTitle(poem.title, poem.titleUr),
+    description: d.poemDescription(poem.shers[0].join(' / '), poem.title),
+    type: 'article',
+  })
 }
 
 export default async function PoemPage({ params }: Props) {
@@ -40,21 +46,9 @@ export default async function PoemPage({ params }: Props) {
   const url = `${site.url}${href(lang, `kalaam/${slug}`)}`
   const Back = lang === 'ur' ? ArrowRight : ArrowLeft
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
-    genre: 'Ghazal',
-    name: poem.titleUr,
-    alternateName: poem.title,
-    inLanguage: 'ur',
-    author: { '@type': 'Person', name: site.fullName.en, alternateName: site.penName.ur, url: site.url },
-    text: poem.shers.map((s) => s.join('\n')).join('\n\n'),
-    url,
-    ...(poem.spotifyTrack ? { audio: { '@type': 'AudioObject', url: `https://open.spotify.com/track/${poem.spotifyTrack}` } } : {}),
-  }
-
   return (
     <article>
+      <JsonLd data={poemGraph(lang, poem)} />
       <header className="wrap pt-32 text-center md:pt-40">
         <Link href={href(lang, 'kalaam')} className="meta link group inline-flex items-center gap-2">
           <Back size={15} className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />
@@ -124,7 +118,6 @@ export default async function PoemPage({ params }: Props) {
         {localDigits(poem.order, lang)} / {localDigits(getPoems().length, lang)}
       </p>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </article>
   )
 }
