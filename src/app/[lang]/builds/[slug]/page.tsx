@@ -99,7 +99,7 @@ export default async function BuildPage({ params }: Props) {
               <p className="prose-serif text-ink">{b.epilogue[lang]}</p>
               <a href={`mailto:${site.email}?subject=${encodeURIComponent(b.name)}`} className="btn btn-solid mt-6">
                 <Mail size={16} />
-                {d.epilogueCta}
+                {b.epilogueCta?.[lang] ?? d.epilogueCta}
               </a>
             </section>
           )}

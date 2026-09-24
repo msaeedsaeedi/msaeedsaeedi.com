@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { ArrowRight } from 'lucide-react'
 import { builds, getBuild } from '@content/builds'
+import { roles } from '@content/journey'
 import { albums } from '@content/music'
 import { selectedAshaar } from '@content/poet'
 import { site } from '@content/site'
@@ -45,7 +47,7 @@ export default async function Home({ params }: Props) {
       alt: other.nav.builds,
       body: dict.home.worlds.builds,
       href: href(locale, 'builds'),
-      count: builds.length,
+      fact: dict.home.worldFacts.builds(builds.length, builds.filter((b) => b.status === 'shipped').length),
       preview: <BuildCover build={flagship} className="h-full w-full" />,
     },
     {
@@ -54,6 +56,7 @@ export default async function Home({ params }: Props) {
       alt: other.nav.journey,
       body: dict.home.worlds.journey,
       href: href(locale, 'journey'),
+      fact: dict.home.worldFacts.journey(roles.at(-1)!.start.slice(0, 4), roles.length),
       preview: (
         <div className="grid h-full w-full place-items-center bg-gold text-paper">
           <span className="display text-6xl" dir="ltr">
@@ -70,7 +73,7 @@ export default async function Home({ params }: Props) {
       alt: other.nav.kalaam,
       body: dict.home.worlds.kalaam,
       href: href(locale, 'kalaam'),
-      count: poems.length,
+      fact: dict.home.worldFacts.kalaam(poems.length, poems.filter((p) => p.trackNo).length),
       preview: (
         <div className="grid h-full w-full place-items-center bg-rose px-6 text-white">
           <Sher lines={selectedAshaar[1].lines} size="sm" />
@@ -83,6 +86,7 @@ export default async function Home({ params }: Props) {
       alt: other.nav.albums,
       body: dict.home.worlds.albums,
       href: href(locale, 'albums'),
+      fact: dict.home.worldFacts.albums(albums.filter((a) => a.status === 'released').length, albums.filter((a) => a.status !== 'released').length),
       preview: <img src={album.cover!} alt="" className="h-full w-full object-cover" />,
     },
     {
@@ -91,6 +95,7 @@ export default async function Home({ params }: Props) {
       alt: other.nav.self,
       body: dict.home.worlds.self,
       href: href(locale, 'self'),
+      fact: dict.home.worldFacts.self,
       preview: <img src={site.portrait.src} alt="" className="h-full w-full object-cover object-top" />,
     },
   ]
@@ -116,9 +121,9 @@ export default async function Home({ params }: Props) {
         portrait={{ src: site.portrait.src, srcSet: site.portrait.srcSet, alt: site.portrait.alt[locale] }}
       />
 
-      {/* Right now */}
-      <section className="wrap grid gap-8 border-t border-line py-16 md:grid-cols-12 md:py-20">
-        <div className="md:col-span-4">
+      {/* Right now: each item opens the room it belongs to. */}
+      <section className="wrap border-t border-line py-16 md:py-20">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
           <h2 className="h3 flex items-center gap-3">
             <span className="relative flex h-2.5 w-2.5" aria-hidden>
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rose opacity-60" />
@@ -126,15 +131,28 @@ export default async function Home({ params }: Props) {
             </span>
             {dict.home.nowTitle}
           </h2>
-          <p className="meta mt-1">{dict.home.nowUpdated}</p>
+          <p className="meta">{dict.home.nowUpdated}</p>
         </div>
-        <ul className="grid gap-x-10 gap-y-5 md:col-span-8 md:grid-cols-2">
-          {dict.home.now.map((item) => (
-            <li key={item} className="border-s-2 border-rose/40 ps-4 text-ink">
-              {item}
-            </li>
-          ))}
-        </ul>
+        <Appear>
+          <ul className="grid gap-px overflow-hidden rounded-[2rem] border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+            {dict.home.now.map((item, i, all) => (
+              <li key={item.title} className={i === all.length - 1 ? 'sm:col-span-2 lg:col-span-1' : ''}>
+                <Link href={href(locale, item.to)} className="group flex h-full flex-col gap-3 bg-paper p-6 transition-colors duration-500 hover:bg-paper-2 md:p-7">
+                  <span className="flex items-center justify-between gap-4">
+                    <span className="meta font-medium !text-rose">{item.label}</span>
+                    <ArrowRight
+                      size={16}
+                      aria-hidden
+                      className="text-ink-2 transition-transform duration-500 group-hover:-rotate-45 group-hover:text-rose rtl:-scale-x-100"
+                    />
+                  </span>
+                  <span className="text-xl font-semibold tracking-tight transition-colors group-hover:text-rose lg:mt-6">{item.title}</span>
+                  <span className="text-[0.95rem] text-ink-2">{item.body}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Appear>
       </section>
 
       {/* Five rooms */}
@@ -156,17 +174,12 @@ export default async function Home({ params }: Props) {
               </h2>
               <p className="lede mt-6 max-w-xl">{flagship.oneLiner[locale]}</p>
               <p className="mt-6 max-w-xl text-ink-2">{flagship.problem[locale]}</p>
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-8">
                 <Magnetic>
                   <Link href={href(locale, `builds/${flagship.slug}`)} className="btn btn-solid">
                     {dict.home.flagshipCta}
                   </Link>
                 </Magnetic>
-                <span className="chip">
-                  <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
-                  {dict.builds.status[flagship.status]}
-                </span>
-                <span className="chip">{flagship.role[locale]}</span>
               </div>
             </div>
             <div className="mx-auto w-full max-w-md">

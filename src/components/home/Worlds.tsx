@@ -4,11 +4,11 @@ import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
-import { localDigits } from '@/lib/format'
 import type { Locale } from '@/i18n/config'
 
 /** `alt` is the same title in the site's other language, shown as a quiet counterpart. */
-export type World = { key: string; title: string; alt: string; body: string; href: string; count?: number; preview: ReactNode }
+/** `fact` is a short line of specifics (counts, dates) under the description. */
+export type World = { key: string; title: string; alt: string; body: string; href: string; fact: string; preview: ReactNode }
 
 /**
  * The five sections of the site as large rows. On hover, a preview card
@@ -51,9 +51,9 @@ export function Worlds({ worlds, locale }: { worlds: World[]; locale: Locale }) 
               <span className="display h2 transition-[color,transform] duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-3 group-hover:text-rose rtl:group-hover:-translate-x-3">
                 {w.title}
               </span>
-              <span className="text-ink-2 md:max-w-md">
-                {w.body}
-                {w.count !== undefined && <span className="chip ms-3 align-middle">{localDigits(w.count, locale)}</span>}
+              <span className="md:max-w-md">
+                <span className="block text-ink-2">{w.body}</span>
+                <span className="meta mt-2 block font-medium !text-gold">{w.fact}</span>
               </span>
               <span
                 aria-hidden

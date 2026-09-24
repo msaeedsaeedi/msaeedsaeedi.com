@@ -3,7 +3,7 @@
 import type { L } from '@/i18n/config'
 
 export type BuildKind = 'flagship' | 'research' | 'product' | 'tool'
-export type BuildStatus = 'design' | 'research' | 'building' | 'shipped' | 'paused'
+export type BuildStatus = 'design' | 'research' | 'experimental' | 'building' | 'shipped' | 'paused'
 
 export type Build = {
   slug: string
@@ -24,6 +24,8 @@ export type Build = {
   question?: L
   /** A closing note, e.g. why a project is paused. Shown with a contact button. */
   epilogue?: L
+  /** Label for the epilogue's contact button, when the default (“Share an idea”) doesn't fit. */
+  epilogueCta?: L
   draft?: boolean
 }
 
@@ -130,8 +132,8 @@ export const builds: Build[] = [
   {
     slug: 'vocab',
     name: 'Vocab',
-    kind: 'product',
-    status: 'shipped',
+    kind: 'research',
+    status: 'experimental',
     year: '2026',
     role: { en: 'Creator', ur: 'خالق' },
     oneLiner: {
@@ -143,8 +145,8 @@ export const builds: Build[] = [
       ur: 'الفاظ سکھانے والی ایپس روزانہ وقت مانگتی ہیں، اور اکثر لوگ ایک ہفتے میں انہیں کھولنا چھوڑ دیتے ہیں۔ الفاظ کو وہ بار بار، بے محنت سامنا نہیں ملتا جس کی یادداشت کو ضرورت ہے۔',
     },
     approach: {
-      en: 'Vocab is a quiet Windows app. A word first appears on your wallpaper for passive exposure, then returns as a notification that tests recall. A scheduler combining FSRS and Bayesian Knowledge Tracing decides when, and adapts to how you actually engage.',
-      ur: 'ووکیب ونڈوز پر خاموشی سے چلنے والا پروگرام ہے۔ لفظ پہلے وال پیپر پر ظاہر ہوتا ہے، پھر ایک نوٹیفکیشن بن کر لوٹتا ہے جو یادداشت کو آزماتا ہے۔ FSRS اور Bayesian Knowledge Tracing کو ملا کر بنایا گیا شیڈیولر طے کرتا ہے کہ کب، اور آپ کے اصل استعمال کے مطابق ڈھلتا ہے۔',
+      en: 'Vocab is an R&D project that tests one idea: can ambient exposure and well-timed recall teach words without a daily session? It runs as a quiet Windows app. A word first appears on your wallpaper for passive exposure, then returns as a notification that tests recall. A scheduler combining FSRS and Bayesian Knowledge Tracing decides when, and adapts to how you actually engage.',
+      ur: 'ووکیب ایک تحقیقی تجربہ ہے جو ایک خیال آزماتا ہے: کیا خاموش سامنا اور بروقت یاد دہانی روزانہ نشست کے بغیر الفاظ سکھا سکتی ہے؟ یہ ونڈوز پر خاموشی سے چلنے والا پروگرام ہے۔ لفظ پہلے وال پیپر پر ظاہر ہوتا ہے، پھر ایک نوٹیفکیشن بن کر لوٹتا ہے جو یادداشت کو آزماتا ہے۔ FSRS اور Bayesian Knowledge Tracing کو ملا کر بنایا گیا شیڈیولر طے کرتا ہے کہ کب، اور آپ کے اصل استعمال کے مطابق ڈھلتا ہے۔',
     },
     highlights: [
       { en: 'Two-phase loop: ambient exposure, then active recall', ur: 'دو مرحلے: پہلے خاموش سامنا، پھر فعال یاد دہانی' },
@@ -154,26 +156,30 @@ export const builds: Build[] = [
     ],
     stack: ['Go', 'Windows', 'FSRS', 'BKT'],
     links: { repo: 'https://github.com/msaeedsaeedi/vocab' },
+    epilogue: {
+      en: 'Vocab is experimental. It works, but it exists to answer a question about memory, not to be a finished product yet. If you study learning or spaced repetition, I’d like to compare notes.',
+      ur: 'ووکیب ابھی تجرباتی ہے۔ یہ چلتا ہے، مگر اس کا مقصد یادداشت کے بارے میں ایک سوال کا جواب ڈھونڈنا ہے، مکمل پروڈکٹ بننا ابھی نہیں۔ اگر آپ سیکھنے یا وقفہ وار دہرائی پر کام کرتے ہیں تو بات کرنا چاہوں گا۔',
+    },
     glyph: 'Vo',
   },
   {
     slug: 'slotty',
     name: 'Slotty',
     kind: 'product',
-    status: 'building',
+    status: 'design',
     year: '2026',
     role: { en: 'Designer and engineer', ur: 'ڈیزائنر اور انجینئر' },
     oneLiner: {
-      en: 'Demo-slot booking for university courses, built so two students can never grab the same slot.',
-      ur: 'جامعہ کے کورسز کے لیے ڈیمو سلاٹ بکنگ، ایسی کہ دو طلبہ کبھی ایک ہی سلاٹ نہ لے سکیں۔',
+      en: 'Demo-slot booking for university courses, designed so two students can never grab the same slot.',
+      ur: 'جامعہ کے کورسز کے لیے ڈیمو سلاٹ بکنگ، جس کا خاکہ ایسا ہے کہ دو طلبہ کبھی ایک ہی سلاٹ نہ لے سکیں۔',
     },
     problem: {
       en: 'Assignment demos at FAST-NU ran on spreadsheets and group chats. Slots were double-booked, TAs lost track, and the last-minute rush broke every system anyone tried.',
       ur: 'فاسٹ یونیورسٹی میں اسائنمنٹ ڈیمو اسپریڈشیٹس اور گروپ چیٹس پر چلتے تھے۔ ایک سلاٹ دو بار بک ہو جاتا، ٹی اے حساب کھو بیٹھتے، اور آخری لمحے کا رش ہر نظام توڑ دیتا۔',
     },
     approach: {
-      en: 'Separate roles for students, TAs and course leadership. Booking runs inside database transactions with active-booking and capacity checks, so the rush can’t break it. Bulk assignment comes in through CSV.',
-      ur: 'طلبہ، ٹی ایز اور کورس انتظامیہ کے الگ کردار۔ بکنگ ڈیٹا بیس ٹرانزیکشنز کے اندر، موجودہ بکنگ اور گنجائش کی جانچ کے ساتھ ہوتی ہے، اس لیے رش اسے توڑ نہیں سکتا۔ بڑی تعداد میں تفویض CSV سے۔',
+      en: 'Separate roles for students, TAs and course leadership. Booking is designed to run inside database transactions with active-booking and capacity checks, so the rush can’t break it. Bulk assignment comes in through CSV.',
+      ur: 'طلبہ، ٹی ایز اور کورس انتظامیہ کے الگ کردار۔ خاکے کے مطابق بکنگ ڈیٹا بیس ٹرانزیکشنز کے اندر، موجودہ بکنگ اور گنجائش کی جانچ کے ساتھ ہو گی، اس لیے رش اسے توڑ نہیں سکتا۔ بڑی تعداد میں تفویض CSV سے۔',
     },
     highlights: [
       { en: 'Concurrency-safe booking with transactional capacity checks', ur: 'ٹرانزیکشن پر مبنی گنجائش کی جانچ، ایک ساتھ بکنگ میں بھی محفوظ' },
@@ -182,6 +188,11 @@ export const builds: Build[] = [
     ],
     stack: ['Next.js', 'NestJS', 'Prisma', 'PostgreSQL', 'Redis'],
     links: { repo: 'https://github.com/msaeedsaeedi/Slotty' },
+    epilogue: {
+      en: 'Slotty is in design, and I’m looking for contributors. If you write code, design interfaces, or have run demo slots as a TA and know where it hurts, there’s room for you.',
+      ur: 'سلاٹی ابھی خاکے کے مرحلے میں ہے، اور مجھے ساتھ کام کرنے والوں کی تلاش ہے۔ اگر آپ کوڈ لکھتے ہیں، انٹرفیس ڈیزائن کرتے ہیں، یا بطور ٹی اے ڈیمو سلاٹس سنبھال چکے ہیں اور جانتے ہیں کہ مشکل کہاں ہے، تو آپ کے لیے جگہ ہے۔',
+    },
+    epilogueCta: { en: 'Join as a contributor', ur: 'ساتھ شامل ہوئیے' },
     glyph: 'Sl',
   },
   {

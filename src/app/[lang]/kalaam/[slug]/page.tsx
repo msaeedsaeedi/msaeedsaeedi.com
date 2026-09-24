@@ -64,8 +64,9 @@ export default async function PoemPage({ params }: Props) {
           {t.ghazal}
           {album && poem.trackNo ? <> &nbsp;/&nbsp; {t.track(poem.trackNo, album.title[lang])}</> : null}
         </p>
-        <h1 lang="ur" className="font-gulzar mt-2 text-[clamp(3rem,9vw,7rem)] leading-[1.6] text-ink">
-          <Rise>{poem.titleUr}</Rise>
+        <h1 lang="ur" className="font-gulzar mt-8 text-[clamp(3rem,9vw,7rem)] md:mt-12 leading-[1.6] text-ink">
+          {/* Nastaliq rises well above the line box; give the reveal mask room so it doesn't crop the top. */}
+          <Rise className="-mt-[0.4em] pt-[0.4em]">{poem.titleUr}</Rise>
         </h1>
         {lang === 'en' && <p className="lede -mt-2 italic text-ink-2">{poem.title}</p>}
         {poem.epigraph && (
@@ -88,6 +89,7 @@ export default async function PoemPage({ params }: Props) {
       <section className="wrap mt-14">
         <PoemReader
           shers={poem.shers}
+          longest={Math.max(...poem.shers.flat().map((l) => l.length))}
           title={`${poem.titleUr} — ${site.penName.ur}`}
           url={url}
           poet={site.penName.ur}

@@ -46,7 +46,7 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
 
   return (
     <div>
-      <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="mb-10 flex flex-col gap-4 md:flex-row-reverse md:items-center md:justify-between">
         <label className="relative block w-full md:max-w-md">
           <span className="sr-only">{t.searchLabel}</span>
           <Search size={17} className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-ink-2" aria-hidden />

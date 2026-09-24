@@ -47,7 +47,7 @@ export function Vortex() {
           )
         })}
         <circle r={12} fill="var(--rose)" />
-        <motion.circle r={12} fill="none" stroke="var(--rose)" animate={{ r: [12, 40], opacity: [0.6, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }} />
+        <motion.circle r={12} fill="none" stroke="var(--rose)" initial={{ r: 12, opacity: 0.6 }} animate={{ r: [12, 40], opacity: [0.6, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }} />
       </motion.svg>
     </motion.div>
   )

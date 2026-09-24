@@ -50,7 +50,7 @@ assets/profile.png       full-size portrait source (not shipped)
 - **Icons:** `lucide-react` for UI, `react-icons` (`si`, `fa6`) for brands via `components/ui/SocialIcon.tsx`.
 - **Locale routing:** `/` redirects to `/en` in `next.config.ts`. When Urdu ships, uncomment the cookie / `Accept-Language` rules there. No middleware.
 - **Poetry pages stay RTL even on /en**: the poet intro is the Urdu one, and poem lists/nav flow right to left.
-- **Facts to respect:** Saeed does not sing; the albums were produced by a production house that must not be named. Prime Innovators is paused (July 2026). Vocab no longer mentions Lexicon.
+- **Facts to respect:** Saeed does not sing; the albums were produced by a production house that must not be named. Prime Innovators is paused (July 2026). Vocab no longer mentions Lexicon, and is an experimental R&D project, not shipped. Slotty is in design, not shipped, and open to contributors.
 - **Links must look clickable:** use `.link` for inline links (quiet underline, rose on hover); nav items get a hover underline.
 
 ## Adding content
@@ -99,3 +99,13 @@ The build fails loudly if a sher doesn't have exactly two lines.
 - Real titles for poems with `titleStatus: working` (the 9 album tracks use their Spotify titles).
 - Wehm-e-Kham-e-Khayal (tracks: Behr-e-Kitab, Bazm-e-Yaad, Khoon-e-Jigar): add `spotifyId`, `durationMs` and per-poem `spotifyTrack` on release.
 - Urdu copy review before flipping `publishedLocales`.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
