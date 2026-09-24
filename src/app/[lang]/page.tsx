@@ -78,11 +78,11 @@ export default async function Home({ params }: Props) {
       ),
     },
     {
-      key: 'sound',
-      title: dict.nav.sound,
-      alt: other.nav.sound,
-      body: dict.home.worlds.sound,
-      href: href(locale, 'sound'),
+      key: 'albums',
+      title: dict.nav.albums,
+      alt: other.nav.albums,
+      body: dict.home.worlds.albums,
+      href: href(locale, 'albums'),
       preview: <img src={album.cover!} alt="" className="h-full w-full object-cover" />,
     },
     {
@@ -110,10 +110,9 @@ export default async function Home({ params }: Props) {
         name={nameLines}
         counterName={locale === 'en' ? site.penName.ur : 'Saeed'}
         lede={dict.home.lede}
-        roles={dict.home.roles}
         ctaPrimary={{ label: dict.home.ctaBuilds, href: href(locale, 'builds') }}
         ctaSecondary={{ label: dict.home.ctaKalaam, href: href(locale, 'kalaam') }}
-        hint={dict.home.inkHint}
+        ink={{ hint: dict.home.inkHint, on: dict.home.inkOn, off: dict.home.inkOff }}
         portrait={{ src: site.portrait.src, srcSet: site.portrait.srcSet, alt: site.portrait.alt[locale] }}
       />
 

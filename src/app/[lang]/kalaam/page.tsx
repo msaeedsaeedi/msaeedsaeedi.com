@@ -45,10 +45,13 @@ export default async function KalaamPage({ params }: Props) {
     <>
       <PageHeader title={t.title} alt={other.kalaam.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={t.intro} />
 
-      <section className="wrap mb-24 grid gap-8 md:grid-cols-12" aria-labelledby="poet">
-        <h2 id="poet" className="meta md:col-span-3">{t.poetTitle}</h2>
+      {/* Poetry is Urdu, so this whole area reads right to left, in the poet's own introduction. */}
+      <section lang="ur" dir="rtl" className="wrap mb-24 grid gap-6 md:grid-cols-12" aria-labelledby="poet">
+        <h2 id="poet" className="font-gulzar text-2xl leading-[2] text-gold md:col-span-3">
+          {ur.kalaam.poetTitle}
+        </h2>
         <Appear className="md:col-span-8">
-          <p className="prose-serif text-ink">{poetIntro[lang]}</p>
+          <p className="font-nastaliq text-[1.2rem] leading-[2.4] text-ink">{poetIntro.ur}</p>
         </Appear>
       </section>
 
@@ -71,8 +74,10 @@ export default async function KalaamPage({ params }: Props) {
 
       <section className="mt-32 bg-paper-2 py-24" aria-labelledby="ashaar">
         <div className="wrap">
-          <h2 id="ashaar" className="display h2 mb-16 text-center">{t.selectedTitle}</h2>
-          <ul className="grid gap-x-16 gap-y-16 md:grid-cols-2">
+          <h2 id="ashaar" lang="ur" className="font-gulzar mb-16 text-center text-[clamp(2.2rem,4.6vw,3.6rem)] leading-[1.7]">
+            {ur.kalaam.selectedTitle}
+          </h2>
+          <ul dir="rtl" className="grid gap-x-16 gap-y-16 md:grid-cols-2">
             {selectedAshaar.map((s, i) => {
               const poem = getPoem(s.from)!
               return (

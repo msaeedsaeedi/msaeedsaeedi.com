@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { localDigits } from '@/lib/format'
 import type { Locale } from '@/i18n/config'
@@ -38,7 +39,7 @@ export function Worlds({ worlds, locale }: { worlds: World[]; locale: Locale }) 
               onPointerEnter={(e) => e.pointerType === 'mouse' && setActive(w.key)}
               onFocus={() => setActive(w.key)}
               onBlur={() => setActive(null)}
-              className="group grid items-baseline gap-x-8 gap-y-2 py-7 md:grid-cols-[5rem_1fr_1.1fr] md:py-9"
+              className="group grid items-baseline gap-x-8 gap-y-2 py-7 md:grid-cols-[5rem_1fr_1.1fr_2.5rem] md:py-9"
             >
               <span
                 aria-hidden
@@ -53,6 +54,12 @@ export function Worlds({ worlds, locale }: { worlds: World[]; locale: Locale }) 
               <span className="text-ink-2 md:max-w-md">
                 {w.body}
                 {w.count !== undefined && <span className="chip ms-3 align-middle">{localDigits(w.count, locale)}</span>}
+              </span>
+              <span
+                aria-hidden
+                className="hidden h-10 w-10 place-items-center self-center rounded-full border border-line text-ink-2 transition-all duration-500 group-hover:border-rose group-hover:bg-rose group-hover:text-white md:grid"
+              >
+                <ArrowRight size={17} className="transition-transform duration-500 group-hover:-rotate-45 rtl:-scale-x-100" />
               </span>
             </Link>
           </li>

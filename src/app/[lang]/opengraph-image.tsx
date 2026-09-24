@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { locales } from '@/i18n/config'
+import { publishedLocales } from '@/i18n/config'
 
 // Rendered once per language at build time; served as a static file.
 export const dynamic = 'force-static'
@@ -10,7 +10,7 @@ export const contentType = 'image/png'
 export const alt = 'Mohammad Saeed, product builder and Urdu poet'
 
 export function generateStaticParams() {
-  return locales.map((lang) => ({ lang }))
+  return publishedLocales.map((lang) => ({ lang }))
 }
 
 export default async function OgImage() {

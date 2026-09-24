@@ -17,3 +17,12 @@ await sharp(portrait)
   .toFile(`${out}/portrait-square.jpg`)
 
 console.log('Images optimized.')
+
+// Album covers: drop the full-size source in assets/music/<slug>.png|jpg and re-run.
+import { readdir } from 'node:fs/promises'
+await mkdir(`${out}/music`, { recursive: true })
+for (const file of await readdir('assets/music')) {
+  const slug = file.replace(/\.(png|jpe?g|webp)$/i, '')
+  await sharp(`assets/music/${file}`).resize({ width: 960, height: 960, fit: 'cover' }).jpeg({ quality: 84, mozjpeg: true }).toFile(`${out}/music/${slug}.jpg`)
+}
+console.log('Album covers optimized.')

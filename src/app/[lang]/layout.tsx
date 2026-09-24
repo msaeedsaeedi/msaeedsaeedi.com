@@ -3,7 +3,7 @@ import { Bricolage_Grotesque, Gulzar, Newsreader, Noto_Nastaliq_Urdu } from 'nex
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { site, socials } from '@content/site'
-import { isLocale, localeMeta, locales } from '@/i18n/config'
+import { isLocale, localeMeta, publishedLocales } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
 import { Providers } from '@/components/layout/Providers'
@@ -32,7 +32,7 @@ const nastaliq = Noto_Nastaliq_Urdu({ subsets: ['arabic'], variable: '--font-not
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return locales.map((lang) => ({ lang }))
+  return publishedLocales.map((lang) => ({ lang }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -73,7 +73,7 @@ export default async function RootLayout({ children, params }: { children: React
     image: `${site.url}${site.portrait.square}`,
     email: `mailto:${site.email}`,
     jobTitle: 'Product builder and software engineer',
-    worksFor: [{ '@type': 'Organization', name: 'Prime Innovators' }, { '@type': 'Organization', name: 'CMOonTheGO' }],
+    worksFor: { '@type': 'Organization', name: 'CMOonTheGO' },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'FAST National University of Computer and Emerging Sciences' },
     address: { '@type': 'PostalAddress', addressLocality: 'Islamabad', addressCountry: 'PK' },
     knowsLanguage: ['en', 'ur'],

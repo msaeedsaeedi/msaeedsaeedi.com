@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { site } from '@content/site'
-import { locales, localeMeta, type Locale } from '@/i18n/config'
+import { publishedLocales, localeMeta, type Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 
 /** Builds per-page metadata with canonical + hreflang alternates for both languages. */
@@ -21,7 +21,7 @@ export function pageMetadata(
     alternates: {
       canonical: url,
       languages: {
-        ...Object.fromEntries(locales.map((l) => [localeMeta[l].htmlLang, `${site.url}/${l}${suffix}`])),
+        ...Object.fromEntries(publishedLocales.map((l) => [localeMeta[l].htmlLang, `${site.url}/${l}${suffix}`])),
         'x-default': `${site.url}/en${suffix}`,
       },
     },

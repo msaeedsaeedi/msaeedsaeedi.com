@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useState } from 'react'
 import type { Build, BuildKind } from '@content/builds'
+import { statusDot } from './status'
 import type { Dictionary } from '@/i18n/en'
 import type { Locale } from '@/i18n/config'
 import { href } from '@/lib/routes'
@@ -15,7 +16,7 @@ type Filter = 'all' | BuildKind
 export function BuildsGrid({ builds, locale, t }: { builds: Build[]; locale: Locale; t: Dictionary['builds'] }) {
   const [filter, setFilter] = useState<Filter>('all')
   const shown = builds.filter((b) => filter === 'all' || b.kind === filter)
-  const filters: Filter[] = ['all', 'flagship', 'product', 'tool']
+  const filters = (['all', 'flagship', 'research', 'product', 'tool'] as Filter[]).filter((f) => f === 'all' || builds.some((b) => b.kind === f))
 
   return (
     <div>
@@ -54,7 +55,7 @@ export function BuildsGrid({ builds, locale, t }: { builds: Build[]; locale: Loc
                   <div className="flex flex-col gap-4 p-6 md:p-8">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="chip">
-                        <span className={`h-1.5 w-1.5 rounded-full ${b.status === 'shipped' ? 'bg-ink-2' : b.status === 'building' ? 'bg-rose' : 'bg-gold'}`} aria-hidden />
+                        <span className={`h-1.5 w-1.5 rounded-full ${statusDot[b.status]}`} aria-hidden />
                         {t.status[b.status]}
                       </span>
                       <span className="chip">{t.kind[b.kind]}</span>

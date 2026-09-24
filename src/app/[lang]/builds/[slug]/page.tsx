@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Mail } from 'lucide-react'
 import { builds, getBuild } from '@content/builds'
-import { isLocale, locales } from '@/i18n/config'
+import { site } from '@content/site'
+import { statusDot } from '@/components/builds/status'
+import { isLocale, publishedLocales } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
 import { href } from '@/lib/routes'
@@ -15,7 +17,7 @@ type Props = { params: Promise<{ lang: string; slug: string }> }
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return locales.flatMap((lang) => builds.map((b) => ({ lang, slug: b.slug })))
+  return publishedLocales.flatMap((lang) => builds.map((b) => ({ lang, slug: b.slug })))
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -38,12 +40,15 @@ export default async function BuildPage({ params }: Props) {
   return (
     <article>
       <header className="wrap pt-32 md:pt-40">
-        <Link href={href(lang, 'builds')} className="meta group inline-flex items-center gap-2 hover:text-ink">
+        <Link href={href(lang, 'builds')} className="meta link group inline-flex items-center gap-2">
           <Back size={15} className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />
           {d.back}
         </Link>
         <div className="mt-10 flex flex-wrap items-center gap-2">
-          <span className="chip">{d.status[b.status]}</span>
+          <span className="chip">
+            <span className={`h-1.5 w-1.5 rounded-full ${statusDot[b.status]}`} aria-hidden />
+            {d.status[b.status]}
+          </span>
           <span className="chip">{d.kind[b.kind]}</span>
         </div>
         <h1 className="latin display h1 mt-6">
@@ -74,6 +79,12 @@ export default async function BuildPage({ params }: Props) {
 
       <div className="wrap mt-20 grid gap-16 md:grid-cols-12">
         <div className="space-y-14 md:col-span-7">
+          {b.question && (
+            <figure className="border-s-2 border-rose ps-6">
+              <figcaption className="meta mb-3">{d.question}</figcaption>
+              <blockquote className="lede">{b.question[lang]}</blockquote>
+            </figure>
+          )}
           <section>
             <h2 className="h3 mb-4">{d.problem}</h2>
             <p className="prose-serif text-ink">{b.problem[lang]}</p>
@@ -82,6 +93,16 @@ export default async function BuildPage({ params }: Props) {
             <h2 className="h3 mb-4">{d.approach}</h2>
             <p className="prose-serif text-ink">{b.approach[lang]}</p>
           </section>
+          {b.epilogue && (
+            <section className="rounded-[1.75rem] bg-paper-2 p-7 md:p-9">
+              <h2 className="h3 mb-4">{d.epilogue}</h2>
+              <p className="prose-serif text-ink">{b.epilogue[lang]}</p>
+              <a href={`mailto:${site.email}?subject=${encodeURIComponent(b.name)}`} className="btn btn-solid mt-6">
+                <Mail size={16} />
+                {d.epilogueCta}
+              </a>
+            </section>
+          )}
           {b.draft && <p className="rounded-2xl border border-dashed border-gold/60 p-5 text-ink-2">{d.moreSoon}</p>}
         </div>
         <aside className="space-y-12 md:col-span-4 md:col-start-9">
@@ -96,12 +117,13 @@ export default async function BuildPage({ params }: Props) {
               ))}
             </ul>
           </section>
+          {(b.links.repo || b.links.site || b.links.extra) && (
           <section>
             <h2 className="h3 mb-4">{d.links}</h2>
             <ul className="space-y-2">
               {b.links.repo && (
                 <li>
-                  <a href={b.links.repo} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 font-medium hover:text-rose">
+                  <a href={b.links.repo} target="_blank" rel="noopener noreferrer" className="link group inline-flex items-center gap-2 font-medium">
                     <SocialIcon id="github" size={16} />
                     {d.source}
                     <ArrowUpRight size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -110,7 +132,7 @@ export default async function BuildPage({ params }: Props) {
               )}
               {b.links.site && (
                 <li>
-                  <a href={b.links.site} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 font-medium hover:text-rose">
+                  <a href={b.links.site} target="_blank" rel="noopener noreferrer" className="link group inline-flex items-center gap-2 font-medium">
                     {d.visit}
                     <ArrowUpRight size={15} />
                   </a>
@@ -118,7 +140,7 @@ export default async function BuildPage({ params }: Props) {
               )}
               {b.links.extra?.map((x) => (
                 <li key={x.href}>
-                  <a href={x.href} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 font-medium hover:text-rose">
+                  <a href={x.href} target="_blank" rel="noopener noreferrer" className="link group inline-flex items-center gap-2 font-medium">
                     {x.label[lang]}
                     <ArrowUpRight size={15} />
                   </a>
@@ -126,6 +148,7 @@ export default async function BuildPage({ params }: Props) {
               ))}
             </ul>
           </section>
+          )}
         </aside>
       </div>
 

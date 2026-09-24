@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { site } from '@content/site'
-import { isLocale, locales } from '@/i18n/config'
+import { isLocale, publishedLocales } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
 import { getNeighbours, getPoem, getPoems } from '@/lib/kalaam'
 import { pageMetadata } from '@/lib/metadata'
@@ -17,7 +17,7 @@ type Props = { params: Promise<{ lang: string; slug: string }> }
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return locales.flatMap((lang) => getPoems().map((p) => ({ lang, slug: p.slug })))
+  return publishedLocales.flatMap((lang) => getPoems().map((p) => ({ lang, slug: p.slug })))
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -54,7 +54,7 @@ export default async function PoemPage({ params }: Props) {
   return (
     <article>
       <header className="wrap pt-32 text-center md:pt-40">
-        <Link href={href(lang, 'kalaam')} className="meta group inline-flex items-center gap-2 hover:text-ink">
+        <Link href={href(lang, 'kalaam')} className="meta link group inline-flex items-center gap-2">
           <Back size={15} className="transition-transform group-hover:-translate-x-1 rtl:group-hover:translate-x-1" />
           {t.back}
         </Link>
@@ -93,7 +93,8 @@ export default async function PoemPage({ params }: Props) {
         />
       </section>
 
-      <nav className="wrap mt-28 grid grid-cols-2 border-t border-line" aria-label={t.back}>
+      {/* Right to left, like the poem: the previous ghazal sits on the right. */}
+      <nav dir="rtl" className="wrap mt-28 grid grid-cols-2 border-t border-line" aria-label={t.back}>
         <div className="border-e border-line py-10 pe-4">
           {prev && (
             <Link href={href(lang, `kalaam/${prev.slug}`)} className="group block">

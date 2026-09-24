@@ -13,7 +13,6 @@ import { formatDuration, localDigits } from '@/lib/format'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { SpotifyEmbed } from '@/components/ui/SpotifyEmbed'
 import { Appear } from '@/components/ui/Reveal'
-import { Sher } from '@/components/kalaam/Sher'
 
 type Props = { params: Promise<{ lang: string }> }
 
@@ -21,14 +20,14 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = await params
   if (!isLocale(lang)) return {}
   const d = getDictionary(lang)
-  return pageMetadata(lang, 'sound', { title: d.sound.title, description: d.sound.intro })
+  return pageMetadata(lang, 'albums', { title: d.albums.title, description: d.albums.intro })
 }
 
-export default async function SoundPage({ params }: Props) {
+export default async function AlbumsPage({ params }: Props) {
   const { lang } = await params
   if (!isLocale(lang)) notFound()
   const d = getDictionary(lang)
-  const t = d.sound
+  const t = d.albums
   const other = lang === 'en' ? ur : en
   const [debut, upcoming] = albums
   const tracks = getAlbumTracks(debut.slug)
@@ -36,7 +35,7 @@ export default async function SoundPage({ params }: Props) {
 
   return (
     <>
-      <PageHeader title={t.title} alt={other.sound.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={t.intro} />
+      <PageHeader title={t.title} alt={other.albums.title} altLang={lang === 'en' ? 'ur' : 'en'} intro={t.intro} />
 
       {/* Debut album */}
       <section className="wrap grid gap-12 md:grid-cols-12" aria-labelledby="debut">
@@ -131,11 +130,24 @@ export default async function SoundPage({ params }: Props) {
               </a>
             </div>
           </div>
-          {/* Cover placeholder: the title's own ghazal stands in until the artwork is ready. */}
-          {upcomingPoem && (
-            <Link href={href(lang, `kalaam/${upcomingPoem.slug}`)} className="group block rounded-[2rem] border border-white/15 p-8 transition-colors hover:border-gold/60">
-              <Sher lines={upcomingPoem.shers[2]} size="md" className="mx-auto text-white/90" />
-            </Link>
+          {upcoming.cover && (
+            <figure className="md:order-first">
+              <img
+                src={upcoming.cover}
+                alt={`${upcoming.title.en} album cover`}
+                width={960}
+                height={960}
+                loading="lazy"
+                className="aspect-square w-full rounded-[2rem] object-cover shadow-2xl shadow-black/40"
+              />
+              {upcomingPoem && (
+                <figcaption className="mt-4 text-sm opacity-80">
+                  <Link href={href(lang, `kalaam/${upcomingPoem.slug}`)} className="link">
+                    {t.titleGhazal}
+                  </Link>
+                </figcaption>
+              )}
+            </figure>
           )}
         </div>
       </section>

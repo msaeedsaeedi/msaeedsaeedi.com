@@ -1,6 +1,6 @@
 import type { Locale } from '@/i18n/config'
 
-export const navItems = ['builds', 'journey', 'kalaam', 'sound', 'self'] as const
+export const navItems = ['builds', 'journey', 'kalaam', 'albums', 'self'] as const
 export type NavKey = (typeof navItems)[number] | 'contact' | 'home'
 
 export function href(locale: Locale, path = ''): string {

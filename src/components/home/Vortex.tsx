@@ -3,8 +3,8 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
 
 /**
- * VortexMe's emblem: rings of state orbiting a core, each at its own speed,
- * the outer (staler) rings fading. Leans toward the cursor.
+ * VortexMe's emblem: an orchestrator at the core with agents orbiting it, each on
+ * its own ring and at its own speed. Leans toward the cursor.
  */
 export function Vortex() {
   const mx = useMotionValue(0)

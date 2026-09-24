@@ -63,7 +63,7 @@ export function Cursor() {
           width: size,
           height: size,
           scale: pressed ? 0.85 : 1,
-          backgroundColor: label ? 'var(--rose)' : 'rgba(0,0,0,0)',
+          backgroundColor: label ? 'rgba(200,52,90,1)' : hovering ? 'rgba(200,52,90,0.12)' : 'rgba(200,52,90,0)',
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 26 }}
       >

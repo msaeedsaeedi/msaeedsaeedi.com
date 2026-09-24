@@ -86,7 +86,7 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
           </button>
         </div>
       ) : (
-        <ul className="grid border-t border-line md:grid-cols-2">
+        <ul dir="rtl" className="grid border-t border-line md:grid-cols-2">
           <AnimatePresence initial={false}>
             {shown.map((p) => (
               <motion.li
@@ -110,7 +110,11 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
                       </span>
                     )}
                   </div>
-                  {locale === 'en' && <p className="meta -mt-3 italic">{p.title}</p>}
+                  {locale === 'en' && (
+                    <p dir="ltr" lang="en" className="meta -mt-3 text-end italic">
+                      {p.title}
+                    </p>
+                  )}
                   <div lang="ur" dir="rtl" className="font-gulzar max-w-[26rem] text-[1.15rem] leading-[2.1] text-ink-2 transition-colors group-hover:text-ink">
                     {p.matla.map((l, i) => (
                       <span key={i} className="misra">
@@ -118,7 +122,7 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
                       </span>
                     ))}
                   </div>
-                  <p className="meta">{p.shersText}</p>
+                  <p dir={locale === 'en' ? 'ltr' : 'rtl'} className="meta text-end">{p.shersText}</p>
                 </Link>
               </motion.li>
             ))}

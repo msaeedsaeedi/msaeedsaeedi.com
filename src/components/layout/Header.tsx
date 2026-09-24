@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import type { Dictionary } from '@/i18n/en'
 import type { Locale } from '@/i18n/config'
 import { href, navItems } from '@/lib/routes'
+import { isMultilingual } from '@/i18n/config'
 import { LanguageSwitch } from './LanguageSwitch'
 import { Logo } from './Logo'
 import { ThemeToggle } from './ThemeToggle'
@@ -63,7 +64,7 @@ export function Header({ locale, nav, controls, homeLabel }: Props) {
                     <Link
                       href={href(locale, key)}
                       aria-current={isActive(key) ? 'page' : undefined}
-                      className="relative block rounded-full px-4 py-2 text-[0.95rem] font-medium text-ink-2 transition-colors hover:text-ink aria-[current=page]:text-ink"
+                      className="group relative block rounded-full px-4 py-2 text-[0.95rem] font-medium text-ink-2 transition-colors hover:text-ink aria-[current=page]:text-ink"
                     >
                       {isActive(key) && (
                         <motion.span
@@ -72,7 +73,14 @@ export function Header({ locale, nav, controls, homeLabel }: Props) {
                           transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                         />
                       )}
-                      {nav[key]}
+                      <span className="relative">
+                        {nav[key]}
+                        {/* Hover underline: draws in from the start edge. */}
+                        <span
+                          aria-hidden
+                          className="absolute inset-x-0 -bottom-1 h-[1.5px] origin-left scale-x-0 rounded-full bg-rose transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100 group-focus-visible:scale-x-100 rtl:origin-right"
+                        />
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -83,7 +91,7 @@ export function Header({ locale, nav, controls, homeLabel }: Props) {
               <Link href={href(locale, 'contact')} className="btn btn-solid hidden !py-2.5 lg:inline-flex">
                 {nav.contact}
               </Link>
-              <LanguageSwitch locale={locale} label={controls.language} short={controls.languageShort} />
+              {isMultilingual && <LanguageSwitch locale={locale} label={controls.language} short={controls.languageShort} />}
               <ThemeToggle labels={controls} />
               <button
                 type="button"

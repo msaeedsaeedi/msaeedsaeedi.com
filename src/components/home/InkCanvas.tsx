@@ -2,40 +2,60 @@
 
 import { useEffect, useRef } from 'react'
 
-type Pt = { x: number; y: number; t: number }
+/** Tune the pen here. Every value is a plain number so it's easy to experiment. */
+export const INK_DEFAULTS = {
+  /** Thickest stroke, drawn when the pen moves slowly (px). */
+  maxWidth: 9,
+  /** Thinnest stroke, drawn on fast flicks (px). */
+  minWidth: 1.2,
+  /** Speed (px/frame) at which the stroke reaches its thinnest. */
+  fastSpeed: 38,
+  /** Angle of the broad nib, like a qalam held for Nastaliq (degrees). */
+  nibAngle: -40,
+  /** How much the nib angle shapes the width, 0 = round brush, 1 = pure broad nib. */
+  nibInfluence: 0.55,
+  /** How closely the pen follows the cursor, 0..1. Lower = smoother, lazier. */
+  follow: 0.28,
+  /** How quickly ink dries away, 0..1 per frame. Lower = trails last longer. */
+  dryRate: 0.032,
+  /** Selector for elements the pen lifts over. Ink lives in the negative space. */
+  avoid: 'a, button, input, h1, h2, p, img, figure, [data-ink-avoid]',
+}
 
-const LIFE = 1600 // ms a stroke stays visible
-const NIB = (-38 * Math.PI) / 180 // a broad nib held at an angle, like a qalam
+type Options = Partial<typeof INK_DEFAULTS>
 
 /**
- * The hero's signature: the pointer writes with a calligrapher's broad nib.
- * Stroke width comes from the nib angle against the direction of travel, so
- * curves thicken and thin the way Nastaliq does. A short demo stroke plays on
- * load to show that the page can be written on. Disabled for reduced motion.
+ * Cursor calligraphy for the hero. A pen glides after the pointer (so strokes are
+ * smooth even when the mouse is jittery), its width set by speed and nib angle.
+ * It lifts over text, buttons and the portrait, so it never scribbles on content,
+ * and the ink dries away on its own. Off for touch, reduced motion, or when disabled.
  */
-export function InkCanvas({ className }: { className?: string }) {
+export function InkCanvas({ className, enabled = true, options }: { className?: string; enabled?: boolean; options?: Options }) {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     const canvas = ref.current
-    if (!canvas) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!canvas || !enabled) return
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!fine || reduce) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
+    const o = { ...INK_DEFAULTS, ...options }
+    const nib = (o.nibAngle * Math.PI) / 180
 
-    let pts: Pt[] = []
-    let raf = 0
-    let running = false
     let w = 0
     let h = 0
-    let nib = 16
-    let rose = '#a3203f'
-    let gold = '#8d6a22'
+    let raf = 0
+    let visible = true
+    let ink = '#a3203f'
+    // Pointer target and the pen chasing it.
+    const target = { x: 0, y: 0, down: false }
+    const pen = { x: 0, y: 0, width: o.minWidth, active: false }
+    let inkLeft = 0 // frames of drying left before the loop can idle
 
-    const readColors = () => {
-      const cs = getComputedStyle(document.documentElement)
-      rose = cs.getPropertyValue('--rose').trim() || rose
-      gold = cs.getPropertyValue('--gold').trim() || gold
+    const readColor = () => {
+      ink = getComputedStyle(document.documentElement).getPropertyValue('--rose').trim() || ink
     }
 
     const resize = () => {
@@ -46,106 +66,118 @@ export function InkCanvas({ className }: { className?: string }) {
       canvas.width = Math.round(w * dpr)
       canvas.height = Math.round(h * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      nib = Math.max(10, Math.min(22, w / 70))
     }
 
-    const add = (x: number, y: number) => {
-      const last = pts[pts.length - 1]
-      const now = performance.now()
-      if (last && Math.hypot(x - last.x, y - last.y) < 2) return
-      // Interpolate long jumps so fast flicks stay continuous.
-      if (last) {
-        const d = Math.hypot(x - last.x, y - last.y)
-        const steps = Math.min(12, Math.floor(d / 14))
-        for (let i = 1; i < steps; i++) {
-          const k = i / steps
-          pts.push({ x: last.x + (x - last.x) * k, y: last.y + (y - last.y) * k, t: now })
+    const segment = (x0: number, y0: number, x1: number, y1: number, w0: number, w1: number) => {
+      // A filled quad with round caps: no seams, no overlap artefacts.
+      const dx = x1 - x0
+      const dy = y1 - y0
+      const len = Math.hypot(dx, dy) || 1
+      const nx = -dy / len
+      const ny = dx / len
+      ctx.beginPath()
+      ctx.moveTo(x0 + nx * w0, y0 + ny * w0)
+      ctx.lineTo(x1 + nx * w1, y1 + ny * w1)
+      ctx.lineTo(x1 - nx * w1, y1 - ny * w1)
+      ctx.lineTo(x0 - nx * w0, y0 - ny * w0)
+      ctx.closePath()
+      ctx.fill()
+      ctx.beginPath()
+      ctx.arc(x1, y1, w1, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    const frame = () => {
+      raf = 0
+      // Dry the ink: fade everything already on the canvas a little.
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.fillStyle = `rgba(0,0,0,${o.dryRate})`
+      ctx.fillRect(0, 0, w, h)
+      ctx.globalCompositeOperation = 'source-over'
+
+      if (target.down) {
+        if (!pen.active) {
+          pen.x = target.x
+          pen.y = target.y
+          pen.width = o.minWidth
+          pen.active = true
+        } else {
+          const nx = pen.x + (target.x - pen.x) * o.follow
+          const ny = pen.y + (target.y - pen.y) * o.follow
+          const dx = nx - pen.x
+          const dy = ny - pen.y
+          const speed = Math.hypot(dx, dy)
+          if (speed > 0.4) {
+            const bySpeed = o.maxWidth - (o.maxWidth - o.minWidth) * Math.min(1, speed / o.fastSpeed)
+            const angle = Math.atan2(dy, dx)
+            const byNib = Math.abs(Math.sin(angle - nib))
+            const wanted = Math.max(o.minWidth, bySpeed * (1 - o.nibInfluence + o.nibInfluence * byNib))
+            const next = pen.width + (wanted - pen.width) * 0.35
+            ctx.fillStyle = ink
+            ctx.globalAlpha = 0.85
+            segment(pen.x, pen.y, nx, ny, pen.width / 2, next / 2)
+            ctx.globalAlpha = 1
+            pen.width = next
+            inkLeft = 130 // long enough for the ink to fully dry before the loop stops
+          }
+          pen.x = nx
+          pen.y = ny
         }
+      } else {
+        pen.active = false
       }
-      pts.push({ x, y, t: now })
-      start()
+
+      if (inkLeft > 0) inkLeft--
+      if (visible && (target.down || inkLeft > 0)) raf = requestAnimationFrame(frame)
+      else ctx.clearRect(0, 0, w, h)
     }
 
-    const draw = () => {
-      const now = performance.now()
-      pts = pts.filter((p) => now - p.t < LIFE)
-      ctx.clearRect(0, 0, w, h)
-      const nx = Math.cos(NIB)
-      const ny = Math.sin(NIB)
-      for (let i = 1; i < pts.length; i++) {
-        const a = pts[i - 1]
-        const b = pts[i]
-        if (b.t - a.t > 120) continue // lifted pen
-        const age = (now - b.t) / LIFE
-        const fade = 1 - age * age
-        const half = (nib / 2) * (0.35 + 0.65 * fade)
-        ctx.globalAlpha = 0.9 * fade
-        ctx.fillStyle = i % 9 === 0 ? gold : rose
-        ctx.beginPath()
-        ctx.moveTo(a.x + nx * half, a.y + ny * half)
-        ctx.lineTo(b.x + nx * half, b.y + ny * half)
-        ctx.lineTo(b.x - nx * half, b.y - ny * half)
-        ctx.lineTo(a.x - nx * half, a.y - ny * half)
-        ctx.closePath()
-        ctx.fill()
-      }
-      ctx.globalAlpha = 1
-      if (pts.length) raf = requestAnimationFrame(draw)
-      else running = false
-    }
-
-    const start = () => {
-      if (running) return
-      running = true
-      raf = requestAnimationFrame(draw)
+    const kick = () => {
+      if (!raf) raf = requestAnimationFrame(frame)
     }
 
     const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return
       const r = canvas.getBoundingClientRect()
       const x = e.clientX - r.left
       const y = e.clientY - r.top
-      if (x < 0 || y < 0 || x > r.width || y > r.height) return
-      if (e.pointerType === 'touch' && e.buttons === 0) return
-      add(x, y)
+      const inside = x >= 0 && y >= 0 && x <= r.width && y <= r.height
+      const over = (e.target as Element | null)?.closest?.(o.avoid)
+      target.x = x
+      target.y = y
+      // Lift the pen over content; put it down again in empty space.
+      target.down = inside && !over
+      kick()
+    }
+    const onLeave = () => {
+      target.down = false
+      kick()
     }
 
-    // Demo stroke: one sweeping swash, right to left like a line of Urdu, ending in a small loop.
-    let demoRaf = 0
-    const demo = () => {
-      const t0 = performance.now()
-      const R = Math.min(w, h) * 0.18
-      const x0 = w * 0.62
-      const y0 = h * 0.42
-      const step = () => {
-        const k = (performance.now() - t0) / 1300
-        if (k > 1) return
-        const e = 1 - Math.pow(1 - k, 2)
-        const x = x0 - e * R * 2.4 + Math.sin(e * Math.PI * 3) * R * 0.18 * e
-        const y = y0 + Math.sin(e * Math.PI * 1.15) * R * 0.75 - Math.cos(e * Math.PI * 3) * R * 0.12 * e
-        add(x, y)
-        demoRaf = requestAnimationFrame(step)
-      }
-      step()
-    }
-
-    readColors()
+    readColor()
     resize()
     const ro = new ResizeObserver(resize)
     ro.observe(canvas)
-    const mo = new MutationObserver(readColors)
+    const mo = new MutationObserver(readColor)
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      if (visible) kick()
+    })
+    io.observe(canvas)
     window.addEventListener('pointermove', onMove, { passive: true })
-    const demoTimer = window.setTimeout(demo, 1400)
+    document.addEventListener('pointerleave', onLeave)
 
     return () => {
       cancelAnimationFrame(raf)
-      cancelAnimationFrame(demoRaf)
-      clearTimeout(demoTimer)
       ro.disconnect()
       mo.disconnect()
+      io.disconnect()
       window.removeEventListener('pointermove', onMove)
+      document.removeEventListener('pointerleave', onLeave)
+      ctx.clearRect(0, 0, w, h)
     }
-  }, [])
+  }, [enabled, options])
 
   return <canvas ref={ref} aria-hidden className={className} />
 }

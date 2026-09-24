@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Download, Mail } from 'lucide-react'
-import { domains, education, leadership, roles, toolbox } from '@content/journey'
+import { domains, education, leadership, learning, roles, toolbox } from '@content/journey'
 import { site } from '@content/site'
 import { isLocale, type Locale } from '@/i18n/config'
 import { getDictionary } from '@/i18n'
@@ -91,6 +91,21 @@ export default async function JourneyPage({ params }: Props) {
                 <p className="mt-3 text-ink">{dm.body[lang]}</p>
                 <p className="meta mt-6 border-t border-line pt-4">{dm.evidence[lang]}</p>
               </Spotlight>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="wrap mt-28 grid gap-12 md:grid-cols-12" aria-labelledby="learning">
+        <h2 id="learning" className="h3 md:col-span-3">{t.learningTitle}</h2>
+        <ul className="grid gap-4 sm:grid-cols-3 md:col-span-9">
+          {learning.map((l) => (
+            <li key={l.title.en} className="rounded-[1.5rem] border border-dashed border-gold/60 p-6">
+              <p className="font-semibold leading-snug">{l.title[lang]}</p>
+              <p className="meta mt-2 flex items-center gap-2">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" aria-hidden />
+                {l.note[lang]}
+              </p>
             </li>
           ))}
         </ul>

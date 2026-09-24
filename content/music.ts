@@ -1,4 +1,4 @@
-// Albums for /sound. Track → poem mapping lives in each poem's frontmatter (spotifyTrack, trackNo).
+// Albums for /albums. Track → poem mapping lives in each poem's frontmatter (spotifyTrack, trackNo).
 import type { L } from '@/i18n/config'
 
 export type Album = {
@@ -28,8 +28,8 @@ export const albums: Album[] = [
     slug: 'wehm-e-kham-e-khayal',
     title: { en: 'Wehm-e-Kham-e-Khayal', ur: 'وہمِ خامِ خیال' },
     status: 'upcoming',
-    // Drop artwork at public/images/music/wehm-e-kham-e-khayal.jpg and set the path here.
-    cover: null,
+    // Source: assets/music/wehm-e-kham-e-khayal.png (resized by `bun run images`).
+    cover: '/images/music/wehm-e-kham-e-khayal.jpg',
     spotifyId: null,
     trackCount: 3,
     poems: ['wehm-e-kham-e-khayal'],

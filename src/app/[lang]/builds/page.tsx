@@ -48,7 +48,7 @@ export default async function BuildsPage({ params }: Props) {
             {alsoOnGithub.map((r) => (
               <li key={r.name}>
                 <a href={r.href} target="_blank" rel="noopener noreferrer" className="group flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-4">
-                  <span className="latin font-semibold transition-colors group-hover:text-rose">{r.name}</span>
+                  <span className="latin link font-semibold">{r.name}</span>
                   <span className="text-ink-2">{r.note[lang]}</span>
                 </a>
               </li>

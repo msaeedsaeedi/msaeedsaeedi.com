@@ -30,11 +30,11 @@ export const roles: Role[] = [
     orgUr: 'پرائم انوویٹرز',
     title: { en: 'Founder and CEO', ur: 'بانی اور سی ای او' },
     start: '2025-11',
-    end: null,
+    end: '2026-07',
     place: { en: 'Islamabad', ur: 'اسلام آباد' },
     summary: {
-      en: 'Founded an open-source talent ecosystem for Pakistan. Lead a ten-person team and architected the platform from research to MVP.',
-      ur: 'پاکستان کے لیے اوپن سورس ٹیلنٹ کا ماحول قائم کیا۔ دس افراد کی ٹیم کی قیادت، اور تحقیق سے MVP تک پلیٹ فارم کا پورا ڈھانچہ۔',
+      en: 'Founded an open-source talent ecosystem for Pakistan. Led a ten-person team and architected the platform from research to MVP, then paused it when AI changed the problem.',
+      ur: 'پاکستان کے لیے اوپن سورس ٹیلنٹ کا ماحول قائم کیا۔ دس رکنی ٹیم کی قیادت کی اور تحقیق سے MVP تک پلیٹ فارم کا ڈھانچہ بنایا، پھر اے آئی کے بعد مسئلہ بدلنے پر اسے روک دیا۔',
     },
     domain: 'leadership',
   },
@@ -143,7 +143,8 @@ export const domains: { id: string; title: L; body: L; evidence: L }[] = [
 export const toolbox: { group: L; items: string[] }[] = [
   { group: { en: 'Frontend', ur: 'فرنٹ اینڈ' }, items: ['TypeScript', 'React', 'Next.js', 'Angular', 'RxJS', 'Tailwind CSS'] },
   { group: { en: 'Backend', ur: 'بیک اینڈ' }, items: ['Node.js', 'NestJS', 'Express', 'Prisma', 'PostgreSQL', 'Redis', 'Go', 'Rust'] },
-  { group: { en: 'Infrastructure', ur: 'انفراسٹرکچر' }, items: ['Docker', 'Kubernetes', 'Traefik', 'GitHub Actions', 'Cloudflare', 'Turborepo'] },
+  { group: { en: 'Infrastructure', ur: 'انفراسٹرکچر' }, items: ['Docker', 'Kubernetes', 'AWS', 'Traefik', 'GitHub Actions', 'Cloudflare', 'Turborepo'] },
+  { group: { en: 'AI', ur: 'اے آئی' }, items: ['LangGraph', 'Multi-agent systems', 'Human-in-the-loop design'] },
   { group: { en: 'Product', ur: 'پروڈکٹ' }, items: ['Figma', 'Linear', 'ClickUp', 'Roadmapping', 'Sprint planning'] },
 ]
 
@@ -165,3 +166,10 @@ export const leadership = {
     ur: 'اساتذہ اور انتظامیہ کے سامنے طلبہ کی نمائندگی، اور کیمپس و بین الکلیاتی تقریبات کا انتظام۔',
   } satisfies L,
 }
+
+/** What I'm studying now. Update as certifications land. */
+export const learning: { title: L; note: L }[] = [
+  { title: { en: 'AWS Certified Cloud Practitioner', ur: 'AWS سرٹیفائیڈ کلاؤڈ پریکٹیشنر' }, note: { en: 'Preparing', ur: 'تیاری جاری' } },
+  { title: { en: 'AWS Certified Solutions Architect – Associate', ur: 'AWS سرٹیفائیڈ سولیوشنز آرکیٹیکٹ، ایسوسی ایٹ' }, note: { en: 'Preparing', ur: 'تیاری جاری' } },
+  { title: { en: 'Agentic AI', ur: 'ایجنٹک اے آئی' }, note: { en: 'Multi-agent orchestration, applied in VortexMe', ur: 'ملٹی ایجنٹ نظام، ووَرٹیکس می میں عملی طور پر' } },
+]
