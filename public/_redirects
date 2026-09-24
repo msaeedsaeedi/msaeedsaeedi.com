@@ -1,0 +1,21 @@
+# Cloudflare Workers Static Assets redirects: [source] [destination] [code]
+# Served without running a Worker. English-only for now (publishedLocales in src/i18n/config.ts).
+# When Urdu ships, `/` can't pick a language from a cookie or Accept-Language here, since these
+# rules can't read request headers. See "Locale routing" in CLAUDE.md.
+/ /en 302
+
+# Old URLs from the previous site.
+/en/work /en/journey 301
+/ur/work /ur/journey 301
+/en/music /en/albums 301
+/ur/music /ur/albums 301
+/en/sound /en/albums 301
+/ur/sound /ur/albums 301
+/en/connect /en/contact 301
+/ur/connect /ur/contact 301
+/en/about /en/self 301
+/ur/about /ur/self 301
+/en/poetry /en/kalaam 301
+/ur/poetry /ur/kalaam 301
+/en/poetry/* /en/kalaam/:splat 301
+/ur/poetry/* /ur/kalaam/:splat 301

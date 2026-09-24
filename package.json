@@ -10,12 +10,10 @@
     "dev": "next dev",
     "prebuild": "node scripts/build-kalaam.mjs",
     "build": "next build",
-    "start": "next start",
     "typecheck": "node scripts/build-kalaam.mjs && tsc --noEmit",
     "images": "node scripts/optimize-images.mjs",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "preview": "bun run build && wrangler dev",
+    "deploy": "bun run build && wrangler deploy"
   },
   "author": "Mohammad Saeed <imsaeedsaeedi@gmail.com>",
   "license": "UNLICENSED",
@@ -33,7 +31,6 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.6",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.2",
     "@types/react": "^19.3.0",
@@ -42,5 +39,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "5",
     "wrangler": "^4.137.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

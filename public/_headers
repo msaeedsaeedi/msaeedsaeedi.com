@@ -1,0 +1,11 @@
+# Cloudflare Workers Static Assets headers.
+
+# Hashed build output never changes under the same URL.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The OG image has no file extension, so Cloudflare can't infer its type.
+/en/opengraph-image
+  Content-Type: image/png
+/ur/opengraph-image
+  Content-Type: image/png

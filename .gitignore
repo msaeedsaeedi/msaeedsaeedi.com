@@ -4,10 +4,8 @@ node_modules/
 # next / cloudflare build output
 .next/
 out/
-.open-next/
 .wrangler/
 .dev.vars*
-cloudflare-env.d.ts
 
 # misc
 .DS_Store
@@ -26,3 +24,6 @@ next-env.d.ts
 .claude/settings.local.json
 src/generated/
 *:Zone.Identifier
+
+# agent worktrees
+.claude/worktrees/

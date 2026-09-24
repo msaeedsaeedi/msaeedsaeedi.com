@@ -1,9 +1,9 @@
 # msaeedsaeedi.com
 
 Personal site of Mohammad Saeed: product builder, engineer, and Urdu poet (pen name **Saeedi / سعیدی**).
-Built bilingual (English + Urdu, RTL), multi-page, light/dark themes, deployed to **Cloudflare Workers** via OpenNext.
+Built bilingual (English + Urdu, RTL), multi-page, light/dark themes, deployed to **Cloudflare Workers Static Assets** as a Next.js static export (no Worker script runs).
 
-**Release status: English only.** Urdu is fully wired but unpublished until its copy is reviewed by hand. The switch is `publishedLocales` in `src/i18n/config.ts` (plus the commented Urdu redirects in `next.config.ts`). Keep `ur.ts` compiling and in sync; don't delete Urdu code.
+**Release status: English only.** Urdu is fully wired but unpublished until its copy is reviewed by hand. The switch is `publishedLocales` in `src/i18n/config.ts` (plus the `/` redirect in `public/_redirects`). Keep `ur.ts` compiling and in sync; don't delete Urdu code.
 
 ## Commands (use bun)
 
@@ -12,7 +12,7 @@ Built bilingual (English + Urdu, RTL), multi-page, light/dark themes, deployed t
 | Dev server | `bun run dev` (compiles poems first) |
 | Production build | `bun run build` |
 | Type check | `bun run typecheck` |
-| Cloudflare local preview (real workerd runtime) | `bun run preview` |
+| Cloudflare local preview (serves `out/` like production) | `bun run preview` |
 | Deploy to Cloudflare | `bun run deploy` (needs `wrangler login`) |
 | Regenerate portrait images | `bun run images` (from `assets/profile.png`) |
 
@@ -40,7 +40,7 @@ assets/profile.png       full-size portrait source (not shipped)
 
 ## Rules that matter
 
-- **No filesystem access at runtime.** Workers has no `fs`. Poems are compiled to JSON at build time; everything else is TS imports. Every route is statically generated (`generateStaticParams` + `dynamicParams = false`).
+- **Static export only (`output: 'export'`).** There is no server at runtime: no route handlers that read the request, server actions, cookies, headers, middleware/proxy, ISR or `next.config` redirects/headers. Every route is statically generated (`generateStaticParams` + `dynamicParams = false`). Poems are compiled to JSON at build time. Adding a server feature would put a billed Worker back in front of every page, so don't.
 - **Bilingual everything.** Any user-visible string goes in both `en.ts` and `ur.ts`, or as an `L` (`{ en, ur }`) in `content/`. Urdu copy is written for Urdu readers, not translated word for word. Use Urdu digits in Urdu (`localDigits`, `urduDigits` in `src/lib/format.ts`).
 - **RTL:** use logical Tailwind utilities (`ms-/me-/ps-/pe-/start-/end-/text-start`), never `ml-/mr-/left-/right-` for layout. Wrap Latin names inside Urdu text with the `latin` class.
 - **Poetry is always Urdu** (`lang="ur" dir="rtl"`, `font-gulzar`). Misre are justified to one width via `.sher` / `.misra`.
@@ -48,7 +48,7 @@ assets/profile.png       full-size portrait source (not shipped)
 - **Colour tokens** live in `src/app/globals.css` (`--paper --paper-2 --ink --ink-2 --line --rose --gold`), redefined under `.dark`. Use `bg-paper`, `text-ink`, `text-rose`, etc. Palette comes from the portrait (navy) and the Gulab-e-Suman cover (crimson, gold).
 - **Motion:** `motion/react`. Every animation respects reduced motion (`MotionConfig reducedMotion="user"` plus CSS). Headings use `<Rise>`, supporting blocks `<Appear>`. Don't add fade-ups to every section.
 - **Icons:** `lucide-react` for UI, `react-icons` (`si`, `fa6`) for brands via `components/ui/SocialIcon.tsx`.
-- **Locale routing:** `/` redirects to `/en` in `next.config.ts`. When Urdu ships, uncomment the cookie / `Accept-Language` rules there. No middleware.
+- **Locale routing:** `/` redirects to `/en` in `public/_redirects` (Cloudflare syntax; old-site URLs are there too). Those rules can't read cookies or `Accept-Language`, so when Urdu ships, choose the language on the client (e.g. a tiny script on a static `/` page) or add a Worker limited to `/` with `run_worker_first: ["/"]`. Never route every page through a Worker.
 - **Poetry pages stay RTL even on /en**: the poet intro is the Urdu one, and poem lists/nav flow right to left.
 - **Facts to respect:** Saeed does not sing; the albums were produced by a production house that must not be named. Prime Innovators is paused (July 2026). Vocab no longer mentions Lexicon, and is an experimental R&D project, not shipped. Slotty is in design, not shipped, and open to contributors.
 - **Links must look clickable:** use `.link` for inline links (quiet underline, rose on hover); nav items get a hover underline.
@@ -88,9 +88,12 @@ The build fails loudly if a sher doesn't have exactly two lines.
 
 ## Cloudflare notes
 
-- OpenNext config: `open-next.config.ts` uses the static-assets incremental cache (prerendered pages are served from Workers Static Assets; no KV/R2 needed). `preview`/`deploy` populate it automatically.
-- `wrangler.jsonc`: add a `routes` custom-domain entry after the first deploy.
-- `next.config.ts` has `images.unoptimized` because Workers has no sharp; pre-size images with `bun run images`.
+- `next build` writes the static site to `out/`. `wrangler.jsonc` is an **assets-only Worker** (no `main`): Cloudflare serves every file, including the router's `?_rsc=` prefetches (`__next.*.txt`), from Workers Static Assets. Those requests are free and don't count as Worker invocations.
+- `html_handling: auto-trailing-slash` maps `/en/contact` to `out/en/contact.html`; `not_found_handling: 404-page` serves `out/404.html` (the global not-found page).
+- `public/_redirects` and `public/_headers` replace `next.config` redirects and headers (Cloudflare syntax). `_headers` also sets `Content-Type: image/png` on the extensionless `opengraph-image` files.
+- The custom domain is attached in the dashboard (Worker > Settings > Domains & Routes).
+- `images.unoptimized` is set because there is no image server; pre-size images with `bun run images`.
+- **Before deploying, run `bun run preview`** and watch the Network tab: prefetches should be `__next.*.txt` files, a few dozen per page, then quiet.
 
 ## Open items (waiting on the owner)
 
