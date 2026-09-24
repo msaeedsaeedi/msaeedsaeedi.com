@@ -2,7 +2,7 @@
 # Served without running a Worker. English-only for now (publishedLocales in src/i18n/config.ts).
 # When Urdu ships, `/` can't pick a language from a cookie or Accept-Language here, since these
 # rules can't read request headers. See "Locale routing" in CLAUDE.md.
-/ /en 302
+/ /en 301
 
 # Old URLs from the previous site.
 /en/work /en/journey 301
