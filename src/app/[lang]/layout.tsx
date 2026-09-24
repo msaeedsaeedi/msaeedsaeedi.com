@@ -1,42 +1,103 @@
-import type { ReactNode } from 'react'
+import type { Metadata, Viewport } from 'next'
+import { Bricolage_Grotesque, Gulzar, Newsreader, Noto_Nastaliq_Urdu } from 'next/font/google'
 import { notFound } from 'next/navigation'
-import { LocaleProvider } from '@/lib/LocaleContext'
-import { getMessages } from '@/lib/messages'
-import { HtmlAttributes } from '@/components/HtmlAttributes'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
-import { Cursor } from '@/components/Cursor'
-import { ProgressBar } from '@/components/ProgressBar'
-import type { Locale } from '@/i18n/types'
+import type { ReactNode } from 'react'
+import { site, socials } from '@content/site'
+import { isLocale, localeMeta, locales } from '@/i18n/config'
+import { getDictionary } from '@/i18n'
+import { pageMetadata } from '@/lib/metadata'
+import { Providers } from '@/components/layout/Providers'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { Cursor } from '@/components/layout/Cursor'
+import '../globals.css'
 
-const LOCALES: Locale[] = ['en', 'ur']
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage',
+  axes: ['wdth', 'opsz'],
+  display: 'swap',
+})
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  variable: '--font-newsreader',
+  style: ['normal', 'italic'],
+  axes: ['opsz'],
+  display: 'swap',
+})
+// Urdu faces are large; let the browser fetch them only when Urdu glyphs appear.
+const gulzar = Gulzar({ subsets: ['arabic'], weight: '400', variable: '--font-gulzar-face', display: 'swap', preload: false })
+const nastaliq = Noto_Nastaliq_Urdu({ subsets: ['arabic'], variable: '--font-noto-nastaliq', display: 'swap', preload: false })
 
-export async function generateStaticParams() {
-  return LOCALES.map((lang) => ({ lang }))
+export const dynamicParams = false
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }))
 }
 
-export default function LangLayout({
-  children,
-  params,
-}: {
-  children: ReactNode
-  params: { lang: Locale }
-}) {
-  const { lang } = params
-  if (!LOCALES.includes(lang)) {
-    notFound()
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+  if (!isLocale(lang)) return {}
+  const dict = getDictionary(lang)
+  return {
+    ...pageMetadata(lang, ''),
+    metadataBase: new URL(site.url),
+    title: { default: `${dict.meta.siteTitle}, ${dict.meta.tagline}`, template: `%s | ${dict.meta.siteTitle}` },
+    applicationName: dict.meta.siteTitle,
+    authors: [{ name: site.fullName.en, url: site.url }],
+    creator: site.fullName.en,
+  }
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#eceef3' },
+    { media: '(prefers-color-scheme: dark)', color: '#0c1022' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
+}
+
+export default async function RootLayout({ children, params }: { children: ReactNode; params: Promise<{ lang: string }> }) {
+  const { lang } = await params
+  if (!isLocale(lang)) notFound()
+  const dict = getDictionary(lang)
+  const { dir, htmlLang } = localeMeta[lang]
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.fullName.en,
+    alternateName: [site.name.en, site.penName.en, site.fullName.ur],
+    url: site.url,
+    image: `${site.url}${site.portrait.square}`,
+    email: `mailto:${site.email}`,
+    jobTitle: 'Product builder and software engineer',
+    worksFor: [{ '@type': 'Organization', name: 'Prime Innovators' }, { '@type': 'Organization', name: 'CMOonTheGO' }],
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'FAST National University of Computer and Emerging Sciences' },
+    address: { '@type': 'PostalAddress', addressLocality: 'Islamabad', addressCountry: 'PK' },
+    knowsLanguage: ['en', 'ur'],
+    sameAs: socials.map((s) => s.href),
   }
 
-  const messages = getMessages(lang)
-
   return (
-    <LocaleProvider lang={lang} messages={messages}>
-      <HtmlAttributes lang={lang} />
-      <Header />
-      <Cursor />
-      <ProgressBar />
-      <main>{children}</main>
-      <Footer />
-    </LocaleProvider>
+    <html
+      lang={htmlLang}
+      dir={dir}
+      suppressHydrationWarning
+      className={`${bricolage.variable} ${newsreader.variable} ${gulzar.variable} ${nastaliq.variable}`}
+    >
+      <body>
+        <Providers>
+          <Cursor />
+          <Header locale={lang} nav={dict.nav} controls={dict.controls} homeLabel={dict.nav.home} />
+          <main id="main" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
+          <Footer locale={lang} dict={dict} />
+        </Providers>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      </body>
+    </html>
   )
 }

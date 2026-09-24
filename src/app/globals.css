@@ -1,0 +1,405 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Tokens. Palette is drawn from the two images that define the brand:
+   the navy of the portrait and the crimson + gold of the Gulab-e-Suman cover.
+   ------------------------------------------------------------------ */
+:root {
+  --paper: #eceef3; /* day: cool paper, the portrait's grey backdrop, lifted */
+  --paper-2: #e1e4ec;
+  --ink: #131a33; /* navy ink */
+  --ink-2: #545b76;
+  --line: color-mix(in oklab, var(--ink) 14%, transparent);
+  --rose: #a3203f; /* gulab */
+  --gold: #8d6a22; /* calligraphy gold, darkened for contrast on paper */
+  --glow: color-mix(in oklab, var(--rose) 22%, transparent);
+  color-scheme: light;
+}
+
+.dark {
+  --paper: #0c1022; /* shab: the suit's navy at midnight */
+  --paper-2: #151a31;
+  --ink: #ebe7ef;
+  --ink-2: #979db6;
+  --line: color-mix(in oklab, var(--ink) 13%, transparent);
+  --rose: #e8577a;
+  --gold: #d8b266;
+  --glow: color-mix(in oklab, var(--rose) 30%, transparent);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-line: var(--line);
+  --color-rose: var(--rose);
+  --color-gold: var(--gold);
+
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-nastaliq: var(--font-noto-nastaliq), 'Jameel Noori Nastaleeq', serif;
+  --font-gulzar: var(--font-gulzar-face), var(--font-noto-nastaliq), serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+/* Urdu: Nastaliq needs generous leading or the descenders collide. */
+:root[lang='ur'] body {
+  font-family: var(--font-nastaliq);
+  font-size: 1.0625rem;
+  line-height: 2.2;
+}
+
+::selection {
+  background: var(--rose);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Grain: a whisper of paper texture so flat colour doesn't feel digital. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark body::before {
+  mix-blend-mode: screen;
+  opacity: 0.035;
+}
+
+/* ------------------------------------------------------------------
+   Layout primitives
+   ------------------------------------------------------------------ */
+.wrap {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+.measure {
+  max-width: 38rem;
+}
+:root[lang='ur'] .measure {
+  max-width: 42rem;
+}
+
+/* ------------------------------------------------------------------
+   Type
+   ------------------------------------------------------------------ */
+.display {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-stretch: 88%;
+  letter-spacing: -0.032em;
+  line-height: 0.9;
+  font-variation-settings: 'opsz' 96;
+}
+
+.h1 {
+  font-size: clamp(3rem, 9vw, 8.5rem);
+}
+.h2 {
+  font-size: clamp(2rem, 4.6vw, 3.75rem);
+  line-height: 0.98;
+}
+.h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* Urdu headings are set in Gulzar; Nastaliq cannot be squeezed like a grotesque. */
+:root[lang='ur'] .display,
+:root[lang='ur'] .h3 {
+  font-family: var(--font-gulzar);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.7;
+  font-stretch: normal;
+}
+:root[lang='ur'] .h1 {
+  font-size: clamp(2.6rem, 7vw, 6.5rem);
+  line-height: 1.55;
+}
+:root[lang='ur'] .h2 {
+  font-size: clamp(1.9rem, 3.8vw, 3.2rem);
+  line-height: 1.7;
+}
+:root[lang='ur'] .h3 {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.9;
+}
+
+.lede {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.1vw, 1.7rem);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+:root[lang='ur'] .lede {
+  font-family: var(--font-nastaliq);
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  line-height: 2.2;
+  letter-spacing: 0;
+}
+
+.prose-serif {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.7;
+}
+:root[lang='ur'] .prose-serif {
+  font-family: var(--font-nastaliq);
+  font-size: 1.1rem;
+  line-height: 2.3;
+}
+
+.meta {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+:root[lang='ur'] .meta {
+  font-size: 0.85rem;
+  line-height: 2.1;
+}
+
+/* Latin fragments inside Urdu text (Kubernetes, CMOonTheGO…) keep Latin metrics. */
+.latin {
+  font-family: var(--font-sans);
+  unicode-bidi: isolate;
+}
+
+/* ------------------------------------------------------------------
+   Poetry. Each misra is justified to a shared width, the way ghazals are
+   set in print, so the couplet reads as one balanced shape.
+   ------------------------------------------------------------------ */
+.sher {
+  font-family: var(--font-gulzar);
+  direction: rtl;
+  line-height: 2.1;
+}
+.misra {
+  display: block;
+  text-align: justify;
+  text-align-last: justify;
+}
+.misra-center {
+  display: block;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------
+   Links & controls
+   ------------------------------------------------------------------ */
+.link-u {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  transition: background-size 0.5s var(--ease-out-expo);
+}
+.link-u:hover,
+.link-u:focus-visible {
+  background-size: 100% 1px;
+  background-position: 0% 100%;
+}
+:root[dir='rtl'] .link-u {
+  background-position: 0% 100%;
+}
+:root[dir='rtl'] .link-u:hover {
+  background-position: 100% 100%;
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.85em 1.4em;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    color 0.4s var(--ease-out-expo),
+    border-color 0.4s var(--ease-out-expo);
+}
+:root[lang='ur'] .btn {
+  font-weight: 400;
+  line-height: 1.9;
+  padding: 0.35em 1.3em 0.55em;
+}
+.btn-solid {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-solid::after,
+.btn-ghost::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--rose);
+  transform: translateY(101%);
+  border-radius: inherit;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+.btn-solid:hover::after,
+.btn-ghost:hover::after {
+  transform: translateY(0);
+}
+.btn-solid:hover {
+  color: #fff;
+}
+.btn-ghost {
+  border: 1px solid var(--line);
+}
+.btn-ghost:hover {
+  color: #fff;
+  border-color: var(--rose);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.2em 0.7em;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 0.8rem;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+:root[lang='ur'] .chip {
+  line-height: 2;
+  padding: 0 0.8em 0.15em;
+}
+
+/* Spotlight: cards light up where the cursor is (set by useSpotlight). */
+.spot {
+  position: relative;
+  isolation: isolate;
+}
+.spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s;
+  background: radial-gradient(28rem circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 60%);
+}
+.spot:hover::before {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------------
+   Theme switch: a circular wipe from the toggle via the View Transitions API.
+   ------------------------------------------------------------------ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0%));
+  animation: vt-reveal 0.8s var(--ease-in-out-circ) forwards;
+}
+@keyframes vt-reveal {
+  to {
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0%));
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Hide the native cursor only when the custom one is active. */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button {
+  cursor: none;
+}
+html.has-cursor input,
+html.has-cursor textarea {
+  cursor: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Latin names (VortexMe, clean-repo) keep the Latin display face on Urdu pages. */
+:root[lang='ur'] .display.latin {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-stretch: 85%;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
