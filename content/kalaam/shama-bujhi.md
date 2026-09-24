@@ -20,3 +20,20 @@ order: 23
 
 سُنا کے حالتِ قلب لب بَہ لب
 سَعیدی یہ تخیل مٹاؤں میں
+
+<!-- roman -->
+
+ae dil kya haalat-e-dil sunaaun main
+tumhen shama bujhi kya dikhaaun main
+
+charaagh-e-zeest bujhne ko aaye hai
+sana se aag phir kya jalaaun main
+
+mere ashaar sunta nahin koi
+dar-o-deewaar tum ko sunaaun main
+
+bahaar-e-nau sukhan mein mohabbat ko
+maani ba maani giraaun main
+
+suna ke haalat-e-qalb lab ba lab
+Saeedi ye takhayyul mitaaun main

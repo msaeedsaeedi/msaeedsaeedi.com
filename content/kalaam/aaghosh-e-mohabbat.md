@@ -26,3 +26,23 @@ trackNo: 7
 
 ہے سَعیدی تیری آغوشِ محبت
 تنہا اس میں تُو بڑا دو چار ہوگا
+
+<!-- roman -->
+
+sozish-e-anjaam se kohsaar hoga
+lamha teri deed ka sansaar hoga
+
+tegh-e-barg-e-gul se mere khoon ka qatra
+beh ke saamaan-e-lab-o-rukhsaar hoga
+
+deeda-e-zau-rez mein ik nakhuda sa
+saahil-e-jazbaat mein us paar hoga
+
+sang-e-ulfat se kuchal ke jism mera
+phir hina ke waaste tayyaar hoga
+
+rang-e-rasm-e-nau mehndi se ayaan hai
+tera koi aashiq-e-dildaar hoga
+
+hai Saeedi teri aaghosh-e-mohabbat
+tanha is mein tu bara do-chaar hoga

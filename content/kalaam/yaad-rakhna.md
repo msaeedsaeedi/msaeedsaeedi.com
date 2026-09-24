@@ -38,3 +38,38 @@ order: 15
 
 یہ صدائے نظر ہے سَعیدی
 آج کیا خواہشِ داد رکھنا
+
+<!-- roman -->
+
+aql ko dil se aazaad rakhna
+tum mohabbat ki miyaad rakhna
+
+ho sake to mohabbat mein dil ko
+girya-e-gham se aazaad rakhna
+
+baarha deeda-e-nam pe us ki
+tum sitam-raani ko yaad rakhna
+
+chaahne ko ye duniya nahin hai
+phir kyun dil mein dil-e-shaad rakhna
+
+hausla hijr ka hai agar to
+guftagu ki kya faryaad rakhna
+
+matlabi to milenge magar tum
+dost un mein pari-zaad rakhna
+
+aarzoo hai mohabbat ki to phir
+dil mein tum ek jallaad rakhna
+
+wasl hai zindagi mein tarab sa
+umr bhar tum use yaad rakhna
+
+aah ke lautna ab kathin hai
+aalam-e-dil ko aabaad rakhna
+
+tu nahin hai Khuda ka agar to
+phir kyun tab-e-khudaadaad rakhna
+
+ye sada-e-nazar hai Saeedi
+aaj kya khwaahish-e-daad rakhna

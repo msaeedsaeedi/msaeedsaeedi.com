@@ -2,28 +2,66 @@
 
 import { motion } from 'motion/react'
 import { Check, Copy, Share2 } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-type Labels = { copy: string; copied: string; share: string; linkCopied: string }
+type Labels = { copy: string; copied: string; share: string; linkCopied: string; roman: string }
+
+// Rendered width of a misra in Gulzar is about 0.32–0.36em per character; a little headroom keeps justified lines from wrapping.
+const EM_PER_CHAR = 0.38
 
 /**
  * The ghazal, one sher at a time. Each sher rises in as it scrolls into view
  * and can be copied on its own (with attribution), which is how shers travel.
+ * `longest` is the character count of the poem's longest misra; the type scales down so it always fits on one line.
+ * `roman` (Roman Urdu) is always in the HTML so search engines index it; the toggle only hides it.
  */
-// Rendered width of a misra in Gulzar is about 0.32–0.36em per character; a little headroom keeps justified lines from wrapping.
-const EM_PER_CHAR = 0.38
-
-/** `longest` is the character count of the poem's longest misra; the type scales down so it always fits on one line. */
-export function PoemReader({ shers, longest, title, url, poet, labels }: { shers: string[][]; longest: number; title: string; url: string; poet: string; labels: Labels }) {
+export function PoemReader({
+  shers,
+  roman,
+  longest,
+  title,
+  url,
+  poet,
+  labels,
+}: {
+  shers: string[][]
+  roman: string[][] | null
+  longest: number
+  title: string
+  url: string
+  poet: string
+  labels: Labels
+}) {
   const fontSize = `min(clamp(1.45rem, 3.2vw, 2.15rem), max(0.95rem, calc(100cqi / ${(longest * EM_PER_CHAR).toFixed(2)})))`
   // Short poems stay compact instead of justifying a few words across the whole column.
   const maxWidth = `${(longest * (EM_PER_CHAR - 0.01)).toFixed(1)}em`
 
   const [copied, setCopied] = useState<number | null>(null)
   const [shared, setShared] = useState(false)
+  const [showRoman, setShowRoman] = useState(true)
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem('roman') === 'off') setShowRoman(false)
+    } catch {
+      /* storage unavailable */
+    }
+  }, [])
+
+  function toggleRoman() {
+    setShowRoman((on) => {
+      try {
+        localStorage.setItem('roman', on ? 'off' : 'on')
+      } catch {
+        /* storage unavailable */
+      }
+      return !on
+    })
+  }
 
   async function copy(i: number) {
-    const text = `${shers[i].join('\n')}\n— ${poet}\n${url}`
+    const romanText = roman && showRoman ? `\n\n${roman[i].join('\n')}` : ''
+    const text = `${shers[i].join('\n')}${romanText}\n— ${poet}\n${url}`
     try {
       await navigator.clipboard.writeText(text)
       setCopied(i)
@@ -48,6 +86,22 @@ export function PoemReader({ shers, longest, title, url, poet, labels }: { shers
 
   return (
     <div>
+      {roman && (
+        <div className="mb-8 flex justify-center">
+          <button
+            type="button"
+            role="switch"
+            aria-checked={showRoman}
+            onClick={toggleRoman}
+            className="group inline-flex items-center gap-3 rounded-full border border-line px-4 py-2 text-sm text-ink-2 transition-colors hover:border-ink-2 hover:text-ink"
+          >
+            <span className={`relative h-4 w-7 rounded-full transition-colors ${showRoman ? 'bg-rose' : 'bg-line'}`} aria-hidden>
+              <span className={`absolute top-0.5 h-3 w-3 rounded-full bg-paper shadow transition-[left] duration-300 ${showRoman ? 'left-3.5' : 'left-0.5'}`} />
+            </span>
+            {labels.roman}
+          </button>
+        </div>
+      )}
       <ol className="mx-auto max-w-[46rem] space-y-2">
         {shers.map((lines, i) => (
           <motion.li
@@ -65,6 +119,15 @@ export function PoemReader({ shers, longest, title, url, poet, labels }: { shers
                 </span>
               ))}
             </p>
+            {roman && (
+              <p lang="ur-Latn" dir="ltr" className={`roman mx-auto mt-3 max-w-[34rem] text-center ${showRoman ? '' : 'hidden'}`}>
+                {roman[i].map((l, j) => (
+                  <span key={j} className="block">
+                    {l}
+                  </span>
+                ))}
+              </p>
+            )}
             <button
               type="button"
               onClick={() => copy(i)}

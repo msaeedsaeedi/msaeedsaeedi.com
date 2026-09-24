@@ -80,3 +80,77 @@ trackNo: 1
 
 بھلا دیکھے سعیدیؔ تو کیوں دیکھے مجھ کو
 جو بات اس کی اوروں سے بننے لگی ہے
+
+<!-- roman -->
+
+meri aag phir se ye jalne lagi hai
+teri yaad yunhi jo aane lagi hai
+
+na kar paar tu meri dehleez aise
+ye khushbu yahaan teri aane lagi hai
+
+nikal ja tu mere khayaalon se jaanam
+teri justuju ab sataane lagi hai
+
+tu had bhi to rakh de ae ishq-e-majaazi
+badan rooh bhi ab bhulaane lagi hai
+
+hata do nazar ko mere dilruba tum
+meri deed aankhen milaane lagi hai
+
+koi poochhe mujh se ke is dil mein aise
+ye himmat kahaan se ab aane lagi hai
+
+kyun soorat nazar hi ye har shakhs mein ab
+mujhe mujh se roothi ye aane lagi hai
+
+meri band to aankh bhi naqsh tere
+shab-o-roz mujh ko dikhaane lagi hai
+
+tere is payaam-e-sana aagahi mein
+ye kuchh kuchh mohabbat bhi aane lagi hai
+
+mujhe dekh kar yun tabeebon ne bola
+shifa aise kaise ye aane lagi hai
+
+ye bulbul ne poochha ke is geet mein ab
+ye tarz-e-sukhan hi kyun aane lagi hai
+
+tere rukh pe bhoori ye gesu ki chaadar
+tere husn ko hi barhaane lagi hai
+
+sar-e-baam aa ke main kyun aise dekhun
+kya baalin pe wo mujh ko takne lagi hai
+
+teri aarzoo hi mere dil mein kab se
+bahut phool jaanaan khilaane lagi hai
+
+kya baat hogi ke aalam mein humdam
+jo har shay ghazal ye sunaane lagi hai
+
+gulaab-e-suman bhi teri hi tabassum
+bahaar-e-sukhan se banaane lagi hai
+
+uri dhool pa ki lipat kar jo tum se
+meri mitti tab se hi jalne lagi hai
+
+milen hijr ki raaten katti nahin hain
+teri yaad lamhe thamaane lagi hai
+
+bichhadte hi tujh se kali mere dil ki
+bare ashk aansu banaane lagi hai
+
+mere jism-e-gham mein teri hi mohabbat
+kyun chhup chhup ke ab ye samaane lagi hai
+
+tabassum se har cheez mere jahaan ki
+teri kyun hi khushbu phalaane lagi hai
+
+mujhe bhool bhi ja ke ab neend meri
+mujhe raat bhar hi jagaane lagi hai
+
+uthen kyun na mere qadam teri jaanib
+jo teri gali ab bulaane lagi hai
+
+bhala dekhe Saeedi tu kyun dekhe mujh ko
+jo baat us ki auron se banne lagi hai

@@ -50,7 +50,7 @@ export function llmsIndex() {
     '',
     '## Ghazals (Urdu, by Saeedi)',
     '',
-    ...poems.map((p) => `- [${p.titleUr} (${p.title})](${url(`kalaam/${p.slug}`)}): ${p.shers[0].join(' / ')}`),
+    ...poems.map((p) => `- [${p.titleUr} (${p.title})](${url(`kalaam/${p.slug}`)}): ${p.shers[0].join(' / ')}${p.roman ? ` (${p.roman[0].join(' / ')})` : ''}`),
     '',
     '## Optional',
     '',
@@ -123,7 +123,10 @@ export function llmsFull() {
     if (album && p.trackNo) out.push(`Track ${p.trackNo} of the album ${album.title.en}.`)
     if (p.epigraph) out.push(`Epigraph: ${p.epigraph}${p.epigraphCredit ? ` (${p.epigraphCredit})` : ''}`)
     out.push('')
-    for (const s of p.shers) out.push(s.join('  \n'), '')
+    p.shers.forEach((s, i) => {
+      out.push(s.join('  \n'), '')
+      if (p.roman) out.push(`_${p.roman[i].join(' / ')}_`, '')
+    })
   }
 
   return out.join('\n')

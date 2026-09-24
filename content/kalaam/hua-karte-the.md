@@ -20,3 +20,20 @@ order: 17
 
 کیوں رکھیں ہم فقط پاسِ پیمانِ دل
 دل کے ہم بھی سَعیدی ہوا کرتے تھے
+
+<!-- roman -->
+
+saaya-e-dhoop shaayad hua karte the
+roshni se magar hum dara karte the
+
+haaye ye teri aah-o-fughaan ki qasam
+dost ke dost hum bhi hua karte the
+
+tere jaane se hum ko hua kuchh nahin
+par hum dost tere hua karte the
+
+hain makeen aalam-e-rang-o-bu mein kahaan
+tere rashk-e-qamar jo hua karte the
+
+kyun rakhen hum faqat paas-e-paimaan-e-dil
+dil ke hum bhi Saeedi hua karte the

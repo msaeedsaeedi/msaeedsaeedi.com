@@ -85,7 +85,9 @@ next sher line one
 next sher line two
 ```
 
-The build fails loudly if a sher doesn't have exactly two lines.
+**Roman Urdu:** after the Urdu, add a `<!-- roman -->` line and the transliteration laid out the same way (same shers, two lines each). It shows under each sher on the poem page (with a toggle), powers Latin-script search on /kalaam, and leads the poem's meta description. Conventions: izafat as `gham-e-zindagi`, `o` for و (`khwaab-o-khayaal`), `n` for ں, capitalise names (`Saeedi`, `Khuda`, `Lahore`).
+
+The build fails loudly if a sher doesn't have exactly two lines, or if the Roman Urdu doesn't match the Urdu sher for sher.
 
 **A new project:** add an entry to `content/builds.ts`. Kinds: flagship, research, product, tool. `draft: true` shows a "write-up coming" note; `question` (research) and `epilogue` (e.g. why it paused) render as their own blocks.
 

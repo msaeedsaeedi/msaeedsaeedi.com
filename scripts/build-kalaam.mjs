@@ -1,4 +1,6 @@
 // Compiles content/kalaam/*.md into src/generated/kalaam.json.
+// An optional Roman Urdu transliteration follows a `<!-- roman -->` line, laid out
+// exactly like the Urdu (same shers, two lines each), so the two can be paired line by line.
 // Runs automatically before `dev` and `build`, so the site never reads the filesystem at runtime
 // (Cloudflare Workers has no fs). Poem format: frontmatter + shers separated by a blank line,
 // each sher = two lines (misre).
@@ -12,12 +14,22 @@ const poems = []
 for (const file of files) {
   const slug = file.replace(/\.md$/, '')
   const { data, content } = matter(await readFile(`${dir}/${file}`, 'utf8'))
-  const shers = content
-    .trim()
-    .split(/\n\s*\n/)
-    .map((block) => block.split('\n').map((l) => l.trim()).filter(Boolean))
+  const [urdu, romanText] = content.split(/^<!--\s*roman\s*-->\s*$/m)
+  const toShers = (text) =>
+    text
+      .trim()
+      .split(/\n\s*\n/)
+      .map((block) => block.split('\n').map((l) => l.trim()).filter(Boolean))
+  const shers = toShers(urdu)
   for (const [i, s] of shers.entries()) {
     if (s.length !== 2) throw new Error(`${file}: sher ${i + 1} has ${s.length} lines, expected 2`)
+  }
+  const roman = romanText ? toShers(romanText) : null
+  if (roman) {
+    if (roman.length !== shers.length) throw new Error(`${file}: ${roman.length} roman shers, expected ${shers.length}`)
+    for (const [i, s] of roman.entries()) {
+      if (s.length !== 2) throw new Error(`${file}: roman sher ${i + 1} has ${s.length} lines, expected 2`)
+    }
   }
   for (const key of ['title', 'titleUr', 'order']) {
     if (data[key] === undefined) throw new Error(`${file}: missing frontmatter "${key}"`)
@@ -34,6 +46,7 @@ for (const file of files) {
     epigraph: data.epigraph ?? null,
     epigraphCredit: data.epigraphCredit ?? null,
     shers,
+    roman,
   })
 }
 

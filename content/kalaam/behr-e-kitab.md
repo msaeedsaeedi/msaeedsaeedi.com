@@ -19,3 +19,17 @@ trackNo: 1
 
 میرے اشک پھر سے رواں نہ ہوں میری اپنے رب سے دعا ہے یہ
 میں نے آج بحرِ کتاب میں ابھی دل کا آنسو بہا دیا
+
+<!-- roman -->
+
+gham-e-zindagi ka to dar nahin gham-e-aashiqi ne rula diya
+hamen un se fursaten kam nahin hamen soz-e-dil ne jala diya
+
+yahaan jo bhi turfa haseen mila wahi mahv-e-kaar-e-jafa mila
+yahaan koi bhi jaazib-e-gham nahin mujhe mere khoon ne jama diya
+
+kyun mohabbaton ke ye silsile bhala aise kyun hi fana na hon
+yahaan wehm-e-kham-e-khayal ne bhale aashiqon ko ganwa diya
+
+mere ashk phir se rawaan na hon meri apne Rab se dua hai ye
+main ne aaj behr-e-kitab mein abhi dil ka aansu baha diya

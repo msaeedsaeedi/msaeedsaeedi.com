@@ -20,3 +20,20 @@ order: 6
 
 ہاں تھا غزل میں سعیدی شکوہ مگر
 شعر بھی تیرا نہیں کہ تم سے کہیں
+
+<!-- roman -->
+
+khwaab haqeeqat nahin ke tum se kahen
+bazm bhi teri nahin ke tum se kahen
+
+bas yun hi ik dam khayaal aaya mujhe
+husn bhi tera nahin ke tum se kahen
+
+is be-dili ka sabab bhi jaana nahin
+aur kya dil mein nahin ke tum se kahen
+
+mere qadam uth ke aate to hain magar
+aaina-e-dil nahin ke tum se kahen
+
+haan tha ghazal mein Saeedi shikwa magar
+sher bhi tera nahin ke tum se kahen

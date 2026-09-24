@@ -22,3 +22,20 @@ trackNo: 2
 
 آنکھ اب اشکِ ندامت ہی بہاتی ہے
 کیوں سَعیدی اسکے گھر جانا پڑا مجھ کو
+
+<!-- roman -->
+
+jab bhi tere saamne aana para mujh ko
+uth ke bazm-e-yaad se aana para mujh ko
+
+kis ne izhaar-e-mohabbat tha kiya tum se
+khair mehfil se teri jaana para mujh ko
+
+dil-nasheen thi wo jagah guzre jahaan se tum
+kal wahin se bhool ke jaana para mujh ko
+
+be-khayaalaana tumhen jo khwaab mein dekha
+aaina khud baarha laana para mujh ko
+
+aankh ab ashk-e-nadaamat hi bahaati hai
+kyun Saeedi us ke ghar jaana para mujh ko

@@ -23,3 +23,23 @@ order: 5
 
 حقیقت خواب کی صورت نہیں بنتی مگر بے دم
 سعیدی یاد آتی ہے بہت چاہے کدورت ہے
+
+<!-- roman -->
+
+teri muskaan meri jaan bala ki khoobsurat hai
+tere rukhsaar ki laali bahut naayaab moorat hai
+
+teri zulf-e-pareshaan hai pari jhumke daraazaan pe
+sunehri daal pe shaayad siyaahi saanp soorat hai
+
+bahut dil ko lubhaata hai bahut hulchul machaata hai
+tere jo dast-e-naazuk pe nishaan-e-zeb-o-zeenat hai
+
+teri ye surmageen aankhen bhala koi bhulaaye kyun
+nahin uthtin magar mujh pe bari bebaak soorat hai
+
+chhupaate ho bhala tum kyun meri to jaan atki hai
+zara sa haath sarkaao nazar ki ye zaroorat hai
+
+haqeeqat khwaab ki soorat nahin banti magar be-dam
+Saeedi yaad aati hai bahut chaahe kadoorat hai

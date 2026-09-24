@@ -29,3 +29,26 @@ trackNo: 6
 
 ہاں سَعیدی منانے وہ آئے حَسیں
 اور پھر کیوں ہو وحشت میری گور سے
+
+<!-- roman -->
+
+ji ye karta hai dekhun tujhe ghaur se
+phir main aa ke milun naan bare taur se
+
+ranjishen hijr ki main mita dun sabhi
+pankh main tor ke laaun jo mor se
+
+neend kyun aaye tujh ko kabhi yaadon se
+main tujhe yaad aaun shab-e-shor se
+
+teri bhi aankh ye naqsh kheenche mere
+phir tu dekhe mujhe hi bare ghaur se
+
+ae Khuda kyun use bhi kabhi ishq ho
+aur phir guzre wo is kathin daur se
+
+phir tu dhoonde khayaalon mein har dam mujhe
+phir milun main kahin ja ke Lahore se
+
+haan Saeedi manaane wo aaye haseen
+aur phir kyun ho wehshat meri gor se

@@ -55,3 +55,53 @@ epigraphCredit: "عنوان مستعار از فیض انور"
 
 پھول نے کہا کیوں گلشنِ سَعیدیؔ
 ہے سَعیدی کے بِن جاودان جاناں
+
+<!-- roman -->
+
+sochta hun ke hun harf-e-jaan jaanaan
+teri zindagi mein armaghaan jaanaan
+
+zeest ke kathin lamhon mein shaayari ko
+gosh-bar-sada hun tere kaan jaanaan
+
+chhe baras se ye hi soch mein raha hun
+hai yaqeen-e-ulfat imtihaan jaanaan
+
+aam se nagar ka aam sa ye shaayar
+dil mein gul sajaaye be-nishaan jaanaan
+
+main gulaab ye kaise dun ke nahin hai
+paaedaar koi phooldaan jaanaan
+
+subh-e-nau thi shabnam gulistaan mein shaayad
+wo Saeed tha kya baaghbaan jaanaan
+
+chaahta hun ke ab saath mein rahen hum
+ab mera bano tum khaandaan jaanaan
+
+humsafar bano tum zindagi ke meri
+talkh lamhe bhi hon gulistaan jaanaan
+
+khil uthe mohabbat khwaar ki tarah ye
+teri khush-mizaaji se makaan jaanaan
+
+waqt guzre tere saath jo use main
+pal mein dhoondh laaun be-thakaan jaanaan
+
+sabz rangon se hai ye tumhen shaghaf jo
+shaayari mein hain ye maujdaan jaanaan
+
+surmai thin wo aankhen magar laga yun
+jheel ya khula hai aasmaan jaanaan
+
+laakh karta hun taareef teri ke kya
+gesu hain tere ke itrdaan jaanaan
+
+naaz hain bahut tere so hum ne socha
+ke khareed laayen husn-daan jaanaan
+
+nakhre bhi uthaayen dil bhi hum lutaayen
+aap ke nahin kya humzabaan jaanaan?
+
+phool ne kaha kyun gulshan-e-Saeedi
+hai Saeedi ke bin jaavedaan jaanaan

@@ -29,3 +29,26 @@ trackNo: 9
 
 تھا سَعیدی دِلِ مکتب میں کل
 خوب پھر میں نے ثناخوانی کی
+
+<!-- roman -->
+
+baat hai dost pareshaani ki
+baad mein us ke pashemaani ki
+
+soch us sokhta-jaan ne mujh par
+baarha kyun nazar-e-saani ki
+
+un nigaahon ke evaz thamta hun
+par nahin baat ye hairaani ki
+
+yaad ko us ki ura ke laayen
+kya gharaz aur pawan paani ki
+
+raat bhar us sukhan-e-shireen ne
+muskuraahat pe darakhshaani ki
+
+khair taareef karun main kaise
+ishrat-e-khoobi-e-dil jaani ki
+
+tha Saeedi dil-e-maktab mein kal
+khoob phir main ne sana-khwaani ki

@@ -40,3 +40,38 @@ trackNo: 3
 
 نہ کی فاتِحَہ خوانی کیونکہ لحد میں
 محبت کو سعیدی اُتارا گیا ہے
+
+<!-- roman -->
+
+ye kis ko lahad mein utaara gaya hai
+Saeedi mohabbat ko maara gaya hai
+
+ye chaaqu ye khanjar ye chhuriyaan ye bhaala
+liya qatl mein kyun sahaara gaya hai
+
+kahin ja ke poochha to kehne lage wo
+ye khoon-e-jigar mein qaraara gaya hai
+
+sahaara gulaabon ka le kar lahad mein
+use qabr mein bhi sanwaara gaya hai
+
+kabhi socha na tha ye kaar-e-maseeha
+yunhi zindagi ko guzaara gaya hai
+
+tere waaste chhor ke yaar tujh ko
+ye darya kinaare se haara gaya hai
+
+khudaara koi poochhta hi nahin hai
+kahaan pe mohabbat ko waara gaya hai
+
+kaha jo sitaaron se maahi ke baare
+bana khaak se wo sitaara gaya hai
+
+na hasrat na himmat na ulfat na raahat
+mere hi sukhan ko sudhaara gaya hai
+
+sabab meri tanhaaiyon ka na poochho
+meri shama-e-dil ka sharaara gaya hai
+
+na ki faateha-khwaani kyunke lahad mein
+mohabbat ko Saeedi utaara gaya hai

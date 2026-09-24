@@ -30,7 +30,8 @@ export async function generateMetadata({ params }: Props) {
   const d = getDictionary(lang).seo
   return pageMetadata(lang, `kalaam/${slug}`, {
     title: d.poemTitle(poem.title, poem.titleUr),
-    description: d.poemDescription(poem.shers[0].join(' / '), poem.title),
+    // Roman Urdu first: it is how most people type a line they half remember.
+    description: d.poemDescription((poem.roman?.[0] ?? poem.shers[0]).join(' / '), poem.title),
     type: 'article',
   })
 }
@@ -83,11 +84,12 @@ export default async function PoemPage({ params }: Props) {
       <section className="wrap mt-14">
         <PoemReader
           shers={poem.shers}
+          roman={poem.roman}
           longest={Math.max(...poem.shers.flat().map((l) => l.length))}
           title={`${poem.titleUr} — ${site.penName.ur}`}
           url={url}
           poet={site.penName.ur}
-          labels={{ copy: t.copy, copied: t.copied, share: t.share, linkCopied: t.linkCopied }}
+          labels={{ copy: t.copy, copied: t.copied, share: t.share, linkCopied: t.linkCopied, roman: t.roman }}
         />
       </section>
 

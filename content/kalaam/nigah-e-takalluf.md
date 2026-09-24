@@ -23,3 +23,20 @@ trackNo: 5
 
 بس سَعیدی نگاہِ تکلف تمہیں
 دیکھے ہے روز کہ ہم نوا جب نہ ہو
+
+<!-- roman -->
+
+jumbish-e-lab se wo jumbish-e-lab na ho
+aaj ghar mere taareeki-e-shab na ho
+
+kyun use na kahun chaand ke baam par
+baarha tu jise dekhe wo kab na ho
+
+main ke masroof-e-duniya tere waaste
+ik kahun sher ke jo munaasib na ho?
+
+aur ke peer-e-shaayar teri raah mein
+kyun tumhen dekh ke muztarib ab na ho
+
+bas Saeedi nigaah-e-takalluf tumhen
+dekhe hai roz ke humnawa jab na ho

@@ -43,6 +43,7 @@ export default async function KalaamPage({ params }: Props) {
     trackNo: p.trackNo,
     album: albums.find((a) => a.slug === p.album)?.title[lang] ?? null,
     text: p.shers.flat().join(' '),
+    romanText: p.roman?.flat().join(' ') ?? '',
   }))
 
   return (

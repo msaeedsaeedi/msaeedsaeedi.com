@@ -23,3 +23,20 @@ trackNo: 8
 
 ورطَۂ زیست ہے کیوں اب تپاک سے سعیدی
 کیا پھر بجھے دل نے جلائی ہے شمعِ مشعوف
+
+<!-- roman -->
+
+hai lafz-e-ghair pe kyun dil ka faisla mauqoof
+bas muzhda-e-ishrat sunaata hai lafz-e-mausoof
+
+payaam-e-aagahi se kyun badla tha ye dil apna
+mutalaashi-e-zeest hua aalam mein gul-e-makhzoof
+
+kate ashk-e-mataanat se tere hijr ka rasta
+gar ayaan chashm-e-nam pe hon jo raaz-e-malfoof
+
+kaise aayen ishq ko samajh tere kund khayaal
+naabeena hai beenaaon mein ye soz-e-maaroof
+
+varta-e-zeest hai kyun ab tapaak se Saeedi
+kya phir bujhe dil ne jalaai hai shama-e-mashoof

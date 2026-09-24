@@ -23,3 +23,20 @@ trackNo: 4
 
 بہ دل اب کتاب میں کہاں لکھ رہا ہے تُو
 سَعیدیؔ کلام یہ جواب الجواب سا
+
+<!-- roman -->
+
+wo rakht-e-siyaah mein junoon-e-itaab sa
+wo meri nigaah mein rukh-e-maahtaab sa
+
+ho kyunkar gulaab aariz-e-gul-izaar sa
+rukh-e-zeba ke hai aaj apne shabaab sa
+
+ayaan ho gul-e-gulistaan par haalat-e-khirad
+ye hi waqt hoga haalat-e-iztiraab sa
+
+hui raat bhar kahaani-e-zeest gosh-zad
+ke jab aa gaya khayaal naakaamyaab sa
+
+ba-dil ab kitaab mein kahaan likh raha hai tu
+Saeedi kalaam ye jawaab-ul-jawaab sa

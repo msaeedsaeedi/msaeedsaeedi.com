@@ -20,3 +20,20 @@ order: 19
 
 بیزار تھے عاشقِ سَعیدی بھی تب
 جب تھا لگا دل لگائی میں دل اپنا
+
+<!-- roman -->
+
+ab lagta nahin parhai mein dil apna
+jo lag gaya hai judaai mein dil apna
+
+hum kehte hain ab ke bhool jaayen un ko
+ke ab hai ghazal-saraai mein dil apna
+
+hum dekh ke un ko muskuraate hain ke
+masroof hai dil rasaai mein dil apna
+
+waapas chala aaya soch kar ye soorat
+rukta hai bani banaai mein dil apna
+
+bezaar the aashiq-e-Saeedi bhi tab
+jab tha laga dil lagaai mein dil apna

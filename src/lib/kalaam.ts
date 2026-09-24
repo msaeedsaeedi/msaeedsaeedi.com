@@ -12,6 +12,8 @@ export type Poem = {
   epigraph: string | null
   epigraphCredit: string | null
   shers: string[][]
+  /** Roman Urdu, sher for sher with `shers`; null until transliterated. */
+  roman: string[][] | null
 }
 
 const poems = poemsJson as Poem[]

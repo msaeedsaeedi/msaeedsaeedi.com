@@ -19,6 +19,8 @@ export type PoemCard = {
   shersText: string
   /** Plain text of every line, used for search. */
   text: string
+  /** Roman Urdu of every line, used for search. */
+  romanText: string
 }
 
 type T = {
@@ -34,6 +36,21 @@ type T = {
 
 // Harakat and other marks that shouldn't block a match (zer, zabar, pesh, shadd, etc.).
 const MARKS = /[ً-ٰٟۖ-ۭٕٔ]/g
+// Roman Urdu has no fixed spelling: "kis ko lahad mein utara gaya hai" is typed as
+// "kisko lahad ma utara gya ha", "mohabbat" as "mohabat", "bhi" as "b". So both sides are reduced to
+// a consonant skeleton: word-final nasal n dropped, then h and vowels removed, q/v/f folded into k/w/p,
+// doubled letters collapsed, spaces ignored. Matching is a substring test on the skeletons.
+const plain = (s: string) => ` ${s.toLowerCase().replace(/[^a-z]+/g, ' ').trim()} `
+const romanKey = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z]+/g, ' ')
+    .replace(/([aeiou])n\b/g, '$1')
+    .replace(/[\sh]|[aeiou]/g, '')
+    .replace(/q/g, 'k')
+    .replace(/v/g, 'w')
+    .replace(/f/g, 'p')
+    .replace(/(.)\1+/g, '$1')
 const norm = (s: string) => s.replace(MARKS, '').replace(/ۂ/g, 'ہ').replace(/ي/g, 'ی').toLowerCase()
 
 export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[]; locale: Locale; t: T; hrefBase: string }) {
@@ -41,8 +58,19 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
   const [onlySung, setOnlySung] = useState(false)
   const query = useDeferredValue(q)
 
-  const indexed = useMemo(() => poems.map((p) => ({ ...p, hay: norm(`${p.title} ${p.titleUr} ${p.text}`) })), [poems])
-  const shown = indexed.filter((p) => (!onlySung || p.trackNo) && (!query.trim() || p.hay.includes(norm(query.trim()))))
+  const indexed = useMemo(
+    () => poems.map((p) => ({ ...p, hay: norm(`${p.titleUr} ${p.text}`), romanHay: romanKey(`${p.title} ${p.romanText}`), romanPlain: plain(`${p.title} ${p.romanText}`) })),
+    [poems],
+  )
+  const q2 = query.trim().toLowerCase()
+  const qKey = romanKey(q2)
+  // Latin input searches titles and Roman Urdu; anything else searches the Urdu. Short queries
+  // collapse to a skeleton of a letter or two, so they match whole words instead.
+  const matches = (p: (typeof indexed)[number]) =>
+    /[a-z]/.test(q2)
+      ? p.romanPlain.includes(plain(q2).trimEnd()) || (qKey.length >= 3 && p.romanHay.includes(qKey))
+      : p.hay.includes(norm(q2))
+  const shown = indexed.filter((p) => (!onlySung || p.trackNo) && (!q2 || matches(p)))
 
   return (
     <div>
