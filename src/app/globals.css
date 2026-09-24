@@ -230,9 +230,9 @@ body::before {
   color: var(--ink-2);
   text-wrap: balance;
 }
-/* Reading preference (ScriptToggle): Urdu, both (default), or Roman Urdu. */
+/* Reading preference (ScriptToggle): Urdu (default, no attribute), both, or Roman Urdu. */
 :root[data-script='roman'] .script-ur,
-:root[data-script='ur'] .script-roman,
+:root:not([data-script]) .script-roman,
 :root:not([data-script='roman']) .only-roman {
   display: none !important;
 }

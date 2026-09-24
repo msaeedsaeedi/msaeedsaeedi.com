@@ -3,7 +3,7 @@
 import { motion } from 'motion/react'
 import { Check, Copy, Share2 } from 'lucide-react'
 import { useState } from 'react'
-import { currentScript, ScriptToggle, type Script } from './ScriptToggle'
+import { currentScript, ScriptDock, type Script } from './ScriptToggle'
 
 type Labels = { copy: string; copied: string; share: string; linkCopied: string; script: { label: string } & Record<Script, string> }
 
@@ -68,11 +68,7 @@ export function PoemReader({
 
   return (
     <div>
-      {roman && (
-        <div className="mb-8 flex justify-center">
-          <ScriptToggle labels={labels.script} />
-        </div>
-      )}
+      {roman && <ScriptDock labels={labels.script} />}
       <ol className="mx-auto max-w-[46rem] space-y-2">
         {shers.map((lines, i) => (
           <motion.li

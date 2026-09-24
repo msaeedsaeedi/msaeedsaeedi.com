@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useId, useState } from 'react'
 
 export type Script = 'ur' | 'both' | 'roman'
@@ -8,19 +8,22 @@ const scripts: Script[] = ['ur', 'both', 'roman']
 
 /**
  * Runs in <head> before first paint so the chosen script shows without a flash.
- * `both` is the default and has no attribute. CSS in globals.css does the hiding:
- * `.script-ur` (Urdu script), `.script-roman` (Roman Urdu), `.only-roman` (shown in Roman mode only).
+ * Urdu is the default and has no attribute; `both` and `roman` set `data-script`. CSS in
+ * globals.css does the hiding: `.script-ur` (Urdu script), `.script-roman` (Roman Urdu),
+ * `.only-roman` (shown in Roman mode only).
  */
-export const scriptInit = `try{var s=localStorage.getItem('script');if(!s&&localStorage.getItem('roman')==='off')s='ur';if(s==='ur'||s==='roman')document.documentElement.dataset.script=s}catch(e){}`
+export const scriptInit = `try{var s=localStorage.getItem('script');if(s==='both'||s==='roman')document.documentElement.dataset.script=s}catch(e){}`
 
 export function currentScript(): Script {
   const s = typeof document === 'undefined' ? null : document.documentElement.dataset.script
-  return s === 'ur' || s === 'roman' ? s : 'both'
+  return s === 'both' || s === 'roman' ? s : 'ur'
 }
 
+type Labels = { label: string } & Record<Script, string>
+
 /** Urdu · Both · Roman. The choice is site-wide and remembered. */
-export function ScriptToggle({ labels, className }: { labels: { label: string } & Record<Script, string>; className?: string }) {
-  const [script, setScript] = useState<Script>('both')
+export function ScriptToggle({ labels, className }: { labels: Labels; className?: string }) {
+  const [script, setScript] = useState<Script>('ur')
   const pill = useId()
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export function ScriptToggle({ labels, className }: { labels: { label: string } 
   }, [])
 
   function choose(s: Script) {
-    if (s === 'both') delete document.documentElement.dataset.script
+    if (s === 'ur') delete document.documentElement.dataset.script
     else document.documentElement.dataset.script = s
     try {
       localStorage.setItem('script', s)
@@ -61,5 +64,44 @@ export function ScriptToggle({ labels, className }: { labels: { label: string } 
         </button>
       ))}
     </div>
+  )
+}
+
+/**
+ * The toggle floating at the bottom of the screen, so it's always within reach while reading.
+ * Slides in shortly after load, and steps aside while the footer is on screen.
+ */
+export function ScriptDock({ labels }: { labels: Labels }) {
+  const [ready, setReady] = useState(false)
+  const [footerVisible, setFooterVisible] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 600)
+    const footer = document.querySelector('footer')
+    const io = footer ? new IntersectionObserver(([e]) => setFooterVisible(e.isIntersecting)) : null
+    if (footer && io) io.observe(footer)
+    return () => {
+      clearTimeout(t)
+      io?.disconnect()
+    }
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {ready && !footerVisible && (
+        <motion.div
+          className="pointer-events-none fixed inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 flex justify-center px-4"
+          initial={{ y: 80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 80, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+        >
+          <div className="pointer-events-auto flex items-center gap-3 rounded-full border border-line bg-paper/85 p-1 shadow-xl sm:ps-4 shadow-ink/10 backdrop-blur-xl">
+            <span className="meta hidden sm:inline">{labels.label}</span>
+            <ScriptToggle labels={labels} className="border-0 !p-0" />
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }

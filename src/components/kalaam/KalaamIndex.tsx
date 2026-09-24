@@ -6,7 +6,7 @@ import { Music2, Search, X } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
 import type { Locale } from '@/i18n/config'
 import { localDigits } from '@/lib/format'
-import { ScriptToggle, type Script } from './ScriptToggle'
+import { ScriptDock, type Script } from './ScriptToggle'
 
 export type PoemCard = {
   slug: string
@@ -89,7 +89,6 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
             className="w-full rounded-full border border-line bg-transparent py-3 ps-11 pe-4 outline-none transition-colors placeholder:text-ink-2/70 focus:border-rose"
           />
         </label>
-        <div className="flex flex-wrap items-center gap-2">
         <div role="group" className="flex gap-2">
           {[false, true].map((sung) => (
             <button
@@ -105,10 +104,9 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
             </button>
           ))}
         </div>
-        <ScriptToggle labels={t.script} className="md:ms-3" />
-        </div>
       </div>
 
+      <ScriptDock labels={t.script} />
       <p className="meta mb-4" aria-live="polite">
         {t.count[shown.length]}
       </p>
