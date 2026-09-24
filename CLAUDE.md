@@ -85,7 +85,7 @@ next sher line one
 next sher line two
 ```
 
-**Roman Urdu:** after the Urdu, add a `<!-- roman -->` line and the transliteration laid out the same way (same shers, two lines each). It shows under each sher on the poem page (with a toggle), powers Latin-script search on /kalaam, and leads the poem's meta description. Conventions: izafat as `gham-e-zindagi`, `o` for و (`khwaab-o-khayaal`), `n` for ں, capitalise names (`Saeedi`, `Khuda`, `Lahore`).
+**Roman Urdu:** after the Urdu, add a `<!-- roman -->` line and the transliteration laid out the same way (same shers, two lines each). Readers choose Urdu · Both · Roman with `ScriptToggle` (Kalaam index and poem pages; site-wide, saved in localStorage, applied before paint by `scriptInit` in the layout). Mark elements with `script-ur`, `script-roman` or `only-roman`, and `script-flip` on RTL containers that should turn LTR in Roman mode; globals.css does the rest. The Roman text also powers Latin-script search on /kalaam, and leads the poem's meta description. Conventions: izafat as `gham-e-zindagi`, `o` for و (`khwaab-o-khayaal`), `n` for ں, capitalise names (`Saeedi`, `Khuda`, `Lahore`).
 
 The build fails loudly if a sher doesn't have exactly two lines, or if the Roman Urdu doesn't match the Urdu sher for sher.
 

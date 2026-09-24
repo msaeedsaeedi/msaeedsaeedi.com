@@ -171,7 +171,7 @@ const ur: Dictionary = {
     listen: 'اسپاٹیفائی پر سنیے',
     loadPlayer: 'پلیئر کھولیے',
     playerNote: 'اسپاٹیفائی کا پلیئر اپنی کوکیز استعمال کرتا ہے۔',
-    roman: 'رومن اردو',
+    script: { label: 'رسم الخط', ur: 'اردو', both: 'دونوں', roman: 'رومن' },
     copy: 'شعر نقل کیجیے',
     copied: 'نقل ہو گیا',
     share: 'بانٹیے',

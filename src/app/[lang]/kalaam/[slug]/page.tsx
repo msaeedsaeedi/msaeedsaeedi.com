@@ -59,11 +59,16 @@ export default async function PoemPage({ params }: Props) {
           {t.ghazal}
           {album && poem.trackNo ? <> &nbsp;/&nbsp; {t.track(poem.trackNo, album.title[lang])}</> : null}
         </p>
-        <h1 lang="ur" className="font-gulzar mt-8 text-[clamp(3rem,9vw,7rem)] md:mt-12 leading-[1.6] text-ink">
+        <h1 className="mt-8 text-ink md:mt-12">
           {/* Nastaliq rises well above the line box; give the reveal mask room so it doesn't crop the top. */}
-          <Rise className="-mt-[0.4em] pt-[0.4em]">{poem.titleUr}</Rise>
+          <span lang="ur" className="script-ur font-gulzar block text-[clamp(3rem,9vw,7rem)] leading-[1.6]">
+            <Rise className="-mt-[0.4em] pt-[0.4em]">{poem.titleUr}</Rise>
+          </span>
+          <span lang="ur-Latn" className="only-roman font-serif block text-[clamp(2.6rem,7vw,5.5rem)] italic leading-[1.2]">
+            {poem.title}
+          </span>
         </h1>
-        {lang === 'en' && <p className="lede -mt-2 italic text-ink-2">{poem.title}</p>}
+        {lang === 'en' && <p className="script-ur lede -mt-2 italic text-ink-2">{poem.title}</p>}
         {poem.epigraph && (
           <Appear delay={0.3}>
             <blockquote lang="ur" dir="rtl" className="font-gulzar mx-auto mt-8 max-w-xl text-xl leading-[2] text-ink-2">
@@ -89,18 +94,21 @@ export default async function PoemPage({ params }: Props) {
           title={`${poem.titleUr} — ${site.penName.ur}`}
           url={url}
           poet={site.penName.ur}
-          labels={{ copy: t.copy, copied: t.copied, share: t.share, linkCopied: t.linkCopied, roman: t.roman }}
+          labels={{ copy: t.copy, copied: t.copied, share: t.share, linkCopied: t.linkCopied, script: t.script }}
         />
       </section>
 
       {/* Right to left, like the poem: the previous ghazal sits on the right. */}
-      <nav dir="rtl" className="wrap mt-28 grid grid-cols-2 border-t border-line" aria-label={t.back}>
+      <nav dir="rtl" className="script-flip wrap mt-28 grid grid-cols-2 border-t border-line" aria-label={t.back}>
         <div className="border-e border-line py-10 pe-4">
           {prev && (
             <Link href={href(lang, `kalaam/${prev.slug}`)} className="group block">
               <span className="meta">{t.prev}</span>
-              <span lang="ur" className="font-gulzar mt-2 block text-[clamp(1.4rem,3vw,2.2rem)] leading-[1.9] transition-colors group-hover:text-rose">
+              <span lang="ur" className="script-ur font-gulzar mt-2 block text-[clamp(1.4rem,3vw,2.2rem)] leading-[1.9] transition-colors group-hover:text-rose">
                 {prev.titleUr}
+              </span>
+              <span dir="ltr" className="only-roman font-serif mt-2 block text-[clamp(1.3rem,2.6vw,1.9rem)] italic transition-colors group-hover:text-rose">
+                {prev.title}
               </span>
             </Link>
           )}
@@ -109,8 +117,11 @@ export default async function PoemPage({ params }: Props) {
           {next && (
             <Link href={href(lang, `kalaam/${next.slug}`)} className="group block">
               <span className="meta">{t.next}</span>
-              <span lang="ur" className="font-gulzar mt-2 block text-[clamp(1.4rem,3vw,2.2rem)] leading-[1.9] transition-colors group-hover:text-rose">
+              <span lang="ur" className="script-ur font-gulzar mt-2 block text-[clamp(1.4rem,3vw,2.2rem)] leading-[1.9] transition-colors group-hover:text-rose">
                 {next.titleUr}
+              </span>
+              <span dir="ltr" className="only-roman font-serif mt-2 block text-[clamp(1.3rem,2.6vw,1.9rem)] italic transition-colors group-hover:text-rose">
+                {next.title}
               </span>
             </Link>
           )}

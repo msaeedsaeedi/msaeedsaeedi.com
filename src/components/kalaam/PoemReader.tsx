@@ -2,9 +2,10 @@
 
 import { motion } from 'motion/react'
 import { Check, Copy, Share2 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { currentScript, ScriptToggle, type Script } from './ScriptToggle'
 
-type Labels = { copy: string; copied: string; share: string; linkCopied: string; roman: string }
+type Labels = { copy: string; copied: string; share: string; linkCopied: string; script: { label: string } & Record<Script, string> }
 
 // Rendered width of a misra in Gulzar is about 0.32–0.36em per character; a little headroom keeps justified lines from wrapping.
 const EM_PER_CHAR = 0.38
@@ -13,7 +14,7 @@ const EM_PER_CHAR = 0.38
  * The ghazal, one sher at a time. Each sher rises in as it scrolls into view
  * and can be copied on its own (with attribution), which is how shers travel.
  * `longest` is the character count of the poem's longest misra; the type scales down so it always fits on one line.
- * `roman` (Roman Urdu) is always in the HTML so search engines index it; the toggle only hides it.
+ * `roman` (Roman Urdu) is always in the HTML so search engines index it; the reading preference only hides one or the other.
  */
 export function PoemReader({
   shers,
@@ -38,30 +39,11 @@ export function PoemReader({
 
   const [copied, setCopied] = useState<number | null>(null)
   const [shared, setShared] = useState(false)
-  const [showRoman, setShowRoman] = useState(true)
-
-  useEffect(() => {
-    try {
-      if (localStorage.getItem('roman') === 'off') setShowRoman(false)
-    } catch {
-      /* storage unavailable */
-    }
-  }, [])
-
-  function toggleRoman() {
-    setShowRoman((on) => {
-      try {
-        localStorage.setItem('roman', on ? 'off' : 'on')
-      } catch {
-        /* storage unavailable */
-      }
-      return !on
-    })
-  }
-
   async function copy(i: number) {
-    const romanText = roman && showRoman ? `\n\n${roman[i].join('\n')}` : ''
-    const text = `${shers[i].join('\n')}${romanText}\n— ${poet}\n${url}`
+    // Copy what the reader is looking at.
+    const script = roman ? currentScript() : 'ur'
+    const parts = [script !== 'roman' && shers[i].join('\n'), script !== 'ur' && roman?.[i].join('\n')].filter(Boolean)
+    const text = `${parts.join('\n\n')}\n— ${poet}\n${url}`
     try {
       await navigator.clipboard.writeText(text)
       setCopied(i)
@@ -88,18 +70,7 @@ export function PoemReader({
     <div>
       {roman && (
         <div className="mb-8 flex justify-center">
-          <button
-            type="button"
-            role="switch"
-            aria-checked={showRoman}
-            onClick={toggleRoman}
-            className="group inline-flex items-center gap-3 rounded-full border border-line px-4 py-2 text-sm text-ink-2 transition-colors hover:border-ink-2 hover:text-ink"
-          >
-            <span className={`relative h-4 w-7 rounded-full transition-colors ${showRoman ? 'bg-rose' : 'bg-line'}`} aria-hidden>
-              <span className={`absolute top-0.5 h-3 w-3 rounded-full bg-paper shadow transition-[left] duration-300 ${showRoman ? 'left-3.5' : 'left-0.5'}`} />
-            </span>
-            {labels.roman}
-          </button>
+          <ScriptToggle labels={labels.script} />
         </div>
       )}
       <ol className="mx-auto max-w-[46rem] space-y-2">
@@ -112,7 +83,7 @@ export function PoemReader({
             viewport={{ once: true, margin: '0px 0px -12% 0px' }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p lang="ur" dir="rtl" className="sher mx-auto" style={{ fontSize, maxWidth }}>
+            <p lang="ur" dir="rtl" className="sher script-ur mx-auto" style={{ fontSize, maxWidth }}>
               {lines.map((l, j) => (
                 <span key={j} className="misra">
                   {l}
@@ -120,7 +91,7 @@ export function PoemReader({
               ))}
             </p>
             {roman && (
-              <p lang="ur-Latn" dir="ltr" className={`roman mx-auto mt-3 max-w-[34rem] text-center ${showRoman ? '' : 'hidden'}`}>
+              <p lang="ur-Latn" dir="ltr" className="roman script-roman mx-auto mt-3 max-w-[34rem] text-center">
                 {roman[i].map((l, j) => (
                   <span key={j} className="block">
                     {l}

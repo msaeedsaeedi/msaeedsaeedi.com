@@ -230,6 +230,28 @@ body::before {
   color: var(--ink-2);
   text-wrap: balance;
 }
+/* Reading preference (ScriptToggle): Urdu, both (default), or Roman Urdu. */
+:root[data-script='roman'] .script-ur,
+:root[data-script='ur'] .script-roman,
+:root:not([data-script='roman']) .only-roman {
+  display: none !important;
+}
+:root[data-script='roman'] .script-flip {
+  direction: ltr;
+}
+:root[data-script='roman'] .script-flip .text-flip {
+  text-align: left;
+}
+:root[data-script='roman'] .roman > span + span {
+  margin-top: 0.4em;
+}
+:root[data-script='roman'] .roman {
+  font-style: normal;
+  color: var(--ink);
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  line-height: 1.75;
+  margin-top: 0;
+}
 .misra-center {
   display: block;
   text-align: center;

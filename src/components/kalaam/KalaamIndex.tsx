@@ -6,12 +6,14 @@ import { Music2, Search, X } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
 import type { Locale } from '@/i18n/config'
 import { localDigits } from '@/lib/format'
+import { ScriptToggle, type Script } from './ScriptToggle'
 
 export type PoemCard = {
   slug: string
   title: string
   titleUr: string
   matla: string[]
+  romanMatla: string[] | null
   sherCount: number
   trackNo: number | null
   /** Album name, shown as a tooltip on the track badge. */
@@ -32,6 +34,7 @@ type T = {
   clear: string
   /** Pre-rendered labels indexed by count (functions can't cross to the client). */
   count: string[]
+  script: { label: string } & Record<Script, string>
 }
 
 // Harakat and other marks that shouldn't block a match (zer, zabar, pesh, shadd, etc.).
@@ -86,6 +89,7 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
             className="w-full rounded-full border border-line bg-transparent py-3 ps-11 pe-4 outline-none transition-colors placeholder:text-ink-2/70 focus:border-rose"
           />
         </label>
+        <div className="flex flex-wrap items-center gap-2">
         <div role="group" className="flex gap-2">
           {[false, true].map((sung) => (
             <button
@@ -100,6 +104,8 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
               {sung ? t.sung : t.all}
             </button>
           ))}
+        </div>
+        <ScriptToggle labels={t.script} className="md:ms-3" />
         </div>
       </div>
 
@@ -116,7 +122,7 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
           </button>
         </div>
       ) : (
-        <ul dir="rtl" className="grid border-t border-line md:grid-cols-2">
+        <ul dir="rtl" className="script-flip grid border-t border-line md:grid-cols-2">
           <AnimatePresence initial={false}>
             {shown.map((p) => (
               <motion.li
@@ -130,8 +136,13 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
               >
                 <Link href={`${hrefBase}/${p.slug}`} className="group flex h-full flex-col gap-3 py-8" data-cursor={locale === 'ur' ? 'پڑھیے' : 'Read'}>
                   <div className="flex items-baseline justify-between gap-4">
-                    <h2 lang="ur" className="font-gulzar text-[1.9rem] leading-[1.8] transition-colors group-hover:text-rose">
-                      {p.titleUr}
+                    <h2 className="transition-colors group-hover:text-rose">
+                      <span lang="ur" className="script-ur font-gulzar text-[1.9rem] leading-[1.8]">
+                        {p.titleUr}
+                      </span>
+                      <span dir="ltr" lang="ur-Latn" className="only-roman font-serif text-[1.7rem] italic leading-[1.5]">
+                        {p.title}
+                      </span>
                     </h2>
                     {p.trackNo && (
                       <span className="chip shrink-0" title={p.album ?? t.sung}>
@@ -141,17 +152,26 @@ export function KalaamIndex({ poems, locale, t, hrefBase }: { poems: PoemCard[];
                     )}
                   </div>
                   {locale === 'en' && (
-                    <p dir="ltr" lang="en" className="meta -mt-3 text-end italic">
+                    <p dir="ltr" lang="en" className="script-ur meta -mt-3 text-end italic">
                       {p.title}
                     </p>
                   )}
-                  <div lang="ur" dir="rtl" className="font-gulzar max-w-[26rem] text-[1.15rem] leading-[2.1] text-ink-2 transition-colors group-hover:text-ink">
+                  <div lang="ur" dir="rtl" className="script-ur font-gulzar max-w-[26rem] text-[1.15rem] leading-[2.1] text-ink-2 transition-colors group-hover:text-ink">
                     {p.matla.map((l, i) => (
                       <span key={i} className="misra">
                         {l}
                       </span>
                     ))}
                   </div>
+                  {p.romanMatla && (
+                    <div lang="ur-Latn" dir="ltr" className="roman script-roman text-flip text-right transition-colors group-hover:text-ink">
+                      {p.romanMatla.map((l, i) => (
+                        <span key={i} className="block">
+                          {l}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <p dir={locale === 'en' ? 'ltr' : 'rtl'} className="meta text-end">{p.shersText}</p>
                 </Link>
               </motion.li>

@@ -174,7 +174,7 @@ const en = {
     loadPlayer: 'Load the player',
     playerNote: 'Loads Spotify’s player, which sets its own cookies.',
     copy: 'Copy sher',
-    roman: 'Roman Urdu',
+    script: { label: 'Read in', ur: 'اردو', both: 'Both', roman: 'Roman' },
     copied: 'Copied',
     share: 'Share',
     linkCopied: 'Link copied',

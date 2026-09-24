@@ -8,6 +8,7 @@ import { getDictionary } from '@/i18n'
 import { pageMetadata } from '@/lib/metadata'
 import { graph, personNode, websiteNode } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { scriptInit } from '@/components/kalaam/ScriptToggle'
 import { Providers } from '@/components/layout/Providers'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -73,6 +74,10 @@ export default async function RootLayout({ children, params }: { children: React
       suppressHydrationWarning
       className={`${bricolage.variable} ${newsreader.variable} ${gulzar.variable} ${nastaliq.variable}`}
     >
+      <head>
+        {/* Apply the saved Urdu/Roman reading preference before first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: scriptInit }} />
+      </head>
       <body>
         <Providers>
           <Cursor />
